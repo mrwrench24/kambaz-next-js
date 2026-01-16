@@ -1,7 +1,3 @@
-"use client";
-// ^ Added because of issues with button / on click
-// https://stackoverflow.com/questions/79664503/event-handlers-cannot-be-passed-to-client-component-props-even-with-use-client
-
 export default function Lab1() {
   return (
     <div id="wd-lab1">
@@ -216,14 +212,6 @@ export default function Lab1() {
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
       </textarea>
-      <h5 id="wd-buttons">Buttons</h5>
-      <button
-        type="button"
-        onClick={() => alert("Life is Good!")}
-        id="wd-all-good"
-      >
-        Hello World!
-      </button>
       <h5 id="wd-radio-buttons">Radio buttons</h5>
       <label>Favorite movie genre:</label>
       <br />
