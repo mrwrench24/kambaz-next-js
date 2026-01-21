@@ -303,7 +303,7 @@ export default function Lab1() {
       to get dummy text
       <br />
       {/* TODO: GitHub Link to...??? */}
-      <a href="https://www.lipsum.com" id="wd-github">
+      <a href="https://github.com/mrwrench24/kambaz-next-js" id="wd-github">
         GitHub Link
       </a>{" "}
       is also available.

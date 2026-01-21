@@ -17,7 +17,7 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-points">Points</label>
           </td>
           <td>
-            <input id="wd-points" defaultValue={100} />
+            <input id="wd-points" type="number" defaultValue={100} />
           </td>
         </tr>
         <tr>
@@ -93,7 +93,7 @@ export default function AssignmentEditor() {
         <tr>
           <td align="right" valign="top"></td>
           <td>
-            <input placeholder="..." id="assign-to-input"></input>
+            <input placeholder="Students..." id="assign-to-input"></input>
           </td>
         </tr>
         <tr>
