@@ -1,7 +1,19 @@
 export default function Modules() {
   return (
     <div>
-      {/* Implement Collapse All button, View Progress button, etc. */}
+      <button>Collapse All</button>
+      <button>View Progress</button>
+      <select id="wd-select-modules-kambaz">
+        <option value="P-ALL" selected>
+          {" "}
+          Publish All{" "}
+        </option>
+        <option value="P-SOME" selected>
+          Publish Some
+        </option>
+      </select>
+      <button>+ Module</button>
+
       <ul id="wd-modules">
         <li className="wd-module">
           <div className="wd-title">Week 1</div>
