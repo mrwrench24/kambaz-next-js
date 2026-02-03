@@ -1,136 +1,148 @@
+import {
+  Col,
+  Form,
+  FormCheck,
+  FormControl,
+  FormLabel,
+  FormSelect,
+  Row,
+} from "react-bootstrap";
+
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
-      <br />
-      <br />
-      <textarea id="wd-description" cols={30} rows={10}>
-        The assignment is available online Submit a link to the landing page of
-        your submission. Be sure to follow all of the instructions or you will
-        lose a LOT of points.
-      </textarea>
-      <br />
-      <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" type="number" defaultValue={100} />
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Assignment Group</label>
-          </td>
-          <td>
-            <select id="assignment-group">
+      <Form>
+        <FormLabel>Assignment Name </FormLabel>
+        <FormControl placeholder="Assignment Name..." />
+        <FormControl
+          className="mt-4"
+          as="textarea"
+          placeholder="Description..."
+          rows={3}
+        />
+
+        <Row className="align-items-top mt-3">
+          <Col sm={2}>
+            <FormLabel>Points</FormLabel>
+          </Col>
+          <Col sm={10}>
+            <FormControl placeholder="100" />
+          </Col>
+        </Row>
+
+        <Row className="align-items-top mt-3">
+          <Col sm={2}>
+            <FormLabel>Assignment Group</FormLabel>
+          </Col>
+          <Col sm={10}>
+            <FormSelect>
               <option value="ASSIGNMENTS">Assignments</option>
               <option value="EXAMS">Exams</option>
               <option value="QUIZZES">Quizzes</option>
-              <option value="PROJECTS">Projects</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Display Grade as</label>
-          </td>
-          <td>
-            <select id="display-grade-as">
-              <option value="POINTS">Points</option>
+            </FormSelect>
+          </Col>
+        </Row>
+
+        <Row className="align-items-top mt-3">
+          <Col sm={2}>
+            <FormLabel>Display Grade as</FormLabel>
+          </Col>
+          <Col sm={10}>
+            <FormSelect>
               <option value="PERCENTAGE">Percentage</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Submission Type</label>
-          </td>
-          <td>
-            <select id="submission-type">
-              <option value="ONLINE">Online</option>
-              <option value="IN-PERSON">In-Person</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>
-            Online Entry Options
-            <br></br>
-            <input type="checkbox" name="check-genre" id="oe-text-entry" />
-            <label htmlFor="oe-text-entry"> Text Entry</label>
-            <br></br>
-            <input type="checkbox" name="check-genre" id="oe-website-url" />
-            <label htmlFor="oe-website-url"> Website URL</label>
-            <br></br>
-            <input
-              type="checkbox"
-              name="check-genre"
-              id="oe-media-recordings"
-            />
-            <label htmlFor="oe-media-recordings"> Media Recordings</label>
-            <br></br>
-            <input
-              type="checkbox"
-              name="check-genre"
-              id="oe-student-annotation"
-            />
-            <label htmlFor="oe-student-annotation"> Student Annotation</label>
-            <br></br>
-            <input type="checkbox" name="check-genre" id="oe-file-upload" />
-            <label htmlFor="oe-file-upload"> File Uploads</label>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Assign</label>
-          </td>
-          <td>Assign to</td>
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>
-            <input placeholder="Students..." id="assign-to-input"></input>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>Due</td>
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <input type="date" defaultValue="2026-01-20" id="ae-due-date" />
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>Available From</td>
-          <td>Until</td>
-        </tr>
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>
-            <input
-              type="date"
-              defaultValue="2026-01-20"
-              id="ae-available-date"
-            />
-          </td>
-          <td>
-            <input type="date" defaultValue="2026-01-21" id="ae-until-date" />
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>
+              <option value="POINTS">Points</option>
+            </FormSelect>
+          </Col>
+        </Row>
+
+        <Row className="align-items-top mt-3">
+          <Col sm={2}>
+            <FormLabel>Submission Type</FormLabel>
+          </Col>
+          <Col sm={10}>
+            <div className="border rounded py-1 px-3">
+              <FormSelect className="mt-2">
+                <option value="ONLINE">Online</option>
+                <option value="IN-PERSON">In-Person</option>
+              </FormSelect>
+
+              <FormCheck
+                type="checkbox"
+                defaultChecked={false}
+                label="Text Entry"
+                className="mt-2"
+              />
+              <FormCheck
+                type="checkbox"
+                defaultChecked={false}
+                label="Website URL"
+                className="mt-2"
+              />
+              <FormCheck
+                type="checkbox"
+                defaultChecked={false}
+                label="Media"
+                className="mt-2"
+              />
+              <FormCheck
+                type="checkbox"
+                defaultChecked={false}
+                label="Student Annotation"
+                className="mt-2"
+              />
+              <FormCheck
+                type="checkbox"
+                defaultChecked={false}
+                label="File Upload"
+                className="mt-2"
+              />
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="align-items-top mt-3">
+          <Col sm={2}>
+            <FormLabel>Assign</FormLabel>
+          </Col>
+          <Col sm={10}>
+            <div className="border rounded py-1 px-3">
+              <h4 className="mt-2">Assign to</h4>
+
+              <FormControl placeholder="Students" />
+
+              <h6 className="mt-2">Due</h6>
+              <input type="date" defaultValue="2026-01-21" id="ae-until-date" />
+
+              <Row className="mt-2">
+                <Col>
+                  <h6>Available From</h6>
+                  <input
+                    type="date"
+                    defaultValue="2026-01-21"
+                    id="ae-until-date"
+                  />
+                </Col>
+                <Col>
+                  <h6>Until</h6>
+                  <input
+                    type="date"
+                    defaultValue="2026-01-21"
+                    id="ae-until-date"
+                  />
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="align-items-end mt-3">
+          <Col sm={2}></Col>
+          <Col sm={10}>
             <button>Cancel</button>
             <button>Save</button>
-          </td>
-        </tr>
-      </table>
+          </Col>
+        </Row>
+      </Form>
     </div>
   );
 }
