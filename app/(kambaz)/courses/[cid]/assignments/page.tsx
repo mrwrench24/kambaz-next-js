@@ -1,130 +1,95 @@
 import Link from "next/link";
+import AssignmentControls from "./AssignmentControls";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import {
+  BsGripVertical,
+  BsJournal,
+  BsNewspaper,
+  BsPencilSquare,
+} from "react-icons/bs";
+import AssignmentGroupButtons from "./AssignmentGroupButtons";
+import AssignmentControlButtons from "./AssignmentControlButtons";
 
 export default function Assignments() {
   return (
     <div id="wd-assignments">
-      <input placeholder="Search for Assignments" id="wd-search-assignment" />
-      <button id="wd-add-assignment-group">+ Group</button>
-      <button id="wd-add-assignment">+ Assignment</button>
-      <h3 id="wd-assignments-title">
-        Assignments: 40% of Total <button>+</button>
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            A1 - ENV + HTML
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 23rd, 2026 | Due
-          Jun. 24th @ 11:59 PM | 100 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            A2 - Node.JS and CSS
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 21st, 2026 | Due
-          Jun. 22nd @ 11:59 PM | 100 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            A2 - React and State
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 28th, 2026 | Due
-          Jun. 29th @ 11:59 PM | 100 pts
-        </li>
-      </ul>
-      <h3 id="wd-assignments-title">
-        Quizzes: 10% of Total <button>+</button>
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Q1 - HTML
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 23rd, 2026 | Due
-          Jun. 24th @ 11:59 PM | 50 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Q2 - CSS
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 25th, 2026 | Due
-          Jun. 28th @ 11:59 PM | 50 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Q3 - React
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 28th, 2026 | Due
-          Jun. 30th @ 11:59 PM | 40 pts
-        </li>
-      </ul>
-      <h3 id="wd-assignments-title">
-        Exams: 30% of Total <button>+</button>
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Exam 1
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 19th, 2026 | Due
-          Jun. 26th @ 11:59 PM | 100 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Exam 2
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 25th, 2026 | Due
-          Jun. 26th @ 11:59 PM | 100 pts
-        </li>
-      </ul>
-      <h3 id="wd-assignments-title">
-        Projects: 20% of Total <button>+</button>
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link
-            href="/courses/1234/assignments/123"
-            className="wd-assignment-link"
-          >
-            Final Project
-          </Link>
-          <br></br>
-          Multiple Modules | <b>Not available until</b> Jun. 23rd, 2026 | Due
-          Jun. 24th @ 11:59 PM | 200 pts
-        </li>
-      </ul>
+      <AssignmentControls />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <ListGroup className="rounded-0" id="wd-assignments">
+        <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Assignments
+            <AssignmentGroupButtons />
+          </div>
+          <ListGroup className="wd-assignments rounded-0 border-start border-4 border-success">
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <div
+                className="d-inline-flex flex-column"
+                style={{ width: "300px" }}
+              >
+                <span className="fw-bold">Assignment 1</span>
+                <span className="text-muted fs-6">
+                  Multiple Modules | Not available until May 6 at 12:00 AM | Due
+                  May 13 at 11:59 PM | 100 pts
+                </span>
+              </div>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <span className="fw-bold">Assignment 2</span>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <span className="fw-bold">Assignment 3</span>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+      </ListGroup>
+
+      <ListGroup className="rounded-0" id="wd-assignments">
+        <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Exams
+            <AssignmentGroupButtons />
+          </div>
+          <ListGroup className="wd-assignments rounded-0 border-start border-4 border-success">
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <div
+                className="d-inline-flex flex-column"
+                style={{ width: "300px" }}
+              >
+                <span className="fw-bold">Exam 1</span>
+                <span className="text-muted fs-6">
+                  Multiple Modules | Not available until May 6 at 12:00 AM | Due
+                  May 13 at 11:59 PM | 100 pts
+                </span>
+              </div>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <span className="fw-bold">Exam 2</span>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+      </ListGroup>
     </div>
   );
 }

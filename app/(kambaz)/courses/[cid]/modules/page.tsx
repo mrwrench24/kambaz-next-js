@@ -1,87 +1,89 @@
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import ModulesControls from "./ModulesControls";
+import { BsGripVertical } from "react-icons/bs";
+import LessonControlButtons from "./LessonControlButtons";
+import ModuleControlButtons from "./ModuleControlButtons";
+
 export default function Modules() {
   return (
     <div>
-      <button>Collapse All</button>
-      <button>View Progress</button>
-      <select id="wd-select-modules-kambaz">
-        <option value="P-ALL"> Publish All </option>
-        <option value="P-SOME">Publish Some</option>
-      </select>
-      <button>+ Module</button>
+      <ModulesControls />
+      <br />
+      <br />
+      <br />
+      <br />
 
-      <ul id="wd-modules">
-        <li className="wd-module">
-          <div className="wd-title">Week 1</div>
-          <ul className="wd-lessons">
-            <li className="wd-lesson">
-              <span className="wd-title">Course Introduction</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">Introduction to the course</li>
-                <li className="wd-content-item">
-                  Go over syllabus and expectations
-                </li>
-              </ul>
-            </li>
-            <li className="wd-lesson">
-              <span className="wd-title">HTML</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">History of Web Development</li>
-                <li className="wd-content-item">Basic HTML</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li className="wd-module">
-          <div className="wd-title">Week 2</div>
-          <ul className="wd-lessons">
-            <li className="wd-lesson">
-              <span className="wd-title">Advanced HTML & JSX</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">More HTML practice</li>
-                <li className="wd-content-item">What is JSX</li>
-              </ul>
-            </li>
-            <li className="wd-lesson">
-              <span className="wd-title">Advanced HTML & JSX</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">More HTML practice</li>
-                <li className="wd-content-item">Components</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li className="wd-module">
-          <div className="wd-title">Week 3</div>
-          <ul className="wd-lessons">
-            <li className="wd-lesson">
-              <span className="wd-title">CSS</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">Styling webpages</li>
-                <li className="wd-content-item">Working with CSS</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li className="wd-module">
-          <div className="wd-title">Week 4</div>
-          <ul className="wd-lessons">
-            <li className="wd-lesson">
-              <span className="wd-title">React</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">What is React</li>
-                <li className="wd-content-item">Using State</li>
-              </ul>
-            </li>
-            <li className="wd-lesson">
-              <span className="wd-title">React (cont.)</span>
-              <ul className="wd-content">
-                <li className="wd-content-item">More on State</li>
-                <li className="wd-content-item">Hooks and Effects</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <ListGroup className="rounded-0" id="wd-modules">
+        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Week 1
+            <ModuleControlButtons />
+          </div>
+          <ListGroup className="wd-lessons rounded-0">
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> LEARNING OBJECTIVES{" "}
+              <LessonControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <LessonControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> Learn what is Web
+              Development <LessonControlButtons />
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+
+        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Week 2
+            <ModuleControlButtons />
+          </div>
+          <ListGroup className="wd-lessons rounded-0">
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> LESSON 1
+            </ListGroupItem>
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> LESSON 2
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+
+        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Week 3
+            <ModuleControlButtons />
+          </div>
+          <ListGroup className="wd-lessons rounded-0">
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> LESSON 3
+            </ListGroupItem>
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> LESSON 4
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+
+        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            Week 4
+            <ModuleControlButtons />
+          </div>
+          <ListGroup className="wd-lessons rounded-0">
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> EXAM 1
+            </ListGroupItem>
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" /> Assignment 1
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+      </ListGroup>
     </div>
   );
 }
