@@ -26,7 +26,7 @@ export default function Modules() {
               <LessonControlButtons />
             </ListGroupItem>
             <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
+              <BsGripVertical className="me-2 fs-3" /> Review Syllabus
               <LessonControlButtons />
             </ListGroupItem>
             <ListGroupItem className="wd-lesson p-3 ps-1">
