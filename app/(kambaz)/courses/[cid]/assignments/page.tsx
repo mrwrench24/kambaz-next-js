@@ -1,6 +1,6 @@
 import Link from "next/link";
 import AssignmentControls from "./AssignmentControls";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import {
   BsGripVertical,
   BsJournal,
@@ -30,11 +30,22 @@ export default function Assignments() {
             <ListGroupItem className="wd-assignment p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" />
               <BsPencilSquare className="me-3 fs-5" />
-              <div
-                className="d-inline-flex flex-column"
-                style={{ width: "300px" }}
-              >
+              <Row>
                 <span className="fw-bold">Assignment 1</span>
+              </Row>
+              <Row>
+                <span className="text-muted fs-6">
+                  Multiple Modules | Not available until May 6 at 12:00 AM | Due
+                  May 13 at 11:59 PM | 100 pts
+                </span>
+              </Row>
+              <AssignmentControlButtons />
+            </ListGroupItem>
+            <ListGroupItem className="wd-assignment p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              <BsPencilSquare className="me-3 fs-5" />
+              <div className="d-inline-flex flex-column">
+                <span className="fw-bold">Assignment 2</span>
                 <span className="text-muted fs-6">
                   Multiple Modules | Not available until May 6 at 12:00 AM | Due
                   May 13 at 11:59 PM | 100 pts
@@ -45,13 +56,13 @@ export default function Assignments() {
             <ListGroupItem className="wd-assignment p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" />
               <BsPencilSquare className="me-3 fs-5" />
-              <span className="fw-bold">Assignment 2</span>
-              <AssignmentControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-assignment p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              <BsPencilSquare className="me-3 fs-5" />
-              <span className="fw-bold">Assignment 3</span>
+              <div className="d-inline-flex flex-column">
+                <span className="fw-bold">Assignment 3</span>
+                <span className="text-muted fs-6">
+                  Multiple Modules | Not available until May 6 at 12:00 AM | Due
+                  May 13 at 11:59 PM | 100 pts
+                </span>
+              </div>
               <AssignmentControlButtons />
             </ListGroupItem>
           </ListGroup>

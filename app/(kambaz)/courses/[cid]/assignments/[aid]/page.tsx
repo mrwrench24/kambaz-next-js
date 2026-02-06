@@ -1,4 +1,5 @@
 import {
+  Button,
   Col,
   Form,
   FormCheck,
@@ -113,7 +114,7 @@ export default function AssignmentEditor() {
               <h6 className="mt-2">Due</h6>
               <input type="date" defaultValue="2026-01-21" id="ae-until-date" />
 
-              <Row className="mt-2">
+              <Row className="mt-2 mb-2">
                 <Col>
                   <h6>Available From</h6>
                   <input
@@ -138,8 +139,22 @@ export default function AssignmentEditor() {
         <Row className="align-items-end mt-3">
           <Col sm={2}></Col>
           <Col sm={10}>
-            <button>Cancel</button>
-            <button>Save</button>
+            <Button
+              variant="danger"
+              size="lg"
+              className="me-1 float-end"
+              id="wd-add-assignment-btn"
+            >
+              Save
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="me-1 float-end"
+              id="wd-add-assignment-btn"
+            >
+              Cancel
+            </Button>
           </Col>
         </Row>
       </Form>
