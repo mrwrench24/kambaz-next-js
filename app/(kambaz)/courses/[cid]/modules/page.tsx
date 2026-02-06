@@ -45,9 +45,11 @@ export default function Modules() {
           <ListGroup className="wd-lessons rounded-0">
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> LESSON 1
+              <LessonControlButtons />
             </ListGroupItem>
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> LESSON 2
+              <LessonControlButtons />
             </ListGroupItem>
           </ListGroup>
         </ListGroupItem>
@@ -61,9 +63,11 @@ export default function Modules() {
           <ListGroup className="wd-lessons rounded-0">
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> LESSON 3
+              <LessonControlButtons />
             </ListGroupItem>
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> LESSON 4
+              <LessonControlButtons />
             </ListGroupItem>
           </ListGroup>
         </ListGroupItem>
@@ -77,9 +81,11 @@ export default function Modules() {
           <ListGroup className="wd-lessons rounded-0">
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> EXAM 1
+              <LessonControlButtons />
             </ListGroupItem>
             <ListGroupItem className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" /> Assignment 1
+              <LessonControlButtons />
             </ListGroupItem>
           </ListGroup>
         </ListGroupItem>

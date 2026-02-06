@@ -49,7 +49,7 @@ export default function KambazNavigation() {
         <Link
           href="/courses"
           id="wd-dashboard-link"
-          className="text-danger text-decoration-none"
+          className="text-white text-decoration-none"
         >
           <LiaBookSolid className="fs-1 text-danger" />
           <br />
@@ -60,7 +60,7 @@ export default function KambazNavigation() {
         <Link
           href="/calendar"
           id="wd-dashboard-link"
-          className="text-danger text-decoration-none"
+          className="text-white text-decoration-none"
         >
           <IoCalendarOutline className="fs-1 text-danger" />
           <br />
@@ -71,7 +71,7 @@ export default function KambazNavigation() {
         <Link
           href="/inbox"
           id="wd-dashboard-link"
-          className="text-danger text-decoration-none"
+          className="text-white text-decoration-none"
         >
           <FaInbox className="fs-1 text-danger" />
           <br />
@@ -82,7 +82,7 @@ export default function KambazNavigation() {
         <Link
           href="/labs"
           id="wd-dashboard-link"
-          className="text-danger text-decoration-none"
+          className="text-white text-decoration-none"
         >
           <LiaCogSolid className="fs-1 text-danger" />
           <br />
@@ -90,36 +90,5 @@ export default function KambazNavigation() {
         </Link>
       </ListGroupItem>
     </ListGroup>
-    // <ListGroup className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2" style={{ width: 120 }} id="wd-kambaz-navigation"></ListGroup>
-    // <div id="wd-kambaz-navigation">
-    //   <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank">
-    //     Northeastern
-    //   </a>
-    //   <br />
-    //   <Link href="/account" id="wd-account-link">
-    //     Account
-    //   </Link>
-    //   <br />
-    //   <Link href="/dashboard" id="wd-dashboard-link">
-    //     Dashboard
-    //   </Link>
-    //   <br />
-    //   <Link href="/dashboard" id="wd-course-link">
-    //     Courses
-    //   </Link>
-    //   <br />
-    //   <Link href="/calendar" id="wd-calendar-link">
-    //     Calendar
-    //   </Link>
-    //   <br />
-    //   <Link href="/inbox" id="wd-inbox-link">
-    //     Inbox
-    //   </Link>
-    //   <br />
-    //   <Link href="/labs" id="wd-labs-link">
-    //     Labs
-    //   </Link>
-    //   <br />
-    // </div>
   );
 }
