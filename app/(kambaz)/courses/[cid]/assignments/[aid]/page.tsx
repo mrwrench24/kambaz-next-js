@@ -1,3 +1,5 @@
+"use client";
+import { useParams } from "next/navigation";
 import {
   Button,
   Col,
@@ -10,6 +12,8 @@ import {
 } from "react-bootstrap";
 
 export default function AssignmentEditor() {
+  const { cid } = useParams();
+
   return (
     <div id="wd-assignments-editor">
       <Form>
@@ -140,6 +144,7 @@ export default function AssignmentEditor() {
           <Col sm={2}></Col>
           <Col sm={10}>
             <Button
+              href={`/courses/${cid}/assignments`}
               variant="danger"
               size="lg"
               className="me-1 float-end"
@@ -148,6 +153,7 @@ export default function AssignmentEditor() {
               Save
             </Button>
             <Button
+              href={`/courses/${cid}/assignments`}
               variant="secondary"
               size="lg"
               className="me-1 float-end"
