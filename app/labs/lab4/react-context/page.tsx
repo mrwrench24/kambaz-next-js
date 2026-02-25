@@ -1,6 +1,8 @@
 "use client";
 import { CounterProvider } from "./counter/context";
 import CounterContext from "./counter";
+import ReactContextTodoList from "./todos/ReactContextTodoList";
+import { TodoProvider } from "./todos/todosContext";
 
 export default function ReactContextExamples() {
   return (
@@ -9,6 +11,10 @@ export default function ReactContextExamples() {
       <CounterProvider>
         <CounterContext />
       </CounterProvider>
+
+      <TodoProvider>
+        <ReactContextTodoList />
+      </TodoProvider>
     </div>
   );
 }

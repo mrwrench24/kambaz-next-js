@@ -14,7 +14,6 @@ export default function TodoList() {
         {todos &&
           todos.map((todo: Todo) => <TodoItem key={todo.id} todo={todo} />)}
         <TodoForm />
-        {}
       </ListGroup>
       <hr />
     </div>

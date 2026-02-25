@@ -1,23 +1,19 @@
-import React from "react";
-import TodoForm from "../../redux/todos/TodoForm";
-import TodoItem from "../../redux/todos/TodoItem";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { ListGroup } from "react-bootstrap";
 import { useTodos } from "./todosContext";
-export default function TodoList() {
+import TodoForm from "./TodoForm";
+import TodoItem from "./TodoItem";
+
+export default function ReactContextTodoList() {
   const { todos } = useTodos();
-  
+
   return (
-    <div id="wd-todo-list-redux">
+    <div>
       <h2>Todo List</h2>
       <ListGroup>
+        {todos &&
+          todos.map((todo: Todo) => <TodoItem key={todo.id} todo={todo} />)}
         <TodoForm />
-        {todos.map((todo: any) => (
-          <TodoItem todo={todo} />
-        ))}
       </ListGroup>
-      <hr />
     </div>
   );
 }
