@@ -1,0 +1,20 @@
+import { Button, ListGroupItem } from "react-bootstrap";
+import { useTodosStore } from "./useTodoStore";
+
+export default function TodoItem({ todo }) {
+  const { updateTodo, deleteTodo } = useTodosStore();
+
+  return (
+    <ListGroupItem key={todo.id}>
+      <Button onClick={() => deleteTodo(todo.id)} id="wd-delete-todo-click">
+        {" "}
+        Delete{" "}
+      </Button>
+      <Button onClick={() => updateTodo(todo)} id="wd-set-todo-click">
+        {" "}
+        Edit{" "}
+      </Button>
+      {todo.title}
+    </ListGroupItem>
+  );
+}

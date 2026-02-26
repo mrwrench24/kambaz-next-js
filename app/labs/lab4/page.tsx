@@ -25,6 +25,8 @@ export default function Lab4() {
         <Link href="./lab4/redux">Redux Examples</Link>
         <hr />
         <Link href="./lab4/react-context">React Context Examples</Link>
+        <hr />
+        <Link href="./lab4/zustand">Zustand Examples</Link>
 
         <ClickEvent />
         <PassingDataOnEvent />

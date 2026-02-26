@@ -4,7 +4,7 @@ import { useTodos } from "./todosContext";
 import { useState } from "react";
 
 export default function TodoForm() {
-  const { addTodo, updateTodo, updateTodoField } = useTodos();
+  const { addTodo } = useTodos();
   const [todoTitle, setTodoTitle] = useState("");
 
   return (
