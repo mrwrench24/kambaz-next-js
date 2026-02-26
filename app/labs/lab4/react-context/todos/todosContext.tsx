@@ -8,18 +8,15 @@ export interface Todo {
 
 interface TodoContextState {
   todos: Todo[];
-  todoField: string;
   addTodo: (todo: Todo) => void;
   deleteTodo: (id: string) => void;
   updateTodo: (todo: Todo) => void;
-  updateTodoField: (entry: string) => void;
 }
 
 const TodoContext = createContext<TodoContextState | undefined>(undefined);
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [todoField, setTodoField] = useState("");
 
   const addTodo = (todo: Todo) => setTodos([...todos, todo]);
 
@@ -33,20 +30,13 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
       todo.id === newTodo.id ? newTodo : todo,
     );
     setTodos(newTodos);
-    setTodoField("");
-  };
-
-  const updateTodoField = (entry: string) => {
-    setTodoField(entry);
   };
 
   const value: TodoContextState = {
     todos,
-    todoField,
     addTodo,
     deleteTodo,
     updateTodo,
-    updateTodoField,
   };
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
