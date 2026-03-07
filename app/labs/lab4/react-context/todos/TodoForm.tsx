@@ -1,28 +1,28 @@
 import { Button, FormControl, ListGroupItem } from "react-bootstrap";
-import { setTodo } from "../../redux/todos/todosReducer";
 import { useTodos } from "./todosContext";
-import { useState } from "react";
 
 export default function TodoForm() {
-  const { addTodo } = useTodos();
-  const [todoTitle, setTodoTitle] = useState("");
+  const { todo, addTodo, setTodo, updateTodo } = useTodos();
 
   return (
     <ListGroupItem>
       <Button
         onClick={() => {
-          addTodo({ id: `${Math.random()}`, title: todoTitle });
-          setTodoTitle("");
+          addTodo(todo);
+          setTodo({ id: `${Math.random()}`, title: "" });
         }}
         id="wd-add-todo-click"
       >
         {" "}
         Add{" "}
       </Button>
-      <Button id="wd-update-todo-click"> Update </Button>
+      <Button id="wd-update-todo-click" onClick={() => updateTodo(todo)}>
+        {" "}
+        Update{" "}
+      </Button>
       <FormControl
-        value={todoTitle}
-        onChange={(e) => setTodoTitle(e.target.value)}
+        value={todo.title}
+        onChange={(e) => setTodo({ ...todo, title: e.target.value })}
       />
     </ListGroupItem>
   );

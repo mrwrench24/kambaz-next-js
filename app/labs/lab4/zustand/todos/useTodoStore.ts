@@ -11,10 +11,11 @@ interface TodosState {
   addTodo: (todo: Todo) => void;
   deleteTodo: (id: string) => void;
   updateTodo: (todo: Todo) => void;
+  setTodo: (todo: Todo) => void;
 }
 
 export const useTodosStore = create<TodosState>((set) => ({
-  todo: { id: "", title: "" },
+  todo: { id: "123456", title: "" },
   todos: [],
   addTodo: (todo) =>
     set((state) => ({
@@ -26,8 +27,15 @@ export const useTodosStore = create<TodosState>((set) => ({
       todos: state.todos.filter((storedTodo) => storedTodo.id !== targetId),
     })),
 
-  updateTodo: (todo) =>
+  updateTodo: (newTodo) =>
+    set((state) => ({
+      todos: state.todos.map((todo) =>
+        todo.id === newTodo.id ? newTodo : todo,
+      ),
+    })),
+
+  setTodo: (todo) =>
     set({
-      todo,
+      todo: todo,
     }),
 }));

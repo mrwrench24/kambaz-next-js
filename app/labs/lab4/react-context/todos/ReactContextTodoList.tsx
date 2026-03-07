@@ -10,9 +10,10 @@ export default function ReactContextTodoList() {
     <div>
       <h2>Todo List</h2>
       <ListGroup>
+        <TodoForm />
+
         {todos &&
           todos.map((todo: Todo) => <TodoItem key={todo.id} todo={todo} />)}
-        <TodoForm />
       </ListGroup>
     </div>
   );

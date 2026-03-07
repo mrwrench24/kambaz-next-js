@@ -10,13 +10,19 @@ export default function KambazLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <Provider store={store}>
-      <div className="d-flex" id="wd-kambaz">
-        <div>
-          <KambazNavigation />
-        </div>
-        <div className="flex-fill ps-3 wd-main-content-offset">{children}</div>
-      </div>
-    </Provider>
+    <html>
+      <body>
+        <Provider store={store}>
+          <div className="d-flex" id="wd-kambaz">
+            <div>
+              <KambazNavigation />
+            </div>
+            <div className="flex-fill ps-3 wd-main-content-offset">
+              {children}
+            </div>
+          </div>
+        </Provider>
+      </body>
+    </html>
   );
 }
