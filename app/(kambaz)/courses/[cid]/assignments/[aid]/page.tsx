@@ -10,9 +10,16 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
+import { RootState } from "../../../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AssignmentEditor() {
-  const { cid } = useParams();
+  const { cid, aid } = useParams();
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentReducer,
+  );
+  const dispatch = useDispatch();
+  const assignment = assignments.find((a) => a._id === aid);
 
   return (
     <div id="wd-assignments-editor">

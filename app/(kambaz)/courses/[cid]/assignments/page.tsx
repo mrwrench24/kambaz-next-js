@@ -44,7 +44,10 @@ export default function Assignments() {
                   <BsGripVertical className="me-2 fs-3" />
                   <BsPencilSquare className="me-3 fs-5 text-success" />
                   <div>
-                    <a href="assignments/123" className="fw-bold">
+                    <a
+                      href={`assignments/${assignment._id}`}
+                      className="fw-bold"
+                    >
                       {assignment.title}
                     </a>
                     <div className="text-muted fs-6">
