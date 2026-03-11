@@ -8,7 +8,7 @@ export default function AccountNavigation() {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
-  const links = currentUser ? ["Profile"] : ["signin", "signup"];
+  const links = currentUser ? ["profile"] : ["signin", "signup"];
   const pathname = usePathname();
   return (
     <Nav variant="pills">
