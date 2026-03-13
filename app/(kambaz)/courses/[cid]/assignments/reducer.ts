@@ -16,7 +16,7 @@ const assignmentsSlice = createSlice({
     // payload = id of assignment
     deleteAssignment: (state, action) => {
       state.assignments = state.assignments.filter((assignment) => {
-        return assignment._id === action.payload;
+        return assignment._id !== action.payload;
       });
     },
     // payload = updated assignment object

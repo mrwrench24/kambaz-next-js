@@ -13,23 +13,57 @@ import {
 import { RootState } from "../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 
+import { addAssignment, updateAssignment } from "../reducer";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const { assignments } = useSelector(
     (state: RootState) => state.assignmentReducer,
   );
+
+  const existingAssignment = assignments.find((a) => a._id === aid);
+  const [assignment, setAssignment] = useState(
+    existingAssignment ?? {
+      _id: aid as string,
+      title: "",
+      course: cid as string,
+      description: "",
+      points: 100,
+      due: "",
+      availableFrom: "",
+      availableUntil: "",
+    },
+  );
+
+  useEffect(() => {
+    if (existingAssignment) {
+      setAssignment(existingAssignment);
+    }
+  }, [aid]);
+
   const dispatch = useDispatch();
-  const assignment = assignments.find((a) => a._id === aid);
 
   return (
     <div id="wd-assignments-editor">
       <Form>
         <FormLabel>Assignment Name </FormLabel>
-        <FormControl placeholder="Assignment Name..." />
+        <FormControl
+          placeholder="Assignment Name..."
+          value={assignment.title}
+          onChange={(e) =>
+            setAssignment({ ...assignment, title: e.target.value })
+          }
+        />
         <FormControl
           className="mt-4"
           as="textarea"
           placeholder="Description..."
+          value={assignment?.description}
+          onChange={(e) =>
+            setAssignment({ ...assignment, description: e.target.value })
+          }
           rows={3}
         />
 
@@ -38,7 +72,13 @@ export default function AssignmentEditor() {
             <FormLabel>Points</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl placeholder="100" />
+            <FormControl
+              placeholder="100"
+              value={assignment?.points}
+              onChange={(e) =>
+                setAssignment({ ...assignment, points: Number(e.target.value) })
+              }
+            />
           </Col>
         </Row>
 
@@ -123,14 +163,27 @@ export default function AssignmentEditor() {
               <FormControl placeholder="Students" />
 
               <h6 className="mt-2">Due</h6>
-              <input type="date" defaultValue="2026-01-21" id="ae-until-date" />
+              <input
+                type="date"
+                value={assignment.due}
+                onChange={(e) =>
+                  setAssignment({ ...assignment, due: e.target.value })
+                }
+                id="ae-until-date"
+              />
 
               <Row className="mt-2 mb-2">
                 <Col>
                   <h6>Available From</h6>
                   <input
                     type="date"
-                    defaultValue="2026-01-21"
+                    value={assignment.availableFrom}
+                    onChange={(e) =>
+                      setAssignment({
+                        ...assignment,
+                        availableFrom: e.target.value,
+                      })
+                    }
                     id="ae-until-date"
                   />
                 </Col>
@@ -138,7 +191,13 @@ export default function AssignmentEditor() {
                   <h6>Until</h6>
                   <input
                     type="date"
-                    defaultValue="2026-01-21"
+                    value={assignment.availableUntil}
+                    onChange={(e) =>
+                      setAssignment({
+                        ...assignment,
+                        availableUntil: e.target.value,
+                      })
+                    }
                     id="ae-until-date"
                   />
                 </Col>
@@ -150,15 +209,24 @@ export default function AssignmentEditor() {
         <Row className="align-items-end mt-3">
           <Col sm={2}></Col>
           <Col sm={10}>
-            <Button
-              href={`/courses/${cid}/assignments`}
-              variant="danger"
-              size="lg"
-              className="me-1 float-end"
-              id="wd-add-assignment-btn"
-            >
-              Save
-            </Button>
+            <Link href={`/courses/${cid}/assignments`}>
+              <Button
+                variant="danger"
+                size="lg"
+                className="me-1 float-end"
+                id="wd-add-assignment-btn"
+                onClick={() =>
+                  dispatch(
+                    existingAssignment
+                      ? updateAssignment(assignment)
+                      : addAssignment(assignment),
+                  )
+                }
+              >
+                Save
+              </Button>
+            </Link>
+
             <Button
               href={`/courses/${cid}/assignments`}
               variant="secondary"

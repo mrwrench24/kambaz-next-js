@@ -11,11 +11,14 @@ import {
 import AssignmentGroupButtons from "./AssignmentGroupButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useParams } from "next/navigation";
-import * as db from "../../../database";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentReducer,
+  );
 
   return (
     <div id="wd-assignments">
@@ -52,8 +55,10 @@ export default function Assignments() {
                     </a>
                     <div className="text-muted fs-6">
                       <span className="text-danger">Multiple Modules</span> |{" "}
-                      <b>Not available until</b> May 6 at 12:00 AM | Due May 13
-                      at 11:59 PM | 100 pts
+                      <b>Not available until</b>{" "}
+                      {assignment.availableUntil ?? "May 13 at 11:59 PM"} | Due{" "}
+                      {assignment.due ?? "May 13 at 11:59 PM"} |{" "}
+                      {assignment.points ?? 100} pts
                     </div>
                   </div>
                 </div>
