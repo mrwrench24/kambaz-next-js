@@ -2,23 +2,24 @@
 import Link from "next/link";
 import AssignmentControls from "./AssignmentControls";
 import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import {
-  BsGripVertical,
-  BsJournal,
-  BsNewspaper,
-  BsPencilSquare,
-} from "react-icons/bs";
+import { BsGripVertical, BsPencilSquare } from "react-icons/bs";
 import AssignmentGroupButtons from "./AssignmentGroupButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
+import { deleteAssignment } from "./reducer";
+import AssignmentDeleter from "./AssignmentDeleter";
+import { useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector(
     (state: RootState) => state.assignmentReducer,
   );
+
+  const dispatch = useDispatch();
+  const [assignmentToDelete, setAssignmentToDelete] = useState(null);
 
   return (
     <div id="wd-assignments">
@@ -42,7 +43,9 @@ export default function Assignments() {
                 className="wd-assignment p-3 ps-1"
                 key={assignment._id}
               >
-                <AssignmentControlButtons />
+                <AssignmentControlButtons
+                  handleClick={() => setAssignmentToDelete(assignment)}
+                />
                 <div className="d-flex">
                   <BsGripVertical className="me-2 fs-3" />
                   <BsPencilSquare className="me-3 fs-5 text-success" />
@@ -66,6 +69,17 @@ export default function Assignments() {
             ))}
         </ListGroupItem>
       </ListGroup>
+
+      <AssignmentDeleter
+        assignmentToDelete={assignmentToDelete}
+        handleCancel={() => setAssignmentToDelete(null)}
+        handleDelete={() => {
+          assignmentToDelete &&
+            dispatch(deleteAssignment(assignmentToDelete._id));
+
+          setAssignmentToDelete(null);
+        }}
+      />
     </div>
   );
 }
