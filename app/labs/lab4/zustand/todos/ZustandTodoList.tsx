@@ -3,6 +3,7 @@ import { ListGroup } from "react-bootstrap";
 import { useTodosStore } from "./useTodoStore";
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
+import { Todo } from "../../react-context/todos/todosContext";
 
 export default function ZustandTodoList() {
   const { todos } = useTodosStore((state) => state);
