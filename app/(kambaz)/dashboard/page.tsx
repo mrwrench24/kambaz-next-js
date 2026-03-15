@@ -30,7 +30,6 @@ export default function Dashboard() {
   const [showAll, setShowAll] = useState(false);
 
   const [course, setCourse] = useState<any>({
-    _id: "0",
     name: "New Course",
     number: "New Number",
     startDate: "2023-09-10",
@@ -53,7 +52,6 @@ export default function Dashboard() {
               id="wd-add-new-course-click"
               onClick={() => {
                 dispatch(addNewCourse(course));
-                dispatch(enroll({ uid: currentUser._id, cid: course._id }));
               }}
             >
               {" "}
