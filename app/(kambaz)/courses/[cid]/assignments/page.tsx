@@ -20,7 +20,6 @@ export default function Assignments() {
 
   const dispatch = useDispatch();
   const [assignmentToDelete, setAssignmentToDelete] = useState(null);
-  console.log(currentUser);
 
   return (
     <div id="wd-assignments">
@@ -51,12 +50,12 @@ export default function Assignments() {
                   <BsGripVertical className="me-2 fs-3" />
                   <BsPencilSquare className="me-3 fs-5 text-success" />
                   <div>
-                    <a
+                    <Link
                       href={`assignments/${assignment._id}`}
                       className="fw-bold"
                     >
                       {assignment.title}
-                    </a>
+                    </Link>
                     <div className="text-muted fs-6">
                       <span className="text-danger">Multiple Modules</span> |{" "}
                       <b>Not available until</b>{" "}
@@ -75,10 +74,11 @@ export default function Assignments() {
         assignmentToDelete={assignmentToDelete}
         handleCancel={() => setAssignmentToDelete(null)}
         handleDelete={() => {
-          assignmentToDelete &&
+          if (assignmentToDelete) {
             dispatch(deleteAssignment(assignmentToDelete._id));
 
-          setAssignmentToDelete(null);
+            setAssignmentToDelete(null);
+          }
         }}
       />
     </div>

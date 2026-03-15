@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "../reducer";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { add } from "@/app/labs/lab3/Math";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -23,16 +24,8 @@ export default function AssignmentEditor() {
     (state: RootState) => state.assignmentReducer,
   );
 
-  const { currentUser } = useSelector(
-    (state: RootState) => state.accountReducer,
-  );
-
-  console.log(currentUser);
-  if (!currentUser || currentUser.role !== "FACULTY") {
-    redirect(`/courses/${cid}/assignments`);
-  }
-
   const existingAssignment = assignments.find((a) => a._id === aid);
+
   const [assignment, setAssignment] = useState(
     existingAssignment ?? {
       _id: aid as string,
@@ -46,13 +39,13 @@ export default function AssignmentEditor() {
     },
   );
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (existingAssignment) {
       setAssignment(existingAssignment);
     }
-  }, [aid]);
-
-  const dispatch = useDispatch();
+  }, [existingAssignment]);
 
   return (
     <div id="wd-assignments-editor">
@@ -218,23 +211,23 @@ export default function AssignmentEditor() {
         <Row className="align-items-end mt-3">
           <Col sm={2}></Col>
           <Col sm={10}>
-            <Link href={`/courses/${cid}/assignments`}>
-              <Button
-                variant="danger"
-                size="lg"
-                className="me-1 float-end"
-                id="wd-add-assignment-btn"
-                onClick={() =>
-                  dispatch(
-                    existingAssignment
-                      ? updateAssignment(assignment)
-                      : addAssignment(assignment),
-                  )
+            <Button
+              variant="danger"
+              size="lg"
+              className="me-1 float-end"
+              id="wd-add-assignment-btn"
+              onClick={() => {
+                if (existingAssignment) {
+                  dispatch(updateAssignment(assignment));
+                } else {
+                  dispatch(addAssignment(assignment));
                 }
-              >
-                Save
-              </Button>
-            </Link>
+
+                redirect(`/courses/${cid}/assignments`);
+              }}
+            >
+              Save
+            </Button>
 
             <Button
               href={`/courses/${cid}/assignments`}
