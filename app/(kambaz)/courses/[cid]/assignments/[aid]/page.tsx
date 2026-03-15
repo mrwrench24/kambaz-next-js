@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import {
   Button,
   Col,
@@ -22,6 +22,15 @@ export default function AssignmentEditor() {
   const { assignments } = useSelector(
     (state: RootState) => state.assignmentReducer,
   );
+
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
+  console.log(currentUser);
+  if (!currentUser || currentUser.role !== "FACULTY") {
+    redirect(`/courses/${cid}/assignments`);
+  }
 
   const existingAssignment = assignments.find((a) => a._id === aid);
   const [assignment, setAssignment] = useState(

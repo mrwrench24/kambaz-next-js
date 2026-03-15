@@ -6,6 +6,7 @@ export default function AccountPage() {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
   if (!currentUser) {
     redirect("/account/signin");
   } else {

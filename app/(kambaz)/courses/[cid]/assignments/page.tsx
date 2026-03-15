@@ -20,6 +20,7 @@ export default function Assignments() {
 
   const dispatch = useDispatch();
   const [assignmentToDelete, setAssignmentToDelete] = useState(null);
+  console.log(currentUser);
 
   return (
     <div id="wd-assignments">

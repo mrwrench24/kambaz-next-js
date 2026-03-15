@@ -11,6 +11,9 @@ export default function Profile() {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
+  console.log(currentUser);
+
   const fetchProfile = () => {
     if (!currentUser) return redirect("/account/signin");
     setProfile(currentUser);
