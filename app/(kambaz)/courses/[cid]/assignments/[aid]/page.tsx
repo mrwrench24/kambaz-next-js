@@ -15,8 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addAssignment, updateAssignment } from "../reducer";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { add } from "@/app/labs/lab3/Math";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();

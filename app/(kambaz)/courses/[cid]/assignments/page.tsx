@@ -18,6 +18,10 @@ export default function Assignments() {
     (state: RootState) => state.assignmentReducer,
   );
 
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
   const dispatch = useDispatch();
   const [assignmentToDelete, setAssignmentToDelete] = useState(null);
 
@@ -50,12 +54,17 @@ export default function Assignments() {
                   <BsGripVertical className="me-2 fs-3" />
                   <BsPencilSquare className="me-3 fs-5 text-success" />
                   <div>
-                    <Link
-                      href={`assignments/${assignment._id}`}
-                      className="fw-bold"
-                    >
-                      {assignment.title}
-                    </Link>
+                    {currentUser.role === "STUDENT" ? (
+                      assignment.title
+                    ) : (
+                      <Link
+                        href={`assignments/${assignment._id}`}
+                        className="fw-bold"
+                      >
+                        {assignment.title}
+                      </Link>
+                    )}
+
                     <div className="text-muted fs-6">
                       <span className="text-danger">Multiple Modules</span> |{" "}
                       <b>Not available until</b>{" "}
