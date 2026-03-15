@@ -166,46 +166,45 @@ export default function Dashboard() {
                             enrollment.course === course._id,
                         ) && <Button variant="primary"> Go </Button>}
 
-                        {currentUser.role !== "FACULTY" &&
-                          (enrollments.some(
-                            (enrollment) =>
-                              enrollment.user === currentUser._id &&
-                              enrollment.course === course._id,
-                          ) ? (
-                            <span>
-                              <Button
-                                className="btn btn-danger float-end"
-                                onClick={(e) => {
-                                  e.preventDefault();
-
-                                  dispatch(
-                                    unenroll({
-                                      uid: currentUser._id,
-                                      cid: course._id,
-                                    }),
-                                  );
-                                }}
-                              >
-                                Unenroll
-                              </Button>
-                            </span>
-                          ) : (
+                        {enrollments.some(
+                          (enrollment) =>
+                            enrollment.user === currentUser._id &&
+                            enrollment.course === course._id,
+                        ) ? (
+                          <span>
                             <Button
-                              className="btn btn-success float-end"
+                              className="btn btn-danger float-end"
                               onClick={(e) => {
                                 e.preventDefault();
 
                                 dispatch(
-                                  enroll({
+                                  unenroll({
                                     uid: currentUser._id,
                                     cid: course._id,
                                   }),
                                 );
                               }}
                             >
-                              Enroll
+                              Unenroll
                             </Button>
-                          ))}
+                          </span>
+                        ) : (
+                          <Button
+                            className="btn btn-success float-end"
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                              dispatch(
+                                enroll({
+                                  uid: currentUser._id,
+                                  cid: course._id,
+                                }),
+                              );
+                            }}
+                          >
+                            Enroll
+                          </Button>
+                        )}
                       </CardBody>
                     </Link>
                   </Card>
