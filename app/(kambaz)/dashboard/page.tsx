@@ -84,18 +84,14 @@ export default function Dashboard() {
         <h2 id="wd-dashboard-published">
           Published Courses ({courses.length})
         </h2>{" "}
-        {currentUser.role !== "FACULTY" && (
-          <div>
-            <Button
-              variant="primary"
-              className="float-end me-2"
-              onClick={() => setShowAll(!showAll)}
-            >
-              {" "}
-              Enrollments{" "}
-            </Button>
-          </div>
-        )}
+        <Button
+          variant="primary"
+          className="float-end me-2"
+          onClick={() => setShowAll(!showAll)}
+        >
+          {" "}
+          Enrollments{" "}
+        </Button>
         <hr />
         <div id="wd-dashboard-courses">
           <Row xs={1} md={5} className="g-4">
