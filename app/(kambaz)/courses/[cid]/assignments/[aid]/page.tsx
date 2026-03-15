@@ -24,26 +24,18 @@ export default function AssignmentEditor() {
 
   const existingAssignment = assignments.find((a) => a._id === aid);
 
-  const [assignment, setAssignment] = useState(
-    existingAssignment ?? {
-      _id: aid as string,
-      title: "",
-      course: cid as string,
-      description: "",
-      points: 100,
-      due: "",
-      availableFrom: "",
-      availableUntil: "",
-    },
-  );
+  const [assignment, setAssignment] = useState({
+    _id: aid as string,
+    title: existingAssignment?.title,
+    course: cid as string,
+    description: "",
+    points: 100,
+    due: "",
+    availableFrom: "",
+    availableUntil: "",
+  });
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (existingAssignment) {
-      setAssignment(existingAssignment);
-    }
-  }, [existingAssignment]);
 
   return (
     <div id="wd-assignments-editor">
@@ -60,7 +52,7 @@ export default function AssignmentEditor() {
           className="mt-4"
           as="textarea"
           placeholder="Description..."
-          value={assignment?.description}
+          value={assignment.description}
           onChange={(e) =>
             setAssignment({ ...assignment, description: e.target.value })
           }
@@ -74,7 +66,7 @@ export default function AssignmentEditor() {
           <Col sm={10}>
             <FormControl
               placeholder="100"
-              value={assignment?.points}
+              value={assignment.points}
               onChange={(e) =>
                 setAssignment({ ...assignment, points: Number(e.target.value) })
               }

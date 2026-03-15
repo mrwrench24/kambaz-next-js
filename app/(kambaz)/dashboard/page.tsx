@@ -162,6 +162,12 @@ export default function Dashboard() {
                         </span>
                       )}
 
+                      {enrollments.some(
+                        (enrollment) =>
+                          enrollment.user === currentUser._id &&
+                          enrollment.course === course._id,
+                      ) && <Button variant="primary"> Go </Button>}
+
                       {currentUser.role !== "FACULTY" &&
                         (enrollments.some(
                           (enrollment) =>
@@ -169,8 +175,6 @@ export default function Dashboard() {
                             enrollment.course === course._id,
                         ) ? (
                           <span>
-                            <Button variant="primary"> Go </Button>
-
                             <Button
                               className="btn btn-danger float-end"
                               onClick={(e) => {
