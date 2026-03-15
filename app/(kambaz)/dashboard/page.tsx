@@ -17,9 +17,6 @@ import { addNewCourse, deleteCourse, updateCourse } from "../courses/reducer";
 import { RootState } from "../store";
 import { enroll, unenroll } from "./reducer";
 
-// getting all kinds of stupid errors that aren't errors.
-export const dynamic = "force-dynamic";
-
 export default function Dashboard() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const dispatch = useDispatch();
