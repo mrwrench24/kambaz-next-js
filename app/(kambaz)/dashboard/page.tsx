@@ -135,7 +135,6 @@ export default function Dashboard() {
                       >
                         {course.description}{" "}
                       </CardText>
-                      <Button variant="primary"> Go </Button>
 
                       {currentUser.role === "FACULTY" && (
                         <span>
@@ -169,21 +168,25 @@ export default function Dashboard() {
                             enrollment.user === currentUser._id &&
                             enrollment.course === course._id,
                         ) ? (
-                          <Button
-                            className="btn btn-danger float-end"
-                            onClick={(e) => {
-                              e.preventDefault();
+                          <span>
+                            <Button variant="primary"> Go </Button>
 
-                              dispatch(
-                                unenroll({
-                                  uid: currentUser._id,
-                                  cid: course._id,
-                                }),
-                              );
-                            }}
-                          >
-                            Unenroll
-                          </Button>
+                            <Button
+                              className="btn btn-danger float-end"
+                              onClick={(e) => {
+                                e.preventDefault();
+
+                                dispatch(
+                                  unenroll({
+                                    uid: currentUser._id,
+                                    cid: course._id,
+                                  }),
+                                );
+                              }}
+                            >
+                              Unenroll
+                            </Button>
+                          </span>
                         ) : (
                           <Button
                             className="btn btn-success float-end"
