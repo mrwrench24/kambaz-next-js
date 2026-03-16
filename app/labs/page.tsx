@@ -20,9 +20,14 @@ export default function labs() {
             Lab 3: JavaScript Fundamentals{" "}
           </Link>
         </li>
-         <li>
+        <li>
           <Link href="/labs/lab4" id="wd-lab4-link">
             Lab 4: React{" "}
+          </Link>
+        </li>
+        <li>
+          <Link href="/labs/lab5" id="wd-lab5-link">
+            Lab 5: REST{" "}
           </Link>
         </li>
       </ul>
