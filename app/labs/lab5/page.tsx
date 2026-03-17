@@ -1,7 +1,10 @@
 "use client";
 
 import EnvironmentVariables from "./EnvironmentVariables";
+import Module from "./Module";
 import PathParameters from "./PathParameters";
+import QueryParameters from "./QueryParameters";
+import WorkingWithObjects from "./WorkingWithObjects";
 const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 
 export default function Lab5() {
@@ -17,6 +20,12 @@ export default function Lab5() {
       <EnvironmentVariables />
 
       <PathParameters />
+
+      <QueryParameters />
+
+      <WorkingWithObjects />
+
+      <Module />
     </div>
   );
 }
