@@ -33,7 +33,7 @@ export default function PathParameters() {
         id="wd-path-parameter-subtract"
         href={`${HTTP_SERVER}/lab5/subtract/${a}/${b}`}
       >
-        Substract {a} - {b}
+        Subtract {a} - {b}
       </a>
       <hr />
     </div>
