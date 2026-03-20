@@ -6,6 +6,8 @@ import "./styles.css";
 import store from "./store";
 import { Provider } from "react-redux";
 
+import Session from "./account/Session";
+
 export default function KambazLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
@@ -13,14 +15,16 @@ export default function KambazLayout({
     <html>
       <body>
         <Provider store={store}>
-          <div className="d-flex" id="wd-kambaz">
-            <div>
-              <KambazNavigation />
+          <Session>
+            <div className="d-flex" id="wd-kambaz">
+              <div>
+                <KambazNavigation />
+              </div>
+              <div className="flex-fill ps-3 wd-main-content-offset">
+                {children}
+              </div>
             </div>
-            <div className="flex-fill ps-3 wd-main-content-offset">
-              {children}
-            </div>
-          </div>
+          </Session>
         </Provider>
       </body>
     </html>
