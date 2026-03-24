@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import AssignmentControls from "./AssignmentControls";
-import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical, BsPencilSquare } from "react-icons/bs";
 import AssignmentGroupButtons from "./AssignmentGroupButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { deleteAssignment, setAssignments } from "./reducer";
+import { setAssignments } from "./reducer";
 import AssignmentDeleter from "./AssignmentDeleter";
 import { useEffect, useState } from "react";
 import * as client from "./assignmentsClient";
@@ -30,6 +30,13 @@ export default function Assignments() {
   const fetchAssignments = async () => {
     const assignments = await client.fetchCourseAssignments(cid as string);
     dispatch(setAssignments(assignments));
+  };
+
+  const onDeleteAssignment = async (aid: string) => {
+    await client.deleteAssignment(aid);
+    dispatch(setAssignments(assignments.filter((a: any) => a._id !== aid)));
+    // makes popup go away
+    setAssignmentToDelete(null);
   };
 
   useEffect(() => {
@@ -91,13 +98,7 @@ export default function Assignments() {
       <AssignmentDeleter
         assignmentToDelete={assignmentToDelete}
         handleCancel={() => setAssignmentToDelete(null)}
-        handleDelete={() => {
-          if (assignmentToDelete) {
-            dispatch(deleteAssignment(assignmentToDelete._id));
-
-            setAssignmentToDelete(null);
-          }
-        }}
+        handleDelete={() => onDeleteAssignment(assignmentToDelete._id)}
       />
     </div>
   );

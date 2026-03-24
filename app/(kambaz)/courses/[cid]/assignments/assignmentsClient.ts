@@ -9,3 +9,10 @@ export const fetchCourseAssignments = async (courseId: string) => {
   );
   return data;
 };
+
+export const deleteAssignment = async (aid: string) => {
+  const { data } = await axiosWithCredentials.delete(
+    `${ASSIGNMENTS_API}/${aid}`,
+  );
+  return data;
+};
