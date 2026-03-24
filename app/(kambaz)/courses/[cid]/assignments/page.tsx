@@ -8,12 +8,14 @@ import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { deleteAssignment } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
 import AssignmentDeleter from "./AssignmentDeleter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as client from "./assignmentsClient";
 
 export default function Assignments() {
   const { cid } = useParams();
+
   const { assignments } = useSelector(
     (state: RootState) => state.assignmentReducer,
   );
@@ -24,6 +26,15 @@ export default function Assignments() {
 
   const dispatch = useDispatch();
   const [assignmentToDelete, setAssignmentToDelete] = useState(null);
+
+  const fetchAssignments = async () => {
+    const assignments = await client.fetchCourseAssignments(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments">
@@ -40,42 +51,40 @@ export default function Assignments() {
             Assignments
             <AssignmentGroupButtons />
           </div>
-          {assignments
-            .filter((assignment: any) => assignment.course === cid)
-            .map((assignment: any) => (
-              <ListGroupItem
-                className="wd-assignment p-3 ps-1"
-                key={assignment._id}
-              >
-                <AssignmentControlButtons
-                  handleClick={() => setAssignmentToDelete(assignment)}
-                />
-                <div className="d-flex">
-                  <BsGripVertical className="me-2 fs-3" />
-                  <BsPencilSquare className="me-3 fs-5 text-success" />
-                  <div>
-                    {currentUser.role === "STUDENT" ? (
-                      assignment.title
-                    ) : (
-                      <Link
-                        href={`assignments/${assignment._id}`}
-                        className="fw-bold"
-                      >
-                        {assignment.title}
-                      </Link>
-                    )}
+          {assignments.map((assignment: any) => (
+            <ListGroupItem
+              className="wd-assignment p-3 ps-1"
+              key={assignment._id}
+            >
+              <AssignmentControlButtons
+                handleClick={() => setAssignmentToDelete(assignment)}
+              />
+              <div className="d-flex">
+                <BsGripVertical className="me-2 fs-3" />
+                <BsPencilSquare className="me-3 fs-5 text-success" />
+                <div>
+                  {currentUser.role === "STUDENT" ? (
+                    assignment.title
+                  ) : (
+                    <Link
+                      href={`assignments/${assignment._id}`}
+                      className="fw-bold"
+                    >
+                      {assignment.title}
+                    </Link>
+                  )}
 
-                    <div className="text-muted fs-6">
-                      <span className="text-danger">Multiple Modules</span> |{" "}
-                      <b>Not available until</b>{" "}
-                      {assignment.availableUntil ?? "May 13 at 11:59 PM"} | Due{" "}
-                      {assignment.due ?? "May 13 at 11:59 PM"} |{" "}
-                      {assignment.points ?? 100} pts
-                    </div>
+                  <div className="text-muted fs-6">
+                    <span className="text-danger">Multiple Modules</span> |{" "}
+                    <b>Not available until</b>{" "}
+                    {assignment.availableUntil ?? "May 13 at 11:59 PM"} | Due{" "}
+                    {assignment.due ?? "May 13 at 11:59 PM"} |{" "}
+                    {assignment.points ?? 100} pts
                   </div>
                 </div>
-              </ListGroupItem>
-            ))}
+              </div>
+            </ListGroupItem>
+          ))}
         </ListGroupItem>
       </ListGroup>
 
