@@ -13,9 +13,12 @@ import {
 import { RootState } from "../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addAssignment, setAssignments, updateAssignment } from "../reducer";
-import { useEffect, useState } from "react";
-import { createAssignmentForCourse } from "../assignmentsClient";
+import { setAssignments } from "../reducer";
+import { useState } from "react";
+import {
+  createAssignmentForCourse,
+  updateAssignment,
+} from "../assignmentsClient";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -49,6 +52,16 @@ export default function AssignmentEditor() {
     );
 
     dispatch(setAssignments([...assignments, newAssignment]));
+  };
+
+  const onUpdateAssignmentForCourse = async () => {
+    await updateAssignment(assignment);
+
+    const newAssignments = assignments.map((a: any) =>
+      a._id === assignment._id ? assignment : a,
+    );
+
+    dispatch(setAssignments(newAssignments));
   };
 
   return (
@@ -222,7 +235,7 @@ export default function AssignmentEditor() {
               id="wd-add-assignment-btn"
               onClick={async () => {
                 if (existingAssignment) {
-                  dispatch(updateAssignment(assignment));
+                  await onUpdateAssignmentForCourse();
                 } else {
                   await onCreateAssignmentForCourse();
                 }

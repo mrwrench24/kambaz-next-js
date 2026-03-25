@@ -28,3 +28,12 @@ export const createAssignmentForCourse = async (
 
   return response.data;
 };
+
+export const updateAssignment = async (assignment: any) => {
+  const { data } = await axiosWithCredentials.put(
+    `${ASSIGNMENTS_API}/${assignment._id}`,
+    assignment,
+  );
+
+  return data;
+};
