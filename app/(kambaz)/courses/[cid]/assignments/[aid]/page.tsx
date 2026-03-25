@@ -13,8 +13,9 @@ import {
 import { RootState } from "../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addAssignment, updateAssignment } from "../reducer";
+import { addAssignment, setAssignments, updateAssignment } from "../reducer";
 import { useEffect, useState } from "react";
+import { createAssignmentForCourse } from "../assignmentsClient";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -36,6 +37,19 @@ export default function AssignmentEditor() {
   });
 
   const dispatch = useDispatch();
+
+  const onCreateAssignmentForCourse = async () => {
+    if (!cid) {
+      return;
+    }
+
+    const newAssignment = await createAssignmentForCourse(
+      cid as string,
+      assignment,
+    );
+
+    dispatch(setAssignments([...assignments, newAssignment]));
+  };
 
   return (
     <div id="wd-assignments-editor">
@@ -206,11 +220,11 @@ export default function AssignmentEditor() {
               size="lg"
               className="me-1 float-end"
               id="wd-add-assignment-btn"
-              onClick={() => {
+              onClick={async () => {
                 if (existingAssignment) {
                   dispatch(updateAssignment(assignment));
                 } else {
-                  dispatch(addAssignment(assignment));
+                  await onCreateAssignmentForCourse();
                 }
 
                 redirect(`/courses/${cid}/assignments`);

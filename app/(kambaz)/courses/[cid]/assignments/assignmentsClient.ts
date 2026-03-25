@@ -16,3 +16,15 @@ export const deleteAssignment = async (aid: string) => {
   );
   return data;
 };
+
+export const createAssignmentForCourse = async (
+  courseId: string,
+  assignment: any,
+) => {
+  const response = await axiosWithCredentials.post(
+    `${ASSIGNMENTS_API}/${courseId}`,
+    assignment,
+  );
+
+  return response.data;
+};
