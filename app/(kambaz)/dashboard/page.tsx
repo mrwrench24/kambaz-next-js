@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "../courses/client";
+import * as enrollmentsClient from "./enrollmentsClient";
 import {
   addNewCourse,
   deleteCourse,
@@ -21,7 +22,7 @@ import {
   setCourses,
 } from "../courses/reducer";
 import { RootState } from "../store";
-import { enroll, unenroll } from "./reducer";
+import { enroll, setEnrollments, unenroll } from "./reducer";
 
 export default function Dashboard() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
@@ -44,10 +45,28 @@ export default function Dashboard() {
     description: "New Description",
   });
 
-  const fetchCourses = async () => {
+  const fetchUsersCourses = async () => {
     try {
       const courses = await client.findMyCourses();
       dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchAllCourses = async () => {
+    try {
+      const courses = await client.fetchAllCourses();
+      dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchEnrollments = async () => {
+    try {
+      const enrollments = await enrollmentsClient.findEnrollments();
+      dispatch(setEnrollments(enrollments));
     } catch (error) {
       console.error(error);
     }
@@ -78,9 +97,29 @@ export default function Dashboard() {
     );
   };
 
+  const onEnroll = async (cid: string) => {
+    const newEnrollment = await enrollmentsClient.postEnrollment(cid);
+    dispatch(setEnrollments([...enrollments, newEnrollment]));
+  };
+
+  const onUnenroll = async (eid: string) => {
+    const enrollment = await enrollmentsClient.deleteEnrollment(eid);
+    dispatch(setEnrollments(enrollments.filter((e) => e._id !== eid)));
+    dispatch(setCourses(courses.filter((c) => c._id !== enrollment.course)));
+  };
+
   useEffect(() => {
-    fetchCourses();
+    fetchUsersCourses();
+    fetchEnrollments();
   }, [currentUser]);
+
+  useEffect(() => {
+    if (showAll) {
+      fetchAllCourses();
+    } else {
+      fetchUsersCourses();
+    }
+  }, [showAll]);
 
   if (!currentUser) {
     return "No user";
@@ -197,45 +236,37 @@ export default function Dashboard() {
                           enrollment.course === course._id,
                       ) && <Button variant="primary"> Go </Button>}
 
-                      {enrollments.some(
-                        (enrollment) =>
-                          enrollment.user === currentUser._id &&
-                          enrollment.course === course._id,
-                      ) ? (
-                        <span>
+                      {/* yeah, nasty arrow function, but needed to have enrollments
+                        available as a variable to read in here... */}
+                      {(() => {
+                        const enrollment = enrollments.find(
+                          (e) =>
+                            e.user === currentUser._id &&
+                            e.course === course._id,
+                        );
+
+                        return enrollment ? (
                           <Button
                             className="btn btn-danger float-end"
-                            onClick={(e) => {
+                            onClick={async (e) => {
                               e.preventDefault();
-
-                              dispatch(
-                                unenroll({
-                                  uid: currentUser._id,
-                                  cid: course._id,
-                                }),
-                              );
+                              await onUnenroll(enrollment._id);
                             }}
                           >
                             Unenroll
                           </Button>
-                        </span>
-                      ) : (
-                        <Button
-                          className="btn btn-success float-end"
-                          onClick={(e) => {
-                            e.preventDefault();
-
-                            dispatch(
-                              enroll({
-                                uid: currentUser._id,
-                                cid: course._id,
-                              }),
-                            );
-                          }}
-                        >
-                          Enroll
-                        </Button>
-                      )}
+                        ) : (
+                          <Button
+                            className="btn btn-success float-end"
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              await onEnroll(course._id);
+                            }}
+                          >
+                            Enroll
+                          </Button>
+                        );
+                      })()}
                     </CardBody>
                   </Link>
                 </Card>
