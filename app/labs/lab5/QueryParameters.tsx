@@ -33,7 +33,7 @@ export default function QueryParameters() {
         id="wd-query-parameter-subtract"
         href={`${HTTP_SERVER}/lab5/calculator?operation=subtract&a=${a}&b=${b}`}
       >
-        Substract {a} - {b}
+        Subtract {a} - {b}
       </a>
       <a
         id="wd-query-parameter-multiply"

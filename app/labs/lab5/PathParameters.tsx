@@ -35,6 +35,22 @@ export default function PathParameters() {
       >
         Subtract {a} - {b}
       </a>
+
+      <a
+        className="btn btn-danger"
+        id="wd-path-parameter-subtract"
+        href={`${HTTP_SERVER}/lab5/multiply/${a}/${b}`}
+      >
+        Multiply {a} * {b}
+      </a>
+
+      <a
+        className="btn btn-danger"
+        id="wd-path-parameter-subtract"
+        href={`${HTTP_SERVER}/lab5/divide/${a}/${b}`}
+      >
+        Divide {a} / {b}
+      </a>
       <hr />
     </div>
   );
