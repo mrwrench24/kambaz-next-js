@@ -14,7 +14,6 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "../courses/client";
-import * as enrollmentsClient from "./enrollmentsClient";
 import {
   addNewCourse,
   deleteCourse,
@@ -65,7 +64,7 @@ export default function Dashboard() {
 
   const fetchEnrollments = async () => {
     try {
-      const enrollments = await enrollmentsClient.findEnrollments();
+      const enrollments = await client.findMyEnrollments();
       dispatch(setEnrollments(enrollments));
     } catch (error) {
       console.error(error);
@@ -104,7 +103,11 @@ export default function Dashboard() {
 
   const onUnenroll = async (cid: string) => {
     const enrollment = await client.unenrollFromCourse(currentUser._id, cid);
-    dispatch(setEnrollments(enrollments.filter((e) => e.course !== cid)));
+    dispatch(
+      setEnrollments(
+        enrollments.filter((e) => e.course !== cid && e.course._id !== cid),
+      ),
+    );
     dispatch(setCourses(courses.filter((c) => c._id !== enrollment.course)));
   };
 
@@ -120,6 +123,8 @@ export default function Dashboard() {
       fetchUsersCourses();
     }
   }, [showAll]);
+
+  console.log(enrollments);
 
   if (!currentUser) {
     return "No user";
@@ -233,7 +238,8 @@ export default function Dashboard() {
                       {enrollments.some(
                         (enrollment) =>
                           enrollment.user === currentUser._id &&
-                          enrollment.course === course._id,
+                          (enrollment.course._id === course._id ||
+                            enrollment.course === course._id),
                       ) && <Button variant="primary"> Go </Button>}
 
                       {/* yeah, nasty arrow function, but needed to have enrollments
@@ -242,7 +248,8 @@ export default function Dashboard() {
                         const enrollment = enrollments.find(
                           (e) =>
                             e.user === currentUser._id &&
-                            e.course === course._id,
+                            (e.course._id === course._id ||
+                              e.course === course._id),
                         );
 
                         return enrollment ? (
