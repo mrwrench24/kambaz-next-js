@@ -98,13 +98,13 @@ export default function Dashboard() {
   };
 
   const onEnroll = async (cid: string) => {
-    const newEnrollment = await enrollmentsClient.postEnrollment(cid);
+    const newEnrollment = await client.enrollIntoCourse(currentUser._id, cid);
     dispatch(setEnrollments([...enrollments, newEnrollment]));
   };
 
-  const onUnenroll = async (eid: string) => {
-    const enrollment = await enrollmentsClient.deleteEnrollment(eid);
-    dispatch(setEnrollments(enrollments.filter((e) => e._id !== eid)));
+  const onUnenroll = async (cid: string) => {
+    const enrollment = await client.unenrollFromCourse(currentUser._id, cid);
+    dispatch(setEnrollments(enrollments.filter((e) => e.course !== cid)));
     dispatch(setCourses(courses.filter((c) => c._id !== enrollment.course)));
   };
 
@@ -250,7 +250,7 @@ export default function Dashboard() {
                             className="btn btn-danger float-end"
                             onClick={async (e) => {
                               e.preventDefault();
-                              await onUnenroll(enrollment._id);
+                              await onUnenroll(enrollment.course);
                             }}
                           >
                             Unenroll
