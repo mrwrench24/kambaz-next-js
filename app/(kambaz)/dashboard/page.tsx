@@ -98,7 +98,6 @@ export default function Dashboard() {
 
   const onEnroll = async (cid: string) => {
     const newEnrollment = await client.enrollIntoCourse(currentUser._id, cid);
-    console.log("New enrollment: " + JSON.stringify(newEnrollment));
     dispatch(setEnrollments([...enrollments, newEnrollment]));
   };
 

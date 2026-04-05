@@ -28,16 +28,7 @@ export default function AssignmentEditor() {
 
   const existingAssignment = assignments.find((a) => a._id === aid);
 
-  const [assignment, setAssignment] = useState({
-    _id: aid as string,
-    title: existingAssignment?.title,
-    course: cid as string,
-    description: "",
-    points: 100,
-    due: "",
-    availableFrom: "",
-    availableUntil: "",
-  });
+  const [assignment, setAssignment] = useState(existingAssignment);
 
   const dispatch = useDispatch();
 
