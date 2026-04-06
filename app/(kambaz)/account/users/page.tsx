@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import PeopleTable from "../../courses/[cid]/people/table/page";
+import PeopleTable from "../../courses/[cid]/people/table/PeopleTable";
 import * as client from "../client";
 import { FormControl } from "react-bootstrap";
 export default function Users() {

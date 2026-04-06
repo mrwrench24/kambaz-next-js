@@ -33,7 +33,6 @@ const enrollmentsSlice = createSlice({
     },
     setEnrollments: (state, action) => {
       state.enrollments = action.payload;
-      console.log(state.enrollments);
     },
   },
 });
