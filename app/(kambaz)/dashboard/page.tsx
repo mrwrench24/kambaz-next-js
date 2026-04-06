@@ -74,6 +74,7 @@ export default function Dashboard() {
   const onAddNewCourse = async () => {
     const newCourse = await client.createCourse(course);
     dispatch(setCourses([...courses, newCourse]));
+    fetchEnrollments();
   };
 
   const onDeleteCourse = async (courseId: string) => {
