@@ -27,6 +27,7 @@ export default function AssignmentEditor() {
   );
 
   const existingAssignment = assignments.find((a) => a._id === aid) || {};
+  const isNew = !assignments.find((a) => a._id === aid);
 
   const [assignment, setAssignment] = useState(existingAssignment);
 
@@ -225,10 +226,10 @@ export default function AssignmentEditor() {
               className="me-1 float-end"
               id="wd-add-assignment-btn"
               onClick={async () => {
-                if (existingAssignment) {
-                  await onUpdateAssignmentForCourse();
-                } else {
+                if (isNew) {
                   await onCreateAssignmentForCourse();
+                } else {
+                  await onUpdateAssignmentForCourse();
                 }
 
                 redirect(`/courses/${cid}/assignments`);
