@@ -11,8 +11,6 @@ const assignmentsSlice = createSlice({
     // payload = new assignment object
     addAssignment: (state, action) => {
       state.assignments = [...state.assignments, action.payload];
-
-      console.log(state.assignments);
     },
     // payload = id of assignment
     deleteAssignment: (state, action) => {
@@ -27,8 +25,6 @@ const assignmentsSlice = createSlice({
           ? action.payload
           : oldAssignment;
       });
-
-      console.log(state.assignments);
     },
     setAssignments: (state, action) => {
       state.assignments = action.payload;

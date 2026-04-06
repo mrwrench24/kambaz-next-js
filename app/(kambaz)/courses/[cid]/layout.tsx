@@ -13,6 +13,7 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const course = courses.find((course: any) => course._id === cid);
+
   return (
     <div id="wd-courses">
       <h2>
@@ -22,7 +23,7 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
       <hr />
       <div className="d-flex">
         <div>
-          <CourseNavigation cid={course._id} />
+          <CourseNavigation cid={cid as string} />
         </div>
         <div className="flex-fill">{children}</div>
       </div>

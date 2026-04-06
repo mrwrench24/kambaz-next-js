@@ -123,8 +123,10 @@ export default function Dashboard() {
   useEffect(() => {
     if (showAll) {
       fetchAllCourses();
+      fetchEnrollments();
     } else {
       fetchUsersCourses();
+      fetchEnrollments();
     }
   }, [showAll]);
 
