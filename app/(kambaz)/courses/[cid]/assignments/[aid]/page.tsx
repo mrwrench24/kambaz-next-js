@@ -26,7 +26,7 @@ export default function AssignmentEditor() {
     (state: RootState) => state.assignmentReducer,
   );
 
-  const existingAssignment = assignments.find((a) => a._id === aid);
+  const existingAssignment = assignments.find((a) => a._id === aid) || {};
 
   const [assignment, setAssignment] = useState(existingAssignment);
 
