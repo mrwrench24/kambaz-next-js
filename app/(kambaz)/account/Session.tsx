@@ -17,6 +17,7 @@ export default function Session({ children }: { children: any }) {
   useEffect(() => {
     fetchProfile();
   }, []);
-
-  return children;
+  if (!pending) {
+    return children;
+  }
 }
