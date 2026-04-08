@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
-import { DiSnapSvg } from "react-icons/di";
-import { FaChevronDown, FaI } from "react-icons/fa6";
+import { FaChevronDown, FaI, FaNewspaper } from "react-icons/fa6";
+import "./index.css";
 
 export default function PostNavigation() {
   const postLists = [
@@ -41,7 +41,9 @@ export default function PostNavigation() {
   return (
     <div className="bg-secondary border border-dark">
       <div className="d-flex align-items-center p-1">
-        <Button>New Post</Button>
+        <Button className="m-1">
+          <FaNewspaper /> New Post
+        </Button>
         <input type="text" placeholder="Search or add a post..." />
       </div>
 
@@ -49,7 +51,7 @@ export default function PostNavigation() {
         {postLists.map((section) => {
           return (
             <div key={section.title}>
-              <div className="bg-secondary p-1 border border-dark">
+              <div className="post-section-header p-1 border border-dark">
                 <span>
                   <FaChevronDown className="me-2" />
                   {section.title}
@@ -61,16 +63,18 @@ export default function PostNavigation() {
                   return (
                     <div
                       key={post.title}
-                      className="bg-white border border-dark p-1 ps-3 d-flex align-items-center"
+                      className="post-link border border-dark p-1 ps-3 d-flex align-items-start"
                     >
                       <div className="flex-fill">
                         <div className="fw-bold">{post.title}</div>
-                        {post.description}
+                        <div className="text-truncate post-description">
+                          {post.description}
+                        </div>
                       </div>
-                      <div className="text-end">
+                      <div className="post-info text-end">
                         <div>02:43 pm</div>
                         <div>
-                          <FaI style={{ backgroundColor: "orange" }} />
+                          <FaI className="instructor-i" />
                         </div>
                       </div>
                     </div>

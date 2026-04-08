@@ -1,0 +1,55 @@
+.post-section-header {
+  cursor: pointer;
+  background-color: #d3dadb;
+}
+
+.post-link {
+  background-color: white;
+  cursor: pointer;
+}
+
+.post-link.selected {
+  background-color: #defcff;
+}
+
+.post-description {
+  max-width: 300px;
+}
+
+.post-info {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.instructor-i {
+  background-color: orange;
+  padding: 2px;
+}
+
+.action-button {
+  background-color: #d3dadb;
+  color: darkblue;
+  padding: 2px 10px 2px 10px;
+  margin: 5px;
+}
+
+.folder-button {
+  background-color: rgba(164, 230, 237, 0.5);
+  border-radius: 20%;
+  padding: 8px;
+  margin: 5px;
+}
+
+.folder-filter-selected {
+  text-decoration: underline;
+  font-weight: bold;
+  text-underline-offset: 4px;
+}
+
+.light-blue-bg {
+  background-color: #93bfc4;
+}
+
+.checkmark {
+  color: green;
+}

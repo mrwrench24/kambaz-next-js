@@ -3,16 +3,16 @@ import { FaCheck } from "react-icons/fa6";
 
 export default function CAGScreen() {
   return (
-    <div style={{ backgroundColor: "lightblue" }} className="p-2">
+    <div className="p-2 light-blue-bg">
       <h4>Class at a Glance</h4>
       <div className="bg-secondary p-2 border border-black d-flex align-items-center">
         <div>
           <div>
-            <FaCheckCircle style={{ color: "green" }} />
+            <FaCheckCircle className="checkmark" />
             <span className="ps-2">No unread posts</span>
           </div>
           <div>
-            <FaCheckCircle style={{ color: "green" }} />
+            <FaCheckCircle className="checkmark" />
             <span className="ps-2">No unanswered posts</span>
           </div>
         </div>

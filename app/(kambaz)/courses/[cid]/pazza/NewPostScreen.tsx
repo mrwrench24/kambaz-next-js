@@ -12,11 +12,7 @@ export default function NewPostScreen() {
           <input type="radio" /> Note
         </span>
       </div>
-      <div
-        className="p-2"
-        id="post-create"
-        style={{ backgroundColor: "lightblue" }}
-      >
+      <div className="p-2 light-blue-bg" id="post-create">
         <div className="pt-2">
           Post To
           <span className="ps-4">
@@ -30,13 +26,13 @@ export default function NewPostScreen() {
         <div className="pt-2">
           Select Folders
           <span>
-            <span className="p-2">HW1</span>
-            <span className="p-2">HW2</span>
-            <span className="p-2">HW3</span>
-            <span className="p-2">HW4</span>
-            <span className="p-2">HW5</span>
-            <span className="p-2">HW6</span>
-            <span className="p-2">HW7</span>
+            <span className="folder-button">HW1</span>
+            <span className="folder-button">HW2</span>
+            <span className="folder-button">HW3</span>
+            <span className="folder-button">HW4</span>
+            <span className="folder-button">HW5</span>
+            <span className="folder-button">HW6</span>
+            <span className="folder-button">HW7</span>
           </span>
           <div className="ps-5">Manage and reorder folders</div>
         </div>

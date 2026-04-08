@@ -16,7 +16,7 @@ export default function PostScreen() {
       <div className="border border-dark">
         <div id="pazza-question-content" className="ps-2 pb-2">
           <div className="d-flex align-items-center ps-1">
-            <div className="ms-auto d-flex align-items-center pe-2">
+            <div className="action-button ms-auto d-flex align-items-center">
               Actions <FaChevronDown className="ps-1" />
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function PostScreen() {
           <span className="p">
             {folders.map((folder) => {
               return (
-                <span key={folder} className="p-2">
+                <span key={folder} className="folder-button">
                   {folder}
                 </span>
               );
@@ -92,7 +92,7 @@ export default function PostScreen() {
                 </span>
               </span>
 
-              <div className="ms-auto pe-2">
+              <div className="action-button ms-auto pe-2">
                 Actions <FaChevronDown className="ps-1" />
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function PostScreen() {
             <div className="p-2 ms-2">
               <div className="d-flex align-items-center">
                 <b>NotAdaLovelace</b> &nbsp; 2 hours ago
-                <div className="ms-auto pe-2">
+                <div className="action-button ms-auto pe-2">
                   <span>
                     Actions <FaChevronDown className="ps-1" />
                   </span>
