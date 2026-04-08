@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import { FaChevronDown } from "react-icons/fa6";
 
 export default function PostScreen() {
@@ -17,7 +17,15 @@ export default function PostScreen() {
         <div id="pazza-question-content" className="ps-2 pb-2">
           <div className="d-flex align-items-center ps-1">
             <div className="action-button ms-auto d-flex align-items-center">
-              Actions <FaChevronDown className="ps-1" />
+              <Dropdown>
+                <Dropdown.Toggle variant="outline-primary" size="sm">
+                  Actions <FaChevronDown className="ps-1" />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item>Edit</Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -92,8 +100,16 @@ export default function PostScreen() {
                 </span>
               </span>
 
-              <div className="action-button ms-auto pe-2">
-                Actions <FaChevronDown className="ps-1" />
+              <div className="action-button ms-auto d-flex align-items-center">
+                <Dropdown>
+                  <Dropdown.Toggle variant="outline-primary" size="sm">
+                    Actions <FaChevronDown className="ps-1" />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>Edit</Dropdown.Item>
+                    <Dropdown.Item>Delete</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             <div>
@@ -107,10 +123,16 @@ export default function PostScreen() {
             <div className="p-2 ms-2">
               <div className="d-flex align-items-center">
                 <b>NotAdaLovelace</b> &nbsp; 2 hours ago
-                <div className="action-button ms-auto pe-2">
-                  <span>
-                    Actions <FaChevronDown className="ps-1" />
-                  </span>
+                <div className="action-button ms-auto d-flex align-items-center">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="outline-primary" size="sm">
+                      Actions <FaChevronDown className="ps-1" />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Edit</Dropdown.Item>
+                      <Dropdown.Item>Delete</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               </div>
               Can you stop asking stupid questions? Thanks in advance.

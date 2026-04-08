@@ -1,3 +1,4 @@
+"use client";
 import { FaCheckCircle } from "react-icons/fa";
 
 export default function CAGScreen() {

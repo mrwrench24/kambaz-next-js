@@ -1,8 +1,18 @@
 import { Button } from "react-bootstrap";
-import { FaChevronDown, FaI, FaNewspaper } from "react-icons/fa6";
+import {
+  FaChevronDown,
+  FaChevronRight,
+  FaI,
+  FaNewspaper,
+} from "react-icons/fa6";
 import "./index.css";
+import { usePazzaContext } from "./PazzaContext";
+import { useState } from "react";
 
 export default function PostNavigation() {
+  const { setPage } = usePazzaContext();
+  const [expanded, setExpanded] = useState([true, true, false]);
+
   const postLists = [
     {
       title: "Today",
@@ -41,46 +51,61 @@ export default function PostNavigation() {
   return (
     <div className="bg-secondary border border-dark">
       <div className="d-flex align-items-center p-1">
-        <Button className="m-1">
+        <Button className="m-1" onClick={() => setPage("new_post")}>
           <FaNewspaper /> New Post
         </Button>
         <input type="text" placeholder="Search or add a post..." />
       </div>
 
       <div>
-        {postLists.map((section) => {
+        {postLists.map((section, index) => {
           return (
             <div key={section.title}>
-              <div className="post-section-header p-1 border border-dark">
+              <div
+                className="post-section-header p-1 border border-dark"
+                onClick={() =>
+                  setExpanded((prev) =>
+                    prev.map((v, i) => (i === index ? !v : v)),
+                  )
+                }
+              >
                 <span>
-                  <FaChevronDown className="me-2" />
+                  {expanded[index] ? (
+                    <FaChevronDown className="me-2" />
+                  ) : (
+                    <FaChevronRight className="me-2" />
+                  )}
+
                   {section.title}
                 </span>
               </div>
 
-              <div>
-                {section.posts.map((post) => {
-                  return (
-                    <div
-                      key={post.title}
-                      className="post-link border border-dark p-1 ps-3 d-flex align-items-start"
-                    >
-                      <div className="flex-fill">
-                        <div className="fw-bold">{post.title}</div>
-                        <div className="text-truncate post-description">
-                          {post.description}
+              {expanded[index] && (
+                <div>
+                  {section.posts.map((post) => {
+                    return (
+                      <div
+                        key={post.title}
+                        className="post-link border border-dark p-1 ps-3 d-flex align-items-start"
+                        onClick={() => setPage("post")}
+                      >
+                        <div className="flex-fill">
+                          <div className="fw-bold">{post.title}</div>
+                          <div className="text-truncate post-description">
+                            {post.description}
+                          </div>
+                        </div>
+                        <div className="post-info text-end">
+                          <div>02:43 pm</div>
+                          <div>
+                            <FaI className="instructor-i" />
+                          </div>
                         </div>
                       </div>
-                      <div className="post-info text-end">
-                        <div>02:43 pm</div>
-                        <div>
-                          <FaI className="instructor-i" />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
