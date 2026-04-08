@@ -9,7 +9,8 @@ export default function PostNavigation() {
       posts: [
         {
           title: "post1",
-          description: "post1 description",
+          description:
+            "post1 description which is pretty long and i want to make sure this is handled okay and maybe its not!",
         },
       ],
     },
