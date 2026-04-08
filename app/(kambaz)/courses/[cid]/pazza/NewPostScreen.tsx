@@ -1,6 +1,18 @@
+"use client";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
+import {
+  BtnBold,
+  BtnItalic,
+  BtnUnderline,
+  Editor,
+  EditorProvider,
+  Toolbar,
+} from "react-simple-wysiwyg";
 
 export default function NewPostScreen() {
+  const [value, setValue] = useState("simple text");
+
   return (
     <div>
       <div className="p-2 d-flex align-items-center" id="post-types">
@@ -44,8 +56,18 @@ export default function NewPostScreen() {
 
         <div className="d-flex align-items-center pt-2">
           Details
-          {/* Gets replaced with a "rich text editor" component */}
-          <input className="ms-2 flex-fill form-control" type="text" />
+          <div className="bg-white flex-fill m-2">
+            {/* Gets replaced with a "rich text editor" component */}
+            <EditorProvider>
+              <Editor value={value}>
+                <Toolbar>
+                  <BtnBold />
+                  <BtnItalic />
+                  <BtnUnderline />
+                </Toolbar>
+              </Editor>
+            </EditorProvider>
+          </div>
         </div>
 
         <span className="ms-5 pt-2">
