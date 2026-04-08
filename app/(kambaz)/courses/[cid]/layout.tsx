@@ -6,8 +6,6 @@ import { useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { RootState } from "../../store";
 import { FaAlignJustify } from "react-icons/fa";
-import { courses } from "../../database";
-import Breadcrumb from "./Breadcrumb";
 
 export default function CoursesLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();

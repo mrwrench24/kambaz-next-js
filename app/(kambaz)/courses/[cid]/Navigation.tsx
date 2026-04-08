@@ -5,7 +5,7 @@ export default function CourseNavigation({ cid }: { cid: string }) {
   const links = [
     "Home",
     "Modules",
-    "Piazza",
+    "Pazza",
     "Zoom",
     "Assignments",
     "Quizzes",
