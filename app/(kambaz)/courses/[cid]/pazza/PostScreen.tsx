@@ -1,8 +1,20 @@
+import { useState } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import { FaChevronDown } from "react-icons/fa6";
+import {
+  BtnBold,
+  BtnBulletList,
+  BtnItalic,
+  BtnStrikeThrough,
+  BtnUnderline,
+  Editor,
+  EditorProvider,
+  Toolbar,
+} from "react-simple-wysiwyg";
 
 export default function PostScreen() {
   const folders = ["hw1", "hw2", "general"];
+  const [value, setValue] = useState("Test data");
 
   return (
     <div>
@@ -19,7 +31,7 @@ export default function PostScreen() {
             <div className="action-button ms-auto d-flex align-items-center">
               <Dropdown>
                 <Dropdown.Toggle variant="outline-primary" size="sm">
-                  Actions <FaChevronDown className="ps-1" />
+                  Actions
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>Edit</Dropdown.Item>
@@ -51,19 +63,30 @@ export default function PostScreen() {
 
         <div className="bg-secondary ps-2 p-1 d-flex align-items-center">
           <Button>Edit</Button>
-          <div className="ps-2">good question | 0</div>
+          <div className="ps-2">
+            <span role="button" className="link-primary">
+              good question
+            </span>{" "}
+            | 0
+          </div>
         </div>
       </div>
 
       <div className="border border-dark p-2">
-        <div id="pazza-student-answer" className="border border-dark ps-1 pt-1">
+        <div id="pazza-student-answer" className="border border-dark p-2">
           <h5>the students' answer</h5>
 
-          <input
-            type="text"
-            placeholder="Start off the answer..."
-            className="mt-2 mb-2 flex-fill form-control"
-          />
+          <EditorProvider>
+            <Editor value={value} className="p-2">
+              <Toolbar>
+                <BtnBold />
+                <BtnItalic />
+                <BtnUnderline />
+                <BtnBulletList />
+                <BtnStrikeThrough />
+              </Toolbar>
+            </Editor>
+          </EditorProvider>
         </div>
 
         <div
@@ -78,7 +101,12 @@ export default function PostScreen() {
 
           <div className="bg-secondary ps-2 p-1 d-flex align-items-center">
             <Button>Edit</Button>
-            <div className="ps-2">good answer | 0</div>
+            <div className="ps-2">
+              <span role="button" className="link-primary">
+                good answer
+              </span>{" "}
+              | 0
+            </div>
 
             <div className="ms-auto">
               Updated 30 seconds ago by Eric Cartman
@@ -103,7 +131,7 @@ export default function PostScreen() {
               <div className="action-button ms-auto d-flex align-items-center">
                 <Dropdown>
                   <Dropdown.Toggle variant="outline-primary" size="sm">
-                    Actions <FaChevronDown className="ps-1" />
+                    Actions
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item>Edit</Dropdown.Item>
@@ -126,7 +154,7 @@ export default function PostScreen() {
                 <div className="action-button ms-auto d-flex align-items-center">
                   <Dropdown>
                     <Dropdown.Toggle variant="outline-primary" size="sm">
-                      Actions <FaChevronDown className="ps-1" />
+                      Actions
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>Edit</Dropdown.Item>

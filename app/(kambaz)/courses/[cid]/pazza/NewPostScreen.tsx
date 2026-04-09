@@ -9,9 +9,33 @@ import {
   EditorProvider,
   Toolbar,
 } from "react-simple-wysiwyg";
+import { usePazzaContext } from "./PazzaContext";
 
 export default function NewPostScreen() {
   const [value, setValue] = useState("simple text");
+  const { setPage } = usePazzaContext();
+
+  const folders = [
+    "HW1",
+    "HW2",
+    "HW3",
+    "HW4",
+    "HW5",
+    "HW6",
+    "exam",
+    "logistics",
+  ];
+
+  const [selected, setSelected] = useState([
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    false,
+  ]);
 
   return (
     <div>
@@ -35,29 +59,43 @@ export default function NewPostScreen() {
           </span>
         </div>
 
-        <div className="pt-2">
+        <div className="pt-3">
           Select Folders
-          <span>
-            <span className="folder-button">HW1</span>
-            <span className="folder-button">HW2</span>
-            <span className="folder-button">HW3</span>
-            <span className="folder-button">HW4</span>
-            <span className="folder-button">HW5</span>
-            <span className="folder-button">HW6</span>
-            <span className="folder-button">HW7</span>
-          </span>
-          <div className="ps-5">Manage and reorder folders</div>
+          <div className="d-flex flex-wrap gap-2 pt-1">
+            {folders.map((folder, index) => {
+              return (
+                <span
+                  className={`folder-button ${selected[index] && "selected"}`}
+                  key={folder}
+                  role="button"
+                  onClick={() =>
+                    setSelected((prev) =>
+                      prev.map((v, i) => (i === index ? !v : v)),
+                    )
+                  }
+                >
+                  {folder}
+                </span>
+              );
+            })}
+          </div>
+          <div
+            className="ps-5 pt-2 pb-1 link-primary"
+            role="button"
+            onClick={() => setPage("manage_class")}
+          >
+            Manage and reorder folders
+          </div>
         </div>
 
-        <div className="d-flex align-items-center pt-2">
+        <div className="d-flex align-items-center pt-3">
           Summary
           <input className="ms-2 flex-fill form-control" type="text" />
         </div>
 
-        <div className="d-flex align-items-center pt-2">
+        <div className="d-flex align-items-center pt-3">
           Details
           <div className="bg-white flex-fill m-2">
-            {/* Gets replaced with a "rich text editor" component */}
             <EditorProvider>
               <Editor value={value}>
                 <Toolbar>

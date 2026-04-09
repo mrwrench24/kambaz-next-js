@@ -36,7 +36,7 @@ export default function ManageClassScreen() {
           return (
             <div key={folder} className="d-flex align-items-center m-1">
               <span>
-                <input type="checkbox" />
+                <input type="checkbox" className="m-1" />
                 Test
               </span>
               <div className="ms-auto">
@@ -50,7 +50,7 @@ export default function ManageClassScreen() {
 
         <div className="d-flex align-items-center m-1">
           <span>
-            <input type="checkbox" />
+            <input type="checkbox" className="m-1" />
             Test
           </span>
           <div className="ms-auto">
