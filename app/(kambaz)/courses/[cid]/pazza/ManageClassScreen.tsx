@@ -1,17 +1,10 @@
 import { Button } from "react-bootstrap";
 import { FaPencil } from "react-icons/fa6";
+import folders from "./database/folders";
+import { useState } from "react";
 
 export default function ManageClassScreen() {
-  const folders = [
-    "hw1",
-    "hw2",
-    "hw3",
-    "hw5",
-    "hw5",
-    "hw6",
-    "project",
-    "general",
-  ];
+  const [editingId, setEditingId] = useState<string | null>();
 
   return (
     <div className="">
@@ -33,31 +26,44 @@ export default function ManageClassScreen() {
         <Button className="bg-danger disabled">Delete Selected Folders</Button>
 
         {folders.map((folder) => {
+          const editing = editingId && editingId === folder.id;
+
           return (
-            <div key={folder} className="d-flex align-items-center m-1">
-              <span>
-                <input type="checkbox" className="m-1" />
-                Test
-              </span>
-              <div className="ms-auto">
-                <Button>
-                  <FaPencil /> Edit
-                </Button>
-              </div>
+            <div key={folder.id}>
+              {editing && (
+                <div className="d-flex align-items-center m-1">
+                  <span>
+                    <input type="checkbox" className="m-1" />
+                    <input type="text" defaultValue={folder.name} />
+                  </span>
+
+                  <div className="ms-auto">
+                    <Button className="m-1" onClick={() => setEditingId(null)}>
+                      Save
+                    </Button>
+                    <Button className="m-1" onClick={() => setEditingId(null)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {!editing && (
+                <div key={folder.id} className="d-flex align-items-center m-1">
+                  <span>
+                    <input type="checkbox" className="m-1" />
+                    {folder.name}
+                  </span>
+
+                  <div className="ms-auto">
+                    <Button onClick={() => setEditingId(folder.id)}>
+                      <FaPencil /> Edit
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
-
-        <div className="d-flex align-items-center m-1">
-          <span>
-            <input type="checkbox" className="m-1" />
-            Test
-          </span>
-          <div className="ms-auto">
-            <Button className="m-1">Save</Button>
-            <Button className="m-1">Cancel</Button>
-          </div>
-        </div>
       </div>
     </div>
   );

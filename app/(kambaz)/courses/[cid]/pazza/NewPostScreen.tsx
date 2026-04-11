@@ -10,32 +10,13 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 import { usePazzaContext } from "./PazzaContext";
+import folders from "./database/folders";
 
 export default function NewPostScreen() {
   const [value, setValue] = useState("simple text");
   const { setPage } = usePazzaContext();
 
-  const folders = [
-    "HW1",
-    "HW2",
-    "HW3",
-    "HW4",
-    "HW5",
-    "HW6",
-    "exam",
-    "logistics",
-  ];
-
-  const [selected, setSelected] = useState([
-    false,
-    true,
-    true,
-    false,
-    false,
-    false,
-    true,
-    false,
-  ]);
+  const [selected, setSelected] = useState<string[]>([]);
 
   return (
     <div>
@@ -62,19 +43,23 @@ export default function NewPostScreen() {
         <div className="pt-3">
           Select Folders
           <div className="d-flex flex-wrap gap-2 pt-1">
-            {folders.map((folder, index) => {
+            {folders.map((folder) => {
+              const isSelected = selected.includes(folder.id);
+
               return (
                 <span
-                  className={`folder-button ${selected[index] && "selected"}`}
-                  key={folder}
+                  className={`folder-button ${isSelected && "selected"}`}
+                  key={folder.id}
                   role="button"
-                  onClick={() =>
-                    setSelected((prev) =>
-                      prev.map((v, i) => (i === index ? !v : v)),
-                    )
-                  }
+                  onClick={() => {
+                    if (isSelected) {
+                      setSelected(selected.filter((fid) => fid !== folder.id));
+                    } else {
+                      setSelected([...selected, folder.id]);
+                    }
+                  }}
                 >
-                  {folder}
+                  {folder.name}
                 </span>
               );
             })}

@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import {
   FaChevronDown,
+  FaChevronLeft,
   FaChevronRight,
   FaI,
   FaNewspaper,
@@ -12,6 +13,7 @@ import { useState } from "react";
 export default function PostNavigation() {
   const { setPage } = usePazzaContext();
   const [expanded, setExpanded] = useState([true, true, false]);
+  const [showControls, setShowControls] = useState(true);
 
   const postLists = [
     {
@@ -48,8 +50,30 @@ export default function PostNavigation() {
     },
   ];
 
+  if (!showControls) {
+    return (
+      <div className="bg-secondary border border-dark">
+        <div>
+          <FaChevronRight
+            role="button"
+            className="m-2"
+            onClick={() => setShowControls(true)}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-secondary border border-dark">
+      <div>
+        <FaChevronLeft
+          role="button"
+          className="m-2"
+          onClick={() => setShowControls(false)}
+        />
+      </div>
+
       <div className="d-flex align-items-center p-1">
         <Button className="m-1" onClick={() => setPage("new_post")}>
           <FaNewspaper /> New Post

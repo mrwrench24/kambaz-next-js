@@ -5,6 +5,7 @@ import PazzaNavigation from "./Navigation";
 import FolderFilters from "./FolderFilters";
 import PostNavigation from "./PostNavigation";
 import { PazzaProvider } from "./PazzaContext";
+import PostNavigationControls from "./PostNavigationControls";
 
 export default function PazzaLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();
@@ -17,8 +18,7 @@ export default function PazzaLayout({ children }: { children: ReactNode }) {
           <FolderFilters />
         </div>
         <div className="d-flex">
-          {/*  */}
-          <div style={{ width: "400px", minWidth: "400px" }}>
+          <div>
             <PostNavigation />
           </div>
 
