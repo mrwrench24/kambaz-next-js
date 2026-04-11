@@ -1,14 +1,17 @@
 import { Button } from "react-bootstrap";
 import {
+  FaBars,
   FaChevronDown,
   FaChevronLeft,
   FaChevronRight,
   FaI,
   FaNewspaper,
+  FaS,
 } from "react-icons/fa6";
 import "./index.css";
 import { usePazzaContext } from "./PazzaContext";
 import { useState } from "react";
+import posts from "./database/posts";
 
 export default function PostNavigation() {
   const { setPage } = usePazzaContext();
@@ -18,35 +21,15 @@ export default function PostNavigation() {
   const postLists = [
     {
       title: "Today",
-      posts: [
-        {
-          title: "post1",
-          description:
-            "post1 description which is pretty long and i want to make sure this is handled okay and maybe its not!",
-        },
-      ],
+      posts: [posts[0]],
     },
     {
       title: "Yesterday",
-      posts: [
-        {
-          title: "post2",
-          description: "post2 description",
-        },
-      ],
+      posts: [posts[1]],
     },
     {
       title: "Last Week",
-      posts: [
-        {
-          title: "post3",
-          description: "post3 description",
-        },
-        {
-          title: "post4",
-          description: "post4 description",
-        },
-      ],
+      posts: [posts[2]],
     },
   ];
 
@@ -111,18 +94,28 @@ export default function PostNavigation() {
                       <div
                         key={post.title}
                         className="post-link border border-dark p-1 ps-3 d-flex align-items-start"
-                        onClick={() => setPage("post")}
+                        onClick={() => setPage(post)}
                       >
                         <div className="flex-fill">
                           <div className="fw-bold">{post.title}</div>
                           <div className="text-truncate post-description">
-                            {post.description}
+                            {post.content}
                           </div>
                         </div>
                         <div className="post-info text-end">
                           <div>02:43 pm</div>
                           <div>
-                            <FaI className="instructor-i" />
+                            {post.instructorAnswer && (
+                              <FaI className="instructor-i" />
+                            )}
+
+                            {post.studentAnswer && !post.instructorAnswer && (
+                              <FaS className="student-s" />
+                            )}
+
+                            {post.postType === "note" && (
+                              <FaBars className="note-lines" />
+                            )}
                           </div>
                         </div>
                       </div>

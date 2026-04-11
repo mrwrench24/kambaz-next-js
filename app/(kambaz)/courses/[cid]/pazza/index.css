@@ -24,6 +24,19 @@
 .instructor-i {
   background-color: orange;
   padding: 2px;
+  border-radius: 25%;
+}
+
+.student-s {
+  background-color: lightgreen;
+  padding: 2px;
+  border-radius: 25%;
+}
+
+.note-lines {
+  background-color: lightgray;
+  padding: 1.75px;
+  border-radius: 25%;
 }
 
 .action-button {

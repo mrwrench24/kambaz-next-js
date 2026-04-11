@@ -1,7 +1,8 @@
 "use client";
 import { createContext, useContext, useState } from "react";
+import { Post } from "./types/types";
 
-export type PageState = "new_post" | "cag" | "post" | "manage_class";
+export type PageState = "new_post" | "cag" | Post | "manage_class";
 type PazzaState = {
   page: PageState;
   setPage: (p: PageState) => void;
