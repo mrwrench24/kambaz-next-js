@@ -1,6 +1,7 @@
 import { Dropdown } from "react-bootstrap";
 import { Followup } from "../types/types";
 import { useState } from "react";
+import PostFollowupReply from "./PostFollowupReply";
 
 export default function PostFollowup({ followup }: { followup: Followup }) {
   const [resolved, setResolved] = useState(followup.resolved);
@@ -61,27 +62,7 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
             <b>{followup.author}</b> 3 hours ago
             <div>{followup.content}</div>
             {followup.replies.map((reply) => {
-              return (
-                <div key={reply.id} className="p-2">
-                  <div className="d-flex align-items-center">
-                    <div>
-                      <b>{reply.author}</b> 2 hours ago
-                      <p>{reply.content}</p>
-                    </div>
-                    <div className="action-button ms-auto">
-                      <Dropdown>
-                        <Dropdown.Toggle variant="outline-primary" size="sm">
-                          Actions
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item>Edit</Dropdown.Item>
-                          <Dropdown.Item>Delete</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </div>
-                  </div>
-                </div>
-              );
+              return <PostFollowupReply key={reply.id} reply={reply} />;
             })}
           </div>
         </div>
