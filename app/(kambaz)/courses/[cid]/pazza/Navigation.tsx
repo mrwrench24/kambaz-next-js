@@ -1,9 +1,15 @@
 "use client";
 import { FaPerson } from "react-icons/fa6";
 import { PageState, usePazzaContext } from "./PazzaContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function PazzaNavigation({ cid }: { cid: string }) {
   const { page, setPage } = usePazzaContext();
+
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
 
   // pages == when should it be "selected"
   const links: { title: string; page: PageState; pages: PageState[] }[] = [
@@ -30,7 +36,9 @@ export default function PazzaNavigation({ cid }: { cid: string }) {
         })}
 
         <FaPerson className="m-2" />
-        <span>Jake Squatrito</span>
+        <span>
+          {currentUser.firstName} {currentUser.lastName}
+        </span>
       </div>
     </div>
   );

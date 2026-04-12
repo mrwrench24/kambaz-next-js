@@ -29,7 +29,7 @@ const posts: Post[] = [
         replies: [
           {
             id: "fr1",
-            author: "Someone Else",
+            author: "234",
             content: "Yes, I am also curious!",
           },
         ],

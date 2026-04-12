@@ -1,15 +1,29 @@
-import { Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import { Followup } from "../types/types";
 import { useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function PostFollowup({ followup }: { followup: Followup }) {
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
   const [resolved, setResolved] = useState(followup.resolved);
+
+  const [editing, setEditing] = useState(false);
+  const [editValue, setEditValue] = useState(followup.content);
+
+  console.log(currentUser.role);
+
+  const canEdit =
+    currentUser.role !== "STUDENT" || followup.author === currentUser._id;
 
   return (
     <div className="bg-secondary p-1 border border-dark m-1" key={followup.id}>
-      <div className="bg-secondary">
-        <div className="d-flex align-items-center">
+      <div className="bg-secondary m-1">
+        <div className="d-flex align-items-center m-1">
           <div className="flex-grow-1">
             <span>
               <span className="ps-2">
@@ -42,25 +56,44 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
             </span>
           </div>
 
-          <div>
-            <div className="action-button ms-auto">
-              <Dropdown>
-                <Dropdown.Toggle variant="outline-primary" size="sm">
-                  Actions
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item>Edit</Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+          {canEdit && (
+            <div>
+              <div className="action-button ms-auto">
+                <Dropdown>
+                  <Dropdown.Toggle variant="outline-primary" size="sm">
+                    Actions
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => setEditing(true)}>
+                      Edit
+                    </Dropdown.Item>
+                    <Dropdown.Item>Delete</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="d-flex align-items-center">
           <div>
-            <b>{followup.author}</b> 3 hours ago
-            <div>{followup.content}</div>
+            {editing ? (
+              <div>
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                />
+                <Button className="m-2" onClick={() => setEditing(false)}>
+                  Save
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <b>{followup.author}</b> 2 hours ago
+                <p>{followup.content}</p>
+              </div>
+            )}
             {followup.replies.map((reply) => {
               return <PostFollowupReply key={reply.id} reply={reply} />;
             })}
@@ -68,7 +101,7 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
         </div>
       </div>
 
-      <div className="p-2 ms-2">
+      <div className="p-1 ms-2">
         <input
           type="text"
           placeholder="Reply to this followup discussion..."

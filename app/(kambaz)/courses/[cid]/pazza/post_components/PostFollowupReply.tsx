@@ -3,16 +3,6 @@ import { FollowupReply } from "../types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { useState } from "react";
-import {
-  BtnBold,
-  BtnBulletList,
-  BtnItalic,
-  BtnStrikeThrough,
-  BtnUnderline,
-  Editor,
-  EditorProvider,
-  Toolbar,
-} from "react-simple-wysiwyg";
 
 export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
   const { currentUser } = useSelector(
@@ -23,10 +13,10 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
   const [editValue, setEditValue] = useState(reply.content);
 
   const canEdit =
-    currentUser.role !== "student" || reply.author === currentUser._id;
+    currentUser.role !== "STUDENT" || reply.author === currentUser._id;
 
   return (
-    <div key={reply.id} className="p-2">
+    <div key={reply.id} className="p-1 ms-2">
       <div className="d-flex align-items-center">
         {editing ? (
           <div>
