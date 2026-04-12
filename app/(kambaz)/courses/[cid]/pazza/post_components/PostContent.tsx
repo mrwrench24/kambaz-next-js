@@ -14,6 +14,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import folders from "../database/folders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import Commendations from "./Commendations";
 
 export default function PostContent({ post }: { post: Post }) {
   const [editing, setEditing] = useState(false);
@@ -99,10 +100,10 @@ export default function PostContent({ post }: { post: Post }) {
           </Button>
         )}
         <div className="ps-2">
-          <span role="button" className="link-primary">
-            good {post.postType}
-          </span>{" "}
-          | {post.commenders.length}
+          <Commendations
+            initialCommenders={post.commenders}
+            commendationsFor={post.postType}
+          />
         </div>
       </div>
     </div>

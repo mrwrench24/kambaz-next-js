@@ -1,24 +1,14 @@
-import { useState } from "react";
-import { Button, Dropdown } from "react-bootstrap";
-import { FaChevronDown } from "react-icons/fa6";
-import {
-  BtnBold,
-  BtnBulletList,
-  BtnItalic,
-  BtnStrikeThrough,
-  BtnUnderline,
-  Editor,
-  EditorProvider,
-  Toolbar,
-} from "react-simple-wysiwyg";
 import { Post } from "./types/types";
-import folders from "./database/folders";
-import AnswerControlBar from "./AnswerControlBar";
 import PostFollowup from "./post_components/PostFollowup";
 import PostContent from "./post_components/PostContent";
+import AnswerDisplay from "./post_components/AnswerDisplay";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function PostScreen({ post }: { post: Post }) {
-  const [value, setValue] = useState("Test data");
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
 
   return (
     <div>
@@ -40,25 +30,10 @@ export default function PostScreen({ post }: { post: Post }) {
             <div id="pazza-student-answer" className="border border-dark">
               <h5 className="p-1 ps-2">the students' answer</h5>
 
-              {post.studentAnswer ? (
-                <AnswerControlBar
-                  contributors={["Eric Cartman", "Stan Marsh"]}
-                />
-              ) : (
-                <div className="m-2">
-                  <EditorProvider>
-                    <Editor value={value} className="p-2">
-                      <Toolbar>
-                        <BtnBold />
-                        <BtnItalic />
-                        <BtnUnderline />
-                        <BtnBulletList />
-                        <BtnStrikeThrough />
-                      </Toolbar>
-                    </Editor>
-                  </EditorProvider>
-                </div>
-              )}
+              <AnswerDisplay
+                answer={post.studentAnswer}
+                canEdit={currentUser.role === "STUDENT"}
+              />
             </div>
 
             <div
@@ -66,23 +41,10 @@ export default function PostScreen({ post }: { post: Post }) {
               className="border border-dark pt-1 mt-2"
             >
               <h5 className="p-1 ps-2">the instructors' answer</h5>
-              {post.instructorAnswer ? (
-                <AnswerControlBar contributors={["Eric Cartman"]} />
-              ) : (
-                <div className="m-2">
-                  <EditorProvider>
-                    <Editor value={value} className="p-2">
-                      <Toolbar>
-                        <BtnBold />
-                        <BtnItalic />
-                        <BtnUnderline />
-                        <BtnBulletList />
-                        <BtnStrikeThrough />
-                      </Toolbar>
-                    </Editor>
-                  </EditorProvider>
-                </div>
-              )}
+              <AnswerDisplay
+                answer={post.instructorAnswer}
+                canEdit={currentUser.role !== "STUDENT"}
+              />
             </div>
           </div>
         )}
