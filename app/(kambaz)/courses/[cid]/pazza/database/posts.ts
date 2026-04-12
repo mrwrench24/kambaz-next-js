@@ -8,7 +8,7 @@ const posts: Post[] = [
     content:
       "Hey, this is a Note that I am testing in the app for now. Hey, this is a Note that I am testing in the app for now. Hey, this is a Note that I am testing in the app for now. Hey, this is a Note that I am testing in the app for now. Hey, this is a Note that I am testing in the app for now. Hey, this is a Note that I am testing in the app for now.",
     postType: "note",
-    author: "Stan Marsh",
+    author: "234",
     commenders: ["u2"],
     folders: ["1", "2"],
     studentAnswer: null,
@@ -23,7 +23,7 @@ const posts: Post[] = [
       },
       {
         id: "f2",
-        resolved: true,
+        resolved: false,
         author: "Ada Lovelace",
         content: "Again, updates on this?",
         replies: [
@@ -42,7 +42,7 @@ const posts: Post[] = [
     title: "Test Post 2",
     content: "Hey, this is a post #2 that I am testing in the app for now.",
     postType: "question",
-    author: "Alan Turing",
+    author: "777",
     commenders: ["u2", "u3", "u4"],
     folders: ["2", "3"],
     studentAnswer: null,
