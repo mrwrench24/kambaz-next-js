@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Post } from "../types/types";
+import { Folder, Post } from "../types/types";
 import {
   BtnBold,
   BtnBulletList,
@@ -11,7 +11,6 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 import { Button, Dropdown } from "react-bootstrap";
-import folders from "../database/folders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import Commendations from "./Commendations";
@@ -20,9 +19,12 @@ export default function PostContent({ post }: { post: Post }) {
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(post.content);
 
-  const postFolders = post.folders.map((folderId) =>
-    folders.find((folder) => folder.id === folderId),
-  );
+  const { folders } = useSelector((state: RootState) => state.folderReducer);
+
+  const postFolders = post.folders
+    .map((folderId) => folders.find((folder) => folder.id === folderId))
+    // for now, if the folder went missing, just safely ignore it / filter it out
+    .filter((f): f is Folder => f !== undefined);
 
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,

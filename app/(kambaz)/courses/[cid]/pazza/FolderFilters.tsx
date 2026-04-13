@@ -1,8 +1,11 @@
 import { useState } from "react";
-import folders from "./database/folders";
 import { Folder } from "./types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function FolderFilters() {
+  const { folders } = useSelector((state: RootState) => state.folderReducer);
+
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
 
   return (

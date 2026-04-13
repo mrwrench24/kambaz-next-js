@@ -10,19 +10,19 @@ const posts: Post[] = [
     postType: "note",
     author: "234",
     commenders: ["u2"],
-    folders: ["1", "2"],
+    folders: ["f1", "f2"],
     studentAnswer: null,
     instructorAnswer: null,
     followups: [
       {
-        id: "f1",
+        id: "fu1",
         resolved: true,
         author: "Ada Lovelace",
         content: "Any updates on this?",
         replies: [],
       },
       {
-        id: "f2",
+        id: "fu2",
         resolved: false,
         author: "Ada Lovelace",
         content: "Again, updates on this?",
@@ -44,7 +44,7 @@ const posts: Post[] = [
     postType: "question",
     author: "777",
     commenders: ["u2", "u3", "u4"],
-    folders: ["2", "3"],
+    folders: ["f2", "f3"],
     studentAnswer: null,
     instructorAnswer: {
       content: "This is an instructor answer.",
@@ -61,7 +61,7 @@ const posts: Post[] = [
     postType: "question",
     author: "Eric Cartman",
     commenders: ["u2"],
-    folders: ["1"],
+    folders: ["f1"],
     studentAnswer: {
       content: "This is a student answer.",
       contributors: ["u2"],
