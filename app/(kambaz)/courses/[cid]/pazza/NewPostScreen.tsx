@@ -75,6 +75,9 @@ export default function NewPostScreen() {
             />{" "}
             Individual Student(s) / Instructors
           </span>
+          {newPost.postTo === "individual" && (
+            <div>Well... don't forget to do this!</div>
+          )}
         </div>
 
         <div className="pt-3">
