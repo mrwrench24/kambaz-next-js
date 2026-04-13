@@ -70,6 +70,26 @@ const posts: Post[] = [
     instructorAnswer: null,
     followups: [],
   },
+  {
+    id: "p4",
+    postNumber: 54,
+    title: "Only for Ada",
+    content: "This post is only visible to the one and only Ada Lovelace",
+    postType: "question",
+    author: "234",
+    commenders: ["u2"],
+    // not yet implemented... but remember to do this!
+    // (since this'll be handled on the backend)
+    onlyVisibleTo: ["777"],
+    folders: ["f1"],
+    studentAnswer: {
+      content: "This is a student answer.",
+      contributors: ["u2"],
+      commenders: ["u1"],
+    },
+    instructorAnswer: null,
+    followups: [],
+  },
 ];
 
 export default posts;
