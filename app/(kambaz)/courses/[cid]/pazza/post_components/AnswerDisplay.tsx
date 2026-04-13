@@ -10,7 +10,7 @@ import {
 } from "react-simple-wysiwyg";
 import { Answer } from "../types/types";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import Commendations from "./Commendations";
 
 export default function AnswerDisplay({
@@ -26,7 +26,24 @@ export default function AnswerDisplay({
   if (answer && !editing) {
     return (
       <div>
-        <div className="p-2">{answer.content}</div>
+        <div className="d-flex align-items-center">
+          <div className="p-2">{answer.content}</div>
+          {canEdit && (
+            <div className="ms-auto m-2">
+              <Dropdown>
+                <Dropdown.Toggle variant="outline-primary" size="sm">
+                  Actions
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setEditing(true)}>
+                    Edit
+                  </Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
+        </div>
         <div className="bg-secondary ps-2 p-1 d-flex align-items-center">
           {canEdit && <Button onClick={() => setEditing(true)}>Edit</Button>}
           <div className="ps-2">
