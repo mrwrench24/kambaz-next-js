@@ -5,6 +5,7 @@ import accountReducer from "./account/reducer";
 import assignmentReducer from "./courses/[cid]/assignments/reducer";
 import enrollmentReducer from "./dashboard/reducer";
 import folderReducer from "./courses/[cid]/pazza/folderReducer";
+import postReducer from "./courses/[cid]/pazza/postReducer";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     assignmentReducer,
     enrollmentReducer,
     folderReducer,
+    postReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

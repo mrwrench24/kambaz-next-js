@@ -11,27 +11,15 @@ import {
 import "./index.css";
 import { usePazzaContext } from "./PazzaContext";
 import { useState } from "react";
-import posts from "./database/posts";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function PostNavigation() {
   const { setPage } = usePazzaContext();
   const [expanded, setExpanded] = useState([true, true, false]);
   const [showControls, setShowControls] = useState(true);
 
-  const postLists = [
-    {
-      title: "Today",
-      posts: [posts[0]],
-    },
-    {
-      title: "Yesterday",
-      posts: [posts[1]],
-    },
-    {
-      title: "Last Week",
-      posts: [posts[2]],
-    },
-  ];
+  const { sections } = useSelector((state: RootState) => state.postReducer);
 
   if (!showControls) {
     return (
@@ -65,7 +53,7 @@ export default function PostNavigation() {
       </div>
 
       <div>
-        {postLists.map((section, index) => {
+        {sections.map((section, index) => {
           return (
             <div key={section.title}>
               <div

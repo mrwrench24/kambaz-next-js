@@ -43,3 +43,8 @@ export type Post = {
   instructorAnswer: Answer | null;
   followups: Followup[];
 };
+
+export type PostSection = {
+  title: string;
+  posts: Post[];
+};
