@@ -19,13 +19,7 @@ const initialState: FollowupState = {
       resolved: false,
       author: "Ada Lovelace",
       content: "Again, updates on this?",
-      replies: [
-        {
-          id: "fr1",
-          author: "234",
-          content: "Yes, I am also curious!",
-        },
-      ],
+      replies: ["fr1"],
     },
   ],
 };
@@ -48,11 +42,17 @@ const followupsSlice = createSlice({
 
       state.followups = [...state.followups, newFollowup];
     },
+    updateFollowup: (state, action: PayloadAction<Followup>) => {
+      state.followups = state.followups.map((f) =>
+        f.id === action.payload.id ? action.payload : f,
+      );
+    },
     deleteFollowup: (state, action: PayloadAction<string>) => {
       state.followups = state.followups.filter((f) => f.id !== action.payload);
     },
   },
 });
 
-export const { createFollowup, deleteFollowup } = followupsSlice.actions;
+export const { createFollowup, updateFollowup, deleteFollowup } =
+  followupsSlice.actions;
 export default followupsSlice.reducer;

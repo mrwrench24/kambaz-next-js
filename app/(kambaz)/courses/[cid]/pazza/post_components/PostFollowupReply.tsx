@@ -1,19 +1,27 @@
 import { Button, Dropdown } from "react-bootstrap";
-import { FollowupReply } from "../types/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { useState } from "react";
+import { deleteReply, updateReply } from "../followupReplyReducer";
 
-export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
+export default function PostFollowupReply({ replyId }: { replyId: string }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
+  const { followupReplies } = useSelector(
+    (state: RootState) => state.followupRepliesReducer,
+  );
+
+  const reply = followupReplies.find((f) => f.id === replyId);
 
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(reply.content);
 
   const canEdit =
     currentUser.role !== "STUDENT" || reply.author === currentUser._id;
+
+  const dispatch = useDispatch();
 
   return (
     <div key={reply.id} className="p-1 ms-2">
@@ -25,7 +33,13 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
               value={editValue}
               onChange={(e) => setEditValue(e.target.value)}
             />
-            <Button className="m-2" onClick={() => setEditing(false)}>
+            <Button
+              className="m-2"
+              onClick={() => {
+                dispatch(updateReply({ ...reply, content: editValue }));
+                setEditing(false);
+              }}
+            >
               Save
             </Button>
           </div>
@@ -46,7 +60,9 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
                 <Dropdown.Item onClick={() => setEditing(true)}>
                   Edit
                 </Dropdown.Item>
-                <Dropdown.Item>Delete</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(deleteReply(reply.id))}>
+                  Delete
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

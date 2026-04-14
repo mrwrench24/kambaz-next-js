@@ -1,9 +1,9 @@
-import { Button, Dropdown } from "react-bootstrap";
+import { Button, Dropdown, FormControl } from "react-bootstrap";
 import { useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { deleteFollowup } from "../followupReducer";
+import { deleteFollowup, updateFollowup } from "../followupReducer";
 
 export default function PostFollowup({ followupId }: { followupId: string }) {
   const { currentUser } = useSelector(
@@ -16,8 +16,6 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
 
   const followup = followups.find((f) => f.id === followupId);
 
-  const [resolved, setResolved] = useState(followup.resolved);
-
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(followup.content);
   const [replyValue, setReplyValue] = useState("");
@@ -26,6 +24,10 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
     currentUser.role !== "STUDENT" || followup.author === currentUser._id;
 
   const dispatch = useDispatch();
+
+  function handleResolvedChange(setTo: boolean) {
+    dispatch(updateFollowup({ ...followup, resolved: setTo }));
+  }
 
   return (
     <div className="bg-secondary p-1 border border-dark m-1" key={followup.id}>
@@ -36,10 +38,10 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
               <span className="ps-2">
                 <input
                   type="radio"
-                  id={`${followup.id}-resolved`}
+                  id={`${name}-resolved`}
                   name={followup.id}
-                  checked={resolved}
-                  onChange={() => setResolved(true)}
+                  checked={followup.resolved}
+                  onChange={() => handleResolvedChange(true)}
                 />
                 <label htmlFor={`${name}-resolved`} className="ps-1">
                   {" "}
@@ -52,8 +54,8 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                   type="radio"
                   id={`${name}-unresolved`}
                   name={followup.id}
-                  checked={!resolved}
-                  onChange={() => setResolved(false)}
+                  checked={!followup.resolved}
+                  onChange={() => handleResolvedChange(false)}
                 />
                 <label htmlFor={`${name}-unresolved`} className="ps-1">
                   {" "}
@@ -95,7 +97,15 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                 />
-                <Button className="m-2" onClick={() => setEditing(false)}>
+                <Button
+                  className="m-2"
+                  onClick={() => {
+                    dispatch(
+                      updateFollowup({ ...followup, content: editValue }),
+                    );
+                    setEditing(false);
+                  }}
+                >
                   Save
                 </Button>
               </div>
@@ -105,8 +115,8 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                 <p>{followup.content}</p>
               </div>
             )}
-            {followup.replies.map((reply) => {
-              return <PostFollowupReply key={reply.id} reply={reply} />;
+            {followup.replies.map((replyId) => {
+              return <PostFollowupReply key={replyId} replyId={replyId} />;
             })}
           </div>
         </div>
@@ -117,7 +127,6 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
           onSubmit={(e) => {
             e.preventDefault();
 
-            // TODO: moving the database around
             setReplyValue("");
           }}
         >

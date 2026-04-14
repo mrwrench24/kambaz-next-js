@@ -7,6 +7,7 @@ import enrollmentReducer from "./dashboard/reducer";
 import folderReducer from "./courses/[cid]/pazza/folderReducer";
 import postReducer from "./courses/[cid]/pazza/postReducer";
 import followupReducer from "./courses/[cid]/pazza/followupReducer";
+import followupRepliesReducer from "./courses/[cid]/pazza/followupReplyReducer";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     folderReducer,
     postReducer,
     followupReducer,
+    followupRepliesReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
