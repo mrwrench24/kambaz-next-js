@@ -11,7 +11,7 @@ export default function PazzaLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();
 
   return (
-    <PazzaProvider>
+    <PazzaProvider cid={cid as string}>
       <div id="wd-pazza" className="pe-4">
         <div>
           <PazzaNavigation cid={cid as string} />

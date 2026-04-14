@@ -2,9 +2,16 @@
 import { RootState } from "@/app/(kambaz)/store";
 import { FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { usePazzaContext } from "./PazzaContext";
 
 export default function CAGScreen() {
+  const { cid } = usePazzaContext();
   const { sections } = useSelector((state: RootState) => state.postReducer);
+  const { enrollments } = useSelector(
+    (state: RootState) => state.enrollmentReducer,
+  );
+
+  const numEnrollments = enrollments.filter((e) => e.course === cid).length;
 
   const numPosts = sections.reduce(
     (count, section) => (count += section.posts.length),
@@ -39,10 +46,10 @@ export default function CAGScreen() {
         </div>
 
         <div className="ms-auto pe-2">
-          <div>{numPosts} total posts</div>
-          <div>{numInstructorAnswer} instructor responses</div>
-          <div>{numStudentAnswer} student responses</div>
-          <div>123414512345 students enrolled</div>
+          <div>{numPosts} total post(s)</div>
+          <div>{numInstructorAnswer} instructor response(s)</div>
+          <div>{numStudentAnswer} student response(s)</div>
+          <div>{numEnrollments} student(s) enrolled</div>
         </div>
       </div>
     </div>
