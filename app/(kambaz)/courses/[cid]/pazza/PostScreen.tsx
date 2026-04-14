@@ -4,6 +4,7 @@ import AnswerDisplay from "./post_components/AnswerDisplay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./postReducer";
+import { useState } from "react";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
@@ -11,6 +12,8 @@ export default function PostScreen({ postId }: { postId: string }) {
   );
 
   const { sections } = useSelector((state: RootState) => state.postReducer);
+
+  const [newFollowup, setNewFollowup] = useState("");
 
   const post = sections
     .find((section) => section.posts.map((post) => post.id).includes(postId))
@@ -134,11 +137,37 @@ export default function PostScreen({ postId }: { postId: string }) {
             return <PostFollowup key={followup.id} followup={followup} />;
           })}
 
-          <input
-            type="text"
-            placeholder="A new followup discussion..."
-            className="mt-2 flex-fill form-control"
-          />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+
+              dispatch(
+                updatePost({
+                  ...post,
+                  followups: [
+                    ...post.followups,
+                    {
+                      id: `${Math.random()}`,
+                      resolved: false,
+                      author: currentUser._id,
+                      content: newFollowup,
+                      replies: [],
+                    },
+                  ],
+                }),
+              );
+
+              setNewFollowup("");
+            }}
+          >
+            <input
+              type="text"
+              placeholder="A new followup discussion..."
+              className="mt-2 flex-fill form-control"
+              value={newFollowup}
+              onChange={(e) => setNewFollowup(e.target.value)}
+            />
+          </form>
         </div>
       </div>
     </div>

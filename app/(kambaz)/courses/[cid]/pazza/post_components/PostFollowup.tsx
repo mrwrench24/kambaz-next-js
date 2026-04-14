@@ -2,8 +2,9 @@ import { Button, Dropdown } from "react-bootstrap";
 import { Followup } from "../types/types";
 import { useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import { updatePost } from "../postReducer";
 
 export default function PostFollowup({ followup }: { followup: Followup }) {
   const { currentUser } = useSelector(
@@ -14,11 +15,12 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
 
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(followup.content);
-
-  console.log(currentUser.role);
+  const [replyValue, setReplyValue] = useState("");
 
   const canEdit =
     currentUser.role !== "STUDENT" || followup.author === currentUser._id;
+
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-secondary p-1 border border-dark m-1" key={followup.id}>
@@ -102,11 +104,22 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
       </div>
 
       <div className="p-1 ms-2">
-        <input
-          type="text"
-          placeholder="Reply to this followup discussion..."
-          className="flex-fill form-control"
-        />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            // TODO: moving the database around
+            setReplyValue("");
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Reply to this followup discussion..."
+            className="flex-fill form-control"
+            value={replyValue}
+            onChange={(e) => setReplyValue(e.target.value)}
+          />
+        </form>
       </div>
     </div>
   );
