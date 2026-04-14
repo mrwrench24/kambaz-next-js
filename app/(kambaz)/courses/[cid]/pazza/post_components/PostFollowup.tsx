@@ -4,6 +4,7 @@ import PostFollowupReply from "./PostFollowupReply";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { deleteFollowup, updateFollowup } from "../followupReducer";
+import { createReply } from "../followupReplyReducer";
 
 export default function PostFollowup({ followupId }: { followupId: string }) {
   const { currentUser } = useSelector(
@@ -96,6 +97,8 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
+                  style={{ minWidth: "400px" }}
+                  className="p-1"
                 />
                 <Button
                   className="m-2"
@@ -126,6 +129,23 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+
+            const id = `${Math.random()}`;
+
+            dispatch(
+              createReply({
+                id,
+                author: currentUser._id,
+                content: replyValue,
+              }),
+            );
+
+            dispatch(
+              updateFollowup({
+                ...followup,
+                replies: [...followup.replies, id],
+              }),
+            );
 
             setReplyValue("");
           }}

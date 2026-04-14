@@ -32,6 +32,8 @@ export default function PostFollowupReply({ replyId }: { replyId: string }) {
               type="text"
               value={editValue}
               onChange={(e) => setEditValue(e.target.value)}
+              style={{ minWidth: "400px" }}
+              className="p-1"
             />
             <Button
               className="m-2"
