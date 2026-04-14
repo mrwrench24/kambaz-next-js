@@ -14,12 +14,17 @@ import { Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import Commendations from "./Commendations";
-import { deletePost } from "../postReducer";
+import { deletePost, updatePost } from "../postReducer";
 import { usePazzaContext } from "../PazzaContext";
 
-export default function PostContent({ post }: { post: Post }) {
+export default function PostContent({ postId }: { postId: string }) {
+  const { sections } = useSelector((state: RootState) => state.postReducer);
+  const post = sections
+    .find((section) => section.posts.map((post) => post.id).includes(postId))
+    .posts.find((post) => post.id === postId);
+
   const [editing, setEditing] = useState(false);
-  const [editValue, setEditValue] = useState(post.content);
+  const [editedContent, setEditedContent] = useState(post.content);
 
   const { folders } = useSelector((state: RootState) => state.folderReducer);
 
@@ -77,9 +82,9 @@ export default function PostContent({ post }: { post: Post }) {
           <div className="m-2">
             <EditorProvider>
               <Editor
-                value={editValue}
+                value={editedContent}
                 className="p-3"
-                onChange={(e) => setEditValue(e.target.value)}
+                onChange={(e) => setEditedContent(e.target.value)}
               >
                 <Toolbar>
                   <BtnBold />
@@ -110,7 +115,16 @@ export default function PostContent({ post }: { post: Post }) {
 
       <div className="bg-secondary ps-2 p-1 d-flex align-items-center">
         {canEdit && (
-          <Button onClick={() => setEditing(!editing)}>
+          <Button
+            onClick={() => {
+              if (editing) {
+                dispatch(updatePost({ ...post, content: editedContent }));
+                setEditing(false);
+              } else {
+                setEditing(true);
+              }
+            }}
+          >
             {editing ? "Save" : "Edit"}
           </Button>
         )}

@@ -64,8 +64,15 @@ const postsSlice = createSlice({
         return section.posts.length !== 0;
       });
     },
+    updatePost: (state, action: PayloadAction<Post>) => {
+      state.sections.forEach((section) => {
+        section.posts = section.posts.map((post) =>
+          post.id === action.payload.id ? action.payload : post,
+        );
+      });
+    },
   },
 });
 
-export const { createPost, deletePost } = postsSlice.actions;
+export const { createPost, deletePost, updatePost } = postsSlice.actions;
 export default postsSlice.reducer;
