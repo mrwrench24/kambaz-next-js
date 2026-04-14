@@ -12,18 +12,21 @@ export type Answer = {
   commenders: string[];
 };
 
-export type FollowupReply = {
-  id: string;
-  author: string;
-  content: string;
+export type NewPost = {
+  postType: "question" | "note";
+  postTo: "all" | "individual";
+  authorId: string;
+  folders: string[];
+  // (title)
+  summary: string;
+  // (content)
+  details: string;
 };
 
-export type Followup = {
+export type PostSection = {
   id: string;
-  resolved: boolean;
-  author: string;
-  content: string;
-  replies: FollowupReply[];
+  title: string;
+  posts: Post[];
 };
 
 export type Post = {
@@ -42,22 +45,20 @@ export type Post = {
   folders: string[];
   studentAnswer: Answer | null;
   instructorAnswer: Answer | null;
-  followups: Followup[];
+  followups: string[];
 };
 
-export type PostSection = {
+/** Followups */
+export type FollowupReply = {
   id: string;
-  title: string;
-  posts: Post[];
+  author: string;
+  content: string;
 };
 
-export type NewPost = {
-  postType: "question" | "note";
-  postTo: "all" | "individual";
-  authorId: string;
-  folders: string[];
-  // (title)
-  summary: string;
-  // (content)
-  details: string;
+export type Followup = {
+  id: string;
+  resolved: boolean;
+  author: string;
+  content: string;
+  replies: FollowupReply[];
 };

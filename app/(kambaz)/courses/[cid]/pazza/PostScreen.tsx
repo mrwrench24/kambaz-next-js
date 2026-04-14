@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./postReducer";
 import { useState } from "react";
+import followups from "./database/followups";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
@@ -133,7 +134,13 @@ export default function PostScreen({ postId }: { postId: string }) {
         <div id="pazza-follow-up-discussions" className="mt-2">
           <h4>followup discussions</h4>
 
-          {post.followups.map((followup) => {
+          {post.followups.map((followupId) => {
+            const followup = followups.find((f) => f.id === followupId);
+
+            if (!followup) {
+              return;
+            }
+
             return <PostFollowup key={followup.id} followup={followup} />;
           })}
 
@@ -141,21 +148,21 @@ export default function PostScreen({ postId }: { postId: string }) {
             onSubmit={(e) => {
               e.preventDefault();
 
-              dispatch(
-                updatePost({
-                  ...post,
-                  followups: [
-                    ...post.followups,
-                    {
-                      id: `${Math.random()}`,
-                      resolved: false,
-                      author: currentUser._id,
-                      content: newFollowup,
-                      replies: [],
-                    },
-                  ],
-                }),
-              );
+              // dispatch(
+              //   updatePost({
+              //     ...post,
+              //     followups: [
+              //       ...post.followups,
+              //       {
+              //         id: `${Math.random()}`,
+              //         resolved: false,
+              //         author: currentUser._id,
+              //         content: newFollowup,
+              //         replies: [],
+              //       },
+              //     ],
+              //   }),
+              // );
 
               setNewFollowup("");
             }}

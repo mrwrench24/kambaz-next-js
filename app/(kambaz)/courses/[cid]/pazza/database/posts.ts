@@ -13,28 +13,7 @@ const posts: Post[] = [
     folders: ["f1", "f2"],
     studentAnswer: null,
     instructorAnswer: null,
-    followups: [
-      {
-        id: "fu1",
-        resolved: true,
-        author: "Ada Lovelace",
-        content: "Any updates on this?",
-        replies: [],
-      },
-      {
-        id: "fu2",
-        resolved: false,
-        author: "Ada Lovelace",
-        content: "Again, updates on this?",
-        replies: [
-          {
-            id: "fr1",
-            author: "234",
-            content: "Yes, I am also curious!",
-          },
-        ],
-      },
-    ],
+    followups: ["fu1", "fu2"],
   },
   {
     id: "p2",
