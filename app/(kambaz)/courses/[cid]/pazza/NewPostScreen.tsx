@@ -10,26 +10,25 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 import { usePazzaContext } from "./PazzaContext";
-import folders from "./database/folders";
-import { Folder } from "./types/types";
+import { NewPost } from "./types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "./postReducer";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function NewPostScreen() {
   const { setPage } = usePazzaContext();
 
-  const [newPost, setNewPost] = useState<{
-    postType: "question" | "note";
-    postTo: "all" | "individual";
-    // folder IDs
-    folders: string[];
-    summary: string;
-    details: string;
-  }>({
+  const [newPost, setNewPost] = useState<NewPost>({
     postType: "question",
     postTo: "all",
     folders: [],
     summary: "",
     details: "",
   });
+
+  const { folders } = useSelector((state: RootState) => state.folderReducer);
+
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -125,6 +124,10 @@ export default function NewPostScreen() {
             className="ms-2 flex-fill form-control"
             type="text"
             placeholder="A brief summary here..."
+            value={newPost.summary}
+            onChange={(e) =>
+              setNewPost({ ...newPost, summary: e.target.value })
+            }
           />
         </div>
 
@@ -150,7 +153,13 @@ export default function NewPostScreen() {
         </div>
 
         <span className="ms-5 pt-2">
-          <Button className="p-2 m-2" onClick={() => setPage("cag")}>
+          <Button
+            className="p-2 m-2"
+            onClick={() => {
+              dispatch(createPost(newPost));
+              setPage("cag");
+            }}
+          >
             Post My Question
           </Button>
           <Button className="p-2 m-2" onClick={() => setPage("cag")}>

@@ -48,3 +48,13 @@ export type PostSection = {
   title: string;
   posts: Post[];
 };
+
+export type NewPost = {
+  postType: "question" | "note";
+  postTo: "all" | "individual";
+  folders: string[];
+  // (title)
+  summary: string;
+  // (content)
+  details: string;
+};
