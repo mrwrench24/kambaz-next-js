@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./postReducer";
 import { useState } from "react";
+import { createFollowup } from "./followupReducer";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
@@ -150,21 +151,22 @@ export default function PostScreen({ postId }: { postId: string }) {
             onSubmit={(e) => {
               e.preventDefault();
 
-              // dispatch(
-              //   updatePost({
-              //     ...post,
-              //     followups: [
-              //       ...post.followups,
-              //       {
-              //         id: `${Math.random()}`,
-              //         resolved: false,
-              //         author: currentUser._id,
-              //         content: newFollowup,
-              //         replies: [],
-              //       },
-              //     ],
-              //   }),
-              // );
+              const id = `${Math.random()}`;
+
+              dispatch(
+                createFollowup({
+                  id,
+                  content: newFollowup,
+                  authorId: currentUser._id,
+                }),
+              );
+
+              dispatch(
+                updatePost({
+                  ...post,
+                  followups: [...post.followups, id],
+                }),
+              );
 
               setNewFollowup("");
             }}

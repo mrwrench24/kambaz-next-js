@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Followup } from "./types/types";
 
 interface FollowupState {
@@ -33,8 +33,23 @@ const initialState: FollowupState = {
 const followupsSlice = createSlice({
   name: "followups",
   initialState,
-  reducers: {},
+  reducers: {
+    createFollowup: (
+      state,
+      action: PayloadAction<{ id: string; content: string; authorId: string }>,
+    ) => {
+      const newFollowup: Followup = {
+        id: action.payload.id,
+        resolved: false,
+        author: action.payload.authorId,
+        content: action.payload.content,
+        replies: [],
+      };
+
+      state.followups = [...state.followups, newFollowup];
+    },
+  },
 });
 
-export const {} = followupsSlice.actions;
+export const { createFollowup } = followupsSlice.actions;
 export default followupsSlice.reducer;
