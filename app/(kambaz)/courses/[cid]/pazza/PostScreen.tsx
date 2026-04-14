@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./postReducer";
 import { useState } from "react";
-import followups from "./database/followups";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
@@ -13,6 +12,9 @@ export default function PostScreen({ postId }: { postId: string }) {
   );
 
   const { sections } = useSelector((state: RootState) => state.postReducer);
+  const { followups } = useSelector(
+    (state: RootState) => state.followupReducer,
+  );
 
   const [newFollowup, setNewFollowup] = useState("");
 
