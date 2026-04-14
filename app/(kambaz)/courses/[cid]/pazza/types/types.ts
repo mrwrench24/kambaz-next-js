@@ -52,6 +52,7 @@ export type PostSection = {
 export type NewPost = {
   postType: "question" | "note";
   postTo: "all" | "individual";
+  authorId: string;
   folders: string[];
   // (title)
   summary: string;

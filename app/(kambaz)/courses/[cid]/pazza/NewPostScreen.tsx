@@ -18,17 +18,34 @@ import { RootState } from "@/app/(kambaz)/store";
 export default function NewPostScreen() {
   const { setPage } = usePazzaContext();
 
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
   const [newPost, setNewPost] = useState<NewPost>({
     postType: "question",
     postTo: "all",
     folders: [],
     summary: "",
     details: "",
+    authorId: currentUser._id,
   });
+
+  const [showWarning, setShowWarning] = useState(false);
 
   const { folders } = useSelector((state: RootState) => state.folderReducer);
 
   const dispatch = useDispatch();
+
+  function handlePostClicked() {
+    if (newPost.summary.length === 0 || newPost.details.length === 0) {
+      setShowWarning(true);
+      return;
+    }
+
+    dispatch(createPost(newPost));
+    setPage("cag");
+  }
 
   return (
     <div>
@@ -54,6 +71,12 @@ export default function NewPostScreen() {
         </span>
       </div>
       <div className="p-2 light-blue-bg" id="post-create">
+        {showWarning && (
+          <div className="border border-danger p-2">
+            Fill out all the fields, please!
+          </div>
+        )}
+
         <div className="pt-2">
           Post To
           <span className="ps-4">
@@ -109,13 +132,15 @@ export default function NewPostScreen() {
               );
             })}
           </div>
-          <div
-            className="ps-5 pt-2 pb-1 link-primary"
-            role="button"
-            onClick={() => setPage("manage_class")}
-          >
-            Manage and reorder folders
-          </div>
+          {currentUser.role !== "STUDENT" && (
+            <div
+              className="ps-5 pt-2 pb-1 link-primary"
+              role="button"
+              onClick={() => setPage("manage_class")}
+            >
+              Manage and reorder folders
+            </div>
+          )}
         </div>
 
         <div className="d-flex align-items-center pt-3">
@@ -153,13 +178,7 @@ export default function NewPostScreen() {
         </div>
 
         <span className="ms-5 pt-2">
-          <Button
-            className="p-2 m-2"
-            onClick={() => {
-              dispatch(createPost(newPost));
-              setPage("cag");
-            }}
-          >
+          <Button className="p-2 m-2" onClick={handlePostClicked}>
             Post My Question
           </Button>
           <Button className="p-2 m-2" onClick={() => setPage("cag")}>

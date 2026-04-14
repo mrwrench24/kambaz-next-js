@@ -4,6 +4,7 @@ import { NewPost, Post, PostSection } from "./types/types";
 
 interface PostState {
   sections: PostSection[];
+  nextPostNumber: number;
 }
 
 const initialState: PostState = {
@@ -12,6 +13,7 @@ const initialState: PostState = {
     { title: "Yesterday", posts: [posts[1]] },
     { title: "Last Week", posts: [posts[2], posts[3]] },
   ],
+  nextPostNumber: 59,
 };
 
 const postsSlice = createSlice({
@@ -21,11 +23,11 @@ const postsSlice = createSlice({
     createPost: (state, action: PayloadAction<NewPost>) => {
       const postToAdd: Post = {
         id: `${Math.random()}`,
-        postNumber: 58,
+        postNumber: state.nextPostNumber,
         title: action.payload.summary,
         content: action.payload.details,
         postType: action.payload.postType,
-        author: "Somebody",
+        author: action.payload.authorId,
         commenders: [],
         // TODO: onlyVisibleTo
         folders: action.payload.folders,
@@ -40,7 +42,15 @@ const postsSlice = createSlice({
 
       if (todaySection) {
         todaySection.posts = [postToAdd, ...todaySection.posts];
+      } else {
+        // TODO: Test
+        state.sections = [
+          { title: "Today", posts: [postToAdd] },
+          ...state.sections,
+        ];
       }
+
+      state.nextPostNumber += 1;
     },
   },
 });
