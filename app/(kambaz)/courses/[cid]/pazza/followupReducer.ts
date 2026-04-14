@@ -48,8 +48,11 @@ const followupsSlice = createSlice({
 
       state.followups = [...state.followups, newFollowup];
     },
+    deleteFollowup: (state, action: PayloadAction<string>) => {
+      state.followups = state.followups.filter((f) => f.id !== action.payload);
+    },
   },
 });
 
-export const { createFollowup } = followupsSlice.actions;
+export const { createFollowup, deleteFollowup } = followupsSlice.actions;
 export default followupsSlice.reducer;

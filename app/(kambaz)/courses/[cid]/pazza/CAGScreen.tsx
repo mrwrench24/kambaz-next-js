@@ -7,6 +7,8 @@ import { usePazzaContext } from "./PazzaContext";
 export default function CAGScreen() {
   const { cid } = usePazzaContext();
   const { sections } = useSelector((state: RootState) => state.postReducer);
+
+  // TODO: Incorrect
   const { enrollments } = useSelector(
     (state: RootState) => state.enrollmentReducer,
   );

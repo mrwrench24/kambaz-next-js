@@ -144,7 +144,7 @@ export default function PostScreen({ postId }: { postId: string }) {
               return;
             }
 
-            return <PostFollowup key={followup.id} followup={followup} />;
+            return <PostFollowup key={followup.id} followupId={followup.id} />;
           })}
 
           <form

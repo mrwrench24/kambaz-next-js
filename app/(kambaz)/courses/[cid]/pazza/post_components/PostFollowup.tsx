@@ -1,15 +1,20 @@
 import { Button, Dropdown } from "react-bootstrap";
-import { Followup } from "../types/types";
 import { useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { updatePost } from "../postReducer";
+import { deleteFollowup } from "../followupReducer";
 
-export default function PostFollowup({ followup }: { followup: Followup }) {
+export default function PostFollowup({ followupId }: { followupId: string }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
+  const { followups } = useSelector(
+    (state: RootState) => state.followupReducer,
+  );
+
+  const followup = followups.find((f) => f.id === followupId);
 
   const [resolved, setResolved] = useState(followup.resolved);
 
@@ -69,7 +74,11 @@ export default function PostFollowup({ followup }: { followup: Followup }) {
                     <Dropdown.Item onClick={() => setEditing(true)}>
                       Edit
                     </Dropdown.Item>
-                    <Dropdown.Item>Delete</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => dispatch(deleteFollowup(followup.id))}
+                    >
+                      Delete
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
