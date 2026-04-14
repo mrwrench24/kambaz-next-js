@@ -13,7 +13,7 @@ export default function PazzaPage() {
     <div>
       {page === "new_post" && <NewPostScreen />}
       {typeof page === "object" && page !== null && (
-        <PostScreen post={page as Post} />
+        <PostScreen postId={(page as Post).id} />
       )}
       {page === "cag" && <CAGScreen />}
       {page === "manage_class" && <ManageClassScreen />}

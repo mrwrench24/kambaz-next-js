@@ -1,14 +1,90 @@
-import { Post } from "./types/types";
 import PostFollowup from "./post_components/PostFollowup";
 import PostContent from "./post_components/PostContent";
 import AnswerDisplay from "./post_components/AnswerDisplay";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import { updatePost } from "./postReducer";
 
-export default function PostScreen({ post }: { post: Post }) {
+export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
+  const { sections } = useSelector((state: RootState) => state.postReducer);
+
+  const post = sections
+    .find((section) => section.posts.map((post) => post.id).includes(postId))
+    .posts.find((post) => post.id === postId);
+
+  const dispatch = useDispatch();
+
+  function handleStudentAnswerChange(newAnswer: string) {
+    const prevStudentAnswer = post.studentAnswer;
+
+    if (!prevStudentAnswer) {
+      dispatch(
+        updatePost({
+          ...post,
+          studentAnswer: {
+            content: newAnswer,
+            contributors: [currentUser._id],
+            commenders: [],
+          },
+        }),
+      );
+    } else {
+      const updatedContributors = prevStudentAnswer.contributors.includes(
+        currentUser._id,
+      )
+        ? prevStudentAnswer.contributors
+        : [...prevStudentAnswer.contributors, currentUser._id];
+
+      dispatch(
+        updatePost({
+          ...post,
+          studentAnswer: {
+            content: newAnswer,
+            contributors: updatedContributors,
+            commenders: prevStudentAnswer.commenders,
+          },
+        }),
+      );
+    }
+  }
+
+  function handleInstructorAnswerChange(newAnswer: string) {
+    const prevInstructorAnswer = post.instructorAnswer;
+
+    if (!prevInstructorAnswer) {
+      dispatch(
+        updatePost({
+          ...post,
+          instructorAnswer: {
+            content: newAnswer,
+            contributors: [currentUser._id],
+            commenders: [],
+          },
+        }),
+      );
+    } else {
+      const updatedContributors = prevInstructorAnswer.contributors.includes(
+        currentUser._id,
+      )
+        ? prevInstructorAnswer.contributors
+        : [...prevInstructorAnswer.contributors, currentUser._id];
+
+      dispatch(
+        updatePost({
+          ...post,
+          instructorAnswer: {
+            content: newAnswer,
+            contributors: updatedContributors,
+            commenders: prevInstructorAnswer.commenders,
+          },
+        }),
+      );
+    }
+  }
 
   return (
     <div>
@@ -33,6 +109,7 @@ export default function PostScreen({ post }: { post: Post }) {
               <AnswerDisplay
                 answer={post.studentAnswer}
                 canEdit={currentUser.role === "STUDENT"}
+                onEdit={handleStudentAnswerChange}
               />
             </div>
 
@@ -44,6 +121,7 @@ export default function PostScreen({ post }: { post: Post }) {
               <AnswerDisplay
                 answer={post.instructorAnswer}
                 canEdit={currentUser.role !== "STUDENT"}
+                onEdit={handleInstructorAnswerChange}
               />
             </div>
           </div>

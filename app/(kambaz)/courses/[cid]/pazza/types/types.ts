@@ -7,6 +7,7 @@ export type Folder = {
 /** Posts */
 export type Answer = {
   content: string;
+  // user IDs
   contributors: string[];
   commenders: string[];
 };

@@ -16,9 +16,11 @@ import Commendations from "./Commendations";
 export default function AnswerDisplay({
   answer,
   canEdit,
+  onEdit,
 }: {
   answer: Answer | null;
   canEdit: boolean;
+  onEdit: (newAnswer: string) => void;
 }) {
   const [editValue, setEditValue] = useState(answer ? answer.content : "");
   const [editing, setEditing] = useState(false);
@@ -78,7 +80,13 @@ export default function AnswerDisplay({
           </Editor>
         </EditorProvider>
 
-        <Button onClick={() => setEditing(false)} className="mt-2">
+        <Button
+          onClick={() => {
+            onEdit(editValue);
+            setEditing(false);
+          }}
+          className="mt-2"
+        >
           Save
         </Button>
       </div>
