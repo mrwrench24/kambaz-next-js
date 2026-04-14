@@ -16,10 +16,13 @@ import { RootState } from "@/app/(kambaz)/store";
 
 export default function PostNavigation() {
   const { setPage } = usePazzaContext();
-  const [expanded, setExpanded] = useState([true, true, false]);
+  // ids of seections that are expanded
   const [showControls, setShowControls] = useState(true);
 
   const { sections } = useSelector((state: RootState) => state.postReducer);
+  const [expanded, setExpanded] = useState(
+    sections.map((section) => section.id),
+  );
 
   if (!showControls) {
     return (
@@ -53,19 +56,22 @@ export default function PostNavigation() {
       </div>
 
       <div>
-        {sections.map((section, index) => {
+        {sections.map((section) => {
+          const isExpanded = expanded.includes(section.id);
           return (
-            <div key={section.title}>
+            <div key={section.id}>
               <div
                 className="post-section-header p-1 border border-dark"
-                onClick={() =>
-                  setExpanded((prev) =>
-                    prev.map((v, i) => (i === index ? !v : v)),
-                  )
-                }
+                onClick={() => {
+                  if (isExpanded) {
+                    setExpanded(expanded.filter((sid) => sid !== section.id));
+                  } else {
+                    setExpanded([...expanded, section.id]);
+                  }
+                }}
               >
                 <span>
-                  {expanded[index] ? (
+                  {isExpanded ? (
                     <FaChevronDown className="me-2" />
                   ) : (
                     <FaChevronRight className="me-2" />
@@ -75,7 +81,7 @@ export default function PostNavigation() {
                 </span>
               </div>
 
-              {expanded[index] && (
+              {isExpanded && (
                 <div>
                   {section.posts.map((post) => {
                     return (

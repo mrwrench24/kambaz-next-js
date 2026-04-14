@@ -9,9 +9,9 @@ interface PostState {
 
 const initialState: PostState = {
   sections: [
-    { title: "Today", posts: [posts[0]] },
-    { title: "Yesterday", posts: [posts[1]] },
-    { title: "Last Week", posts: [posts[2], posts[3]] },
+    { id: "sec1", title: "Today", posts: [posts[0]] },
+    { id: "sec2", title: "Yesterday", posts: [posts[1]] },
+    { id: "sec3", title: "Last Week", posts: [posts[2], posts[3]] },
   ],
   nextPostNumber: 59,
 };
@@ -45,15 +45,27 @@ const postsSlice = createSlice({
       } else {
         // TODO: Test
         state.sections = [
-          { title: "Today", posts: [postToAdd] },
+          { id: `${Math.random()}`, title: "Today", posts: [postToAdd] },
           ...state.sections,
         ];
       }
 
       state.nextPostNumber += 1;
     },
+    // string = the id of the post to delete
+    deletePost: (state, action: PayloadAction<string>) => {
+      state.sections.forEach((section) => {
+        section.posts = section.posts.filter(
+          (post) => post.id !== action.payload,
+        );
+      });
+
+      state.sections = state.sections.filter((section) => {
+        return section.posts.length !== 0;
+      });
+    },
   },
 });
 
-export const { createPost } = postsSlice.actions;
+export const { createPost, deletePost } = postsSlice.actions;
 export default postsSlice.reducer;

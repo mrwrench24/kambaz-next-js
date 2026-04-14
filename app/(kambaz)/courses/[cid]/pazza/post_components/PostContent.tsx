@@ -11,9 +11,11 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 import { Button, Dropdown } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import Commendations from "./Commendations";
+import { deletePost } from "../postReducer";
+import { usePazzaContext } from "../PazzaContext";
 
 export default function PostContent({ post }: { post: Post }) {
   const [editing, setEditing] = useState(false);
@@ -30,8 +32,12 @@ export default function PostContent({ post }: { post: Post }) {
     (state: RootState) => state.accountReducer,
   );
 
+  const { setPage } = usePazzaContext();
+
   const canEdit =
     currentUser._id === post.author || currentUser.role !== "STUDENT";
+
+  const dispatch = useDispatch();
 
   return (
     <div className="border border-dark">
@@ -51,7 +57,14 @@ export default function PostContent({ post }: { post: Post }) {
                   <Dropdown.Item onClick={() => setEditing(true)}>
                     Edit
                   </Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      dispatch(deletePost(post.id));
+                      setPage("cag");
+                    }}
+                  >
+                    Delete
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

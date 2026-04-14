@@ -45,6 +45,7 @@ export type Post = {
 };
 
 export type PostSection = {
+  id: string;
   title: string;
   posts: Post[];
 };
