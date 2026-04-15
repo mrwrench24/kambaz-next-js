@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { useState } from "react";
 import { deleteReply, updateReply } from "../reducers/followupReplyReducer";
+import * as client from "../clients/repliesClient";
 
 export default function PostFollowupReply({ replyId }: { replyId: string }) {
   const { currentUser } = useSelector(
@@ -23,6 +24,21 @@ export default function PostFollowupReply({ replyId }: { replyId: string }) {
 
   const dispatch = useDispatch();
 
+  async function onDeleteReply(id: string) {
+    await client.deleteReply(id);
+    dispatch(deleteReply(reply.id));
+  }
+
+  async function onEditReply() {
+    if (editValue === "") {
+      return;
+    }
+
+    await client.updateReply({ ...reply, content: editValue });
+    dispatch(updateReply({ ...reply, content: editValue }));
+    setEditing(false);
+  }
+
   return (
     <div key={reply.id} className="p-1 ms-2">
       <div className="d-flex align-items-center">
@@ -35,13 +51,7 @@ export default function PostFollowupReply({ replyId }: { replyId: string }) {
               style={{ minWidth: "400px" }}
               className="p-1"
             />
-            <Button
-              className="m-2"
-              onClick={() => {
-                dispatch(updateReply({ ...reply, content: editValue }));
-                setEditing(false);
-              }}
-            >
+            <Button className="m-2" onClick={onEditReply}>
               Save
             </Button>
           </div>
@@ -62,7 +72,7 @@ export default function PostFollowupReply({ replyId }: { replyId: string }) {
                 <Dropdown.Item onClick={() => setEditing(true)}>
                   Edit
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(deleteReply(reply.id))}>
+                <Dropdown.Item onClick={() => onDeleteReply(reply.id)}>
                   Delete
                 </Dropdown.Item>
               </Dropdown.Menu>

@@ -6,13 +6,7 @@ interface FollowupReplyState {
 }
 
 const initialState: FollowupReplyState = {
-  followupReplies: [
-    {
-      id: "fr1",
-      author: "777",
-      content: "Following up?",
-    },
-  ],
+  followupReplies: [],
 };
 
 const followupRepliesSlice = createSlice({
@@ -31,6 +25,9 @@ const followupRepliesSlice = createSlice({
       state.followupReplies = state.followupReplies.filter(
         (f) => f.id !== action.payload,
       );
+    },
+    setReplies: (state, action: PayloadAction<FollowupReply[]>) => {
+      state.followupReplies = action.payload;
     },
   },
 });
