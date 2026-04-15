@@ -117,6 +117,28 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.studentAnswer}
                 canEdit={currentUser.role === "STUDENT"}
                 onEdit={handleStudentAnswerChange}
+                changeCommended={(commended) => {
+                  if (commended) {
+                    dispatch(
+                      updatePost({
+                        ...post,
+                        studentAnswer: {
+                          ...post.studentAnswer,
+                          commenders: post.commenders.filter(
+                            (c) => c !== currentUser._id,
+                          ),
+                        },
+                      }),
+                    );
+                  } else {
+                    dispatch(
+                      updatePost({
+                        ...post,
+                        commenders: [...post.commenders, currentUser._id],
+                      }),
+                    );
+                  }
+                }}
               />
             </div>
 
@@ -129,6 +151,28 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.instructorAnswer}
                 canEdit={currentUser.role !== "STUDENT"}
                 onEdit={handleInstructorAnswerChange}
+                changeCommended={(commended) => {
+                  if (commended) {
+                    dispatch(
+                      updatePost({
+                        ...post,
+                        instructorAnswer: {
+                          ...post.instructorAnswer,
+                          commenders: post.commenders.filter(
+                            (c) => c !== currentUser._id,
+                          ),
+                        },
+                      }),
+                    );
+                  } else {
+                    dispatch(
+                      updatePost({
+                        ...post,
+                        commenders: [...post.commenders, currentUser._id],
+                      }),
+                    );
+                  }
+                }}
               />
             </div>
           </div>

@@ -130,8 +130,29 @@ export default function PostContent({ postId }: { postId: string }) {
         )}
         <div className="ps-2">
           <Commendations
-            initialCommenders={post.commenders}
+            commenders={post.commenders}
             commendationsFor={post.postType}
+            onCommendationPressed={() => {
+              const commended = post.commenders.includes(currentUser._id);
+
+              if (commended) {
+                dispatch(
+                  updatePost({
+                    ...post,
+                    commenders: post.commenders.filter(
+                      (c) => c !== currentUser._id,
+                    ),
+                  }),
+                );
+              } else {
+                dispatch(
+                  updatePost({
+                    ...post,
+                    commenders: [...post.commenders, currentUser._id],
+                  }),
+                );
+              }
+            }}
           />
         </div>
       </div>

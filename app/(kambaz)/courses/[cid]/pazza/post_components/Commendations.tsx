@@ -4,15 +4,16 @@ import { useSelector } from "react-redux";
 
 export default function Commendations({
   commendationsFor,
-  initialCommenders,
+  commenders,
+  onCommendationPressed,
 }: {
   commendationsFor: "question" | "note" | "answer";
-  initialCommenders: string[];
+  commenders: string[];
+  onCommendationPressed: () => void;
 }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
-  const [commenders, setCommenders] = useState(initialCommenders);
 
   const commended = commenders.includes(currentUser._id);
 
@@ -21,13 +22,7 @@ export default function Commendations({
       <span
         role="button"
         className={`${commended ? "commended" : "link-primary"}`}
-        onClick={() => {
-          if (commended) {
-            setCommenders(commenders.filter((com) => com !== currentUser._id));
-          } else {
-            setCommenders([...commenders, currentUser._id]);
-          }
-        }}
+        onClick={onCommendationPressed}
       >
         good {commendationsFor}
       </span>{" "}

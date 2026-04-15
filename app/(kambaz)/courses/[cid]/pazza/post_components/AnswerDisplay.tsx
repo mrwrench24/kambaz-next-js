@@ -12,16 +12,23 @@ import { Answer } from "../types/types";
 import { useState } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import Commendations from "./Commendations";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function AnswerDisplay({
   answer,
   canEdit,
   onEdit,
+  changeCommended,
 }: {
   answer: Answer | null;
   canEdit: boolean;
   onEdit: (newAnswer: string) => void;
+  changeCommended: (to: boolean) => void;
 }) {
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
   const [editValue, setEditValue] = useState(answer ? answer.content : "");
   const [editing, setEditing] = useState(false);
 
@@ -50,8 +57,15 @@ export default function AnswerDisplay({
           {canEdit && <Button onClick={() => setEditing(true)}>Edit</Button>}
           <div className="ps-2">
             <Commendations
-              initialCommenders={answer.commenders}
+              commenders={answer.commenders}
               commendationsFor="answer"
+              onCommendationPressed={() => {
+                const wasCommended = answer.commenders.includes(
+                  currentUser._id,
+                );
+
+                changeCommended(!wasCommended);
+              }}
             />
           </div>
 
