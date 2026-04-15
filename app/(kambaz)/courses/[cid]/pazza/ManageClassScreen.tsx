@@ -10,15 +10,48 @@ import {
   updateFolder,
 } from "./reducers/folderReducer";
 import { Folder } from "./types/types";
+import * as client from "./clients/foldersClient";
+import { useParams } from "next/navigation";
 
 export default function ManageClassScreen() {
   const { folders } = useSelector((state: RootState) => state.folderReducer);
+  const { cid } = useParams();
 
   const [newFolderName, setNewFolderName] = useState("");
   const [editFolder, setEditFolder] = useState<Folder | null>(null);
   const [selectedFolders, setSelectedFolders] = useState<string[]>([]);
 
   const dispatch = useDispatch();
+
+  async function onCreateFolder() {
+    if (newFolderName.length === 0 || !cid) {
+      return;
+    }
+
+    await client.createFolder(cid as string, newFolderName);
+    dispatch(createFolder(newFolderName));
+    setNewFolderName("");
+  }
+
+  async function onDeleteFolders() {
+    if (selectedFolders.length === 0) {
+      return;
+    }
+
+    await client.deleteFolders(selectedFolders);
+    dispatch(deleteFolders(selectedFolders));
+    setSelectedFolders([]);
+  }
+
+  async function onEditFolder() {
+    if (editFolder === null) {
+      return;
+    }
+
+    await client.updateFolder(editFolder);
+    dispatch(updateFolder(editFolder));
+    setEditFolder(null);
+  }
 
   return (
     <div className="">
@@ -41,10 +74,7 @@ export default function ManageClassScreen() {
           <Button
             className="ms-2"
             disabled={newFolderName.length === 0}
-            onClick={() => {
-              dispatch(createFolder(newFolderName));
-              setNewFolderName("");
-            }}
+            onClick={onCreateFolder}
           >
             Add Folder
           </Button>
@@ -54,10 +84,7 @@ export default function ManageClassScreen() {
         <Button
           className="bg-danger"
           disabled={selectedFolders.length === 0}
-          onClick={() => {
-            dispatch(deleteFolders(selectedFolders));
-            setSelectedFolders([]);
-          }}
+          onClick={onDeleteFolders}
         >
           Delete Selected Folders
         </Button>
@@ -94,13 +121,7 @@ export default function ManageClassScreen() {
                   </span>
 
                   <div className="ms-auto">
-                    <Button
-                      className="m-1"
-                      onClick={() => {
-                        dispatch(updateFolder(editFolder));
-                        setEditFolder(null);
-                      }}
-                    >
+                    <Button className="m-1" onClick={onEditFolder}>
                       Save
                     </Button>
                     <Button className="m-1" onClick={() => setEditFolder(null)}>

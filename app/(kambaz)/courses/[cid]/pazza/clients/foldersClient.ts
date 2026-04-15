@@ -24,8 +24,8 @@ export const updateFolder = async (folder: Folder) => {
   return response.data;
 };
 
-// returns the same FID
-export const deleteFolder = async (fids: string[]) => {
+// returns the same FIDs
+export const deleteFolders = async (fids: string[]) => {
   const response = await axiosWithCredentials.delete(FOLDERS_API, {
     data: fids,
   });
