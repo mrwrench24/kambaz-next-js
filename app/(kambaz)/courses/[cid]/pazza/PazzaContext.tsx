@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useContext, useState } from "react";
 import { Folder, Post } from "./types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
 
 export type PageState = "new_post" | "cag" | Post | "manage_class";
 type PazzaState = {
@@ -20,8 +22,20 @@ export function PazzaProvider({
   cid: string;
   children: React.ReactNode;
 }) {
-  const [page, setPage] = useState<PageState>("cag");
+  const [page, setPageDirect] = useState<PageState>("cag");
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
+
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
+  const setPage = (p: PageState) => {
+    if (currentUser.role === "STUDENT" && p === "manage_class") {
+      return;
+    }
+
+    setPageDirect(p);
+  };
 
   return (
     <PazzaContext.Provider

@@ -98,6 +98,7 @@ export default function PostNavigation() {
                       page.id === post.id;
 
                     return (
+                      // TODO: displaying whether this was posted by a student or an instructor.
                       <div
                         key={post.id}
                         className={`post-link border border-dark p-1 ps-3 d-flex align-items-start ${selected && "selected"}`}

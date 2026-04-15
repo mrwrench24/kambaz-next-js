@@ -38,7 +38,11 @@ export default function NewPostScreen() {
   const dispatch = useDispatch();
 
   function handlePostClicked() {
-    if (newPost.summary.length === 0 || newPost.details.length === 0) {
+    if (
+      newPost.summary.length <= 0 ||
+      newPost.summary.length > 100 ||
+      newPost.folders.length === 0
+    ) {
       setShowWarning(true);
       return;
     }
@@ -73,7 +77,8 @@ export default function NewPostScreen() {
       <div className="p-2 light-blue-bg" id="post-create">
         {showWarning && (
           <div className="border border-danger p-2">
-            Fill out all the fields, please!
+            A summary of no more than 100 characters at least one folder are
+            needed. Please fill out all fields!
           </div>
         )}
 
