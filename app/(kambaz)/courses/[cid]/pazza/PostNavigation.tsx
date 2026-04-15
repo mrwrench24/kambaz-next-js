@@ -13,9 +13,10 @@ import { usePazzaContext } from "./PazzaContext";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import { Post } from "./types/types";
 
 export default function PostNavigation() {
-  const { setPage } = usePazzaContext();
+  const { page, setPage } = usePazzaContext();
   // ids of seections that are expanded
   const [showControls, setShowControls] = useState(true);
 
@@ -84,10 +85,15 @@ export default function PostNavigation() {
               {isExpanded && (
                 <div>
                   {section.posts.map((post) => {
+                    const selected =
+                      typeof page === "object" &&
+                      "id" in page &&
+                      page.id === post.id;
+
                     return (
                       <div
                         key={post.title}
-                        className="post-link border border-dark p-1 ps-3 d-flex align-items-start"
+                        className={`post-link border border-dark p-1 ps-3 d-flex align-items-start ${selected && "selected"}`}
                         onClick={() => setPage(post)}
                       >
                         <div className="flex-fill">
@@ -99,12 +105,12 @@ export default function PostNavigation() {
                         <div className="post-info text-end">
                           <div>02:43 pm</div>
                           <div>
-                            {post.instructorAnswer && (
-                              <FaI className="instructor-i" />
+                            {post.studentAnswer && (
+                              <FaS className="student-s" />
                             )}
 
-                            {post.studentAnswer && !post.instructorAnswer && (
-                              <FaS className="student-s" />
+                            {post.instructorAnswer && (
+                              <FaI className="instructor-i ms-1" />
                             )}
 
                             {post.postType === "note" && (

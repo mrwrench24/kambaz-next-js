@@ -83,6 +83,7 @@ export default function AnswerDisplay({
             value={editValue}
             className="p-2"
             onChange={(e) => setEditValue(e.target.value)}
+            placeholder="Your answer here..."
           >
             <Toolbar>
               <BtnBold />
