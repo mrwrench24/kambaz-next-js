@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import posts from "./database/posts";
-import { NewPost, Post, PostSection } from "./types/types";
+import posts from "../database/posts";
+import { NewPost, Post, PostSection } from "../types/types";
 
 interface PostState {
   sections: PostSection[];

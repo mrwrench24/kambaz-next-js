@@ -12,7 +12,7 @@ import {
 import { usePazzaContext } from "./PazzaContext";
 import { NewPost } from "./types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "./postReducer";
+import { createPost } from "./reducers/postReducer";
 import { RootState } from "@/app/(kambaz)/store";
 
 export default function NewPostScreen() {

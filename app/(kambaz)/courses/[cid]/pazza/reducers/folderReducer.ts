@@ -1,20 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Folder } from "./types/types";
+import { Folder } from "../types/types";
 
 interface FolderState {
   folders: Folder[];
 }
 
 const initialState: FolderState = {
-  folders: [
-    { id: "f1", name: "hw1" },
-    { id: "f2", name: "hw2" },
-    { id: "f3", name: "hw3" },
-    { id: "f4", name: "hw4" },
-    { id: "f5", name: "final_exam" },
-    { id: "f6", name: "project" },
-    { id: "f7", name: "logistics" },
-  ],
+  folders: [],
 };
 
 const foldersSlice = createSlice({
@@ -39,9 +31,13 @@ const foldersSlice = createSlice({
         (folder) => !action.payload.includes(folder.id),
       );
     },
+    setFolders: (state, action: PayloadAction<Folder[]>) => {
+      console.log("setting folders");
+      state.folders = action.payload;
+    },
   },
 });
 
-export const { createFolder, updateFolder, deleteFolders } =
+export const { createFolder, updateFolder, deleteFolders, setFolders } =
   foldersSlice.actions;
 export default foldersSlice.reducer;

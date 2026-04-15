@@ -3,8 +3,8 @@ import { useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { deleteFollowup, updateFollowup } from "../followupReducer";
-import { createReply } from "../followupReplyReducer";
+import { deleteFollowup, updateFollowup } from "../reducers/followupReducer";
+import { createReply } from "../reducers/followupReplyReducer";
 
 export default function PostFollowup({ followupId }: { followupId: string }) {
   const { currentUser } = useSelector(

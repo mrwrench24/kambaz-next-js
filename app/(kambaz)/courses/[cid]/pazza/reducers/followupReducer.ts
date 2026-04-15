@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Followup } from "./types/types";
+import { Followup } from "../types/types";
 
 interface FollowupState {
   followups: Followup[];

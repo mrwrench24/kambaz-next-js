@@ -14,7 +14,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import Commendations from "./Commendations";
-import { deletePost, updatePost } from "../postReducer";
+import { deletePost, updatePost } from "../reducers/postReducer";
 import { usePazzaContext } from "../PazzaContext";
 
 export default function PostContent({ postId }: { postId: string }) {

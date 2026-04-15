@@ -4,7 +4,11 @@ import { FaPencil } from "react-icons/fa6";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { createFolder, deleteFolders, updateFolder } from "./folderReducer";
+import {
+  createFolder,
+  deleteFolders,
+  updateFolder,
+} from "./reducers/folderReducer";
 import { Folder } from "./types/types";
 
 export default function ManageClassScreen() {

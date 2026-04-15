@@ -2,7 +2,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { useState } from "react";
-import { deleteReply, updateReply } from "../followupReplyReducer";
+import { deleteReply, updateReply } from "../reducers/followupReplyReducer";
 
 export default function PostFollowupReply({ replyId }: { replyId: string }) {
   const { currentUser } = useSelector(

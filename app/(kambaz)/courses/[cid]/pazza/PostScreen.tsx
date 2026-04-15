@@ -3,9 +3,9 @@ import PostContent from "./post_components/PostContent";
 import AnswerDisplay from "./post_components/AnswerDisplay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { updatePost } from "./postReducer";
+import { updatePost } from "./reducers/postReducer";
 import { useState } from "react";
-import { createFollowup } from "./followupReducer";
+import { createFollowup } from "./reducers/followupReducer";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(

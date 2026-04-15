@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FollowupReply } from "./types/types";
+import { FollowupReply } from "../types/types";
 
 interface FollowupReplyState {
   followupReplies: FollowupReply[];
