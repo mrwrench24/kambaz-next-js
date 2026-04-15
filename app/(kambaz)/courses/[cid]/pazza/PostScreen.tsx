@@ -117,16 +117,17 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.studentAnswer}
                 canEdit={currentUser.role === "STUDENT"}
                 onEdit={handleStudentAnswerChange}
-                changeCommended={(commended) => {
-                  if (commended) {
+                changeCommended={(to) => {
+                  if (to) {
                     dispatch(
                       updatePost({
                         ...post,
                         studentAnswer: {
                           ...post.studentAnswer,
-                          commenders: post.commenders.filter(
-                            (c) => c !== currentUser._id,
-                          ),
+                          commenders: [
+                            ...post.studentAnswer.commenders,
+                            currentUser._id,
+                          ],
                         },
                       }),
                     );
@@ -134,7 +135,12 @@ export default function PostScreen({ postId }: { postId: string }) {
                     dispatch(
                       updatePost({
                         ...post,
-                        commenders: [...post.commenders, currentUser._id],
+                        studentAnswer: {
+                          ...post.studentAnswer,
+                          commenders: post.studentAnswer.commenders.filter(
+                            (c) => c !== currentUser._id,
+                          ),
+                        },
                       }),
                     );
                   }
@@ -151,16 +157,17 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.instructorAnswer}
                 canEdit={currentUser.role !== "STUDENT"}
                 onEdit={handleInstructorAnswerChange}
-                changeCommended={(commended) => {
-                  if (commended) {
+                changeCommended={(to) => {
+                  if (to) {
                     dispatch(
                       updatePost({
                         ...post,
                         instructorAnswer: {
                           ...post.instructorAnswer,
-                          commenders: post.commenders.filter(
-                            (c) => c !== currentUser._id,
-                          ),
+                          commenders: [
+                            ...post.instructorAnswer.commenders,
+                            currentUser._id,
+                          ],
                         },
                       }),
                     );
@@ -168,7 +175,12 @@ export default function PostScreen({ postId }: { postId: string }) {
                     dispatch(
                       updatePost({
                         ...post,
-                        commenders: [...post.commenders, currentUser._id],
+                        instructorAnswer: {
+                          ...post.instructorAnswer,
+                          commenders: post.instructorAnswer.commenders.filter(
+                            (c) => c !== currentUser._id,
+                          ),
+                        },
                       }),
                     );
                   }
