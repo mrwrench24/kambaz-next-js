@@ -5,7 +5,6 @@ import PazzaNavigation from "./Navigation";
 import FolderFilters from "./FolderFilters";
 import PostNavigation from "./PostNavigation";
 import { PazzaProvider } from "./PazzaContext";
-import PostNavigationControls from "./PostNavigationControls";
 
 export default function PazzaLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();
@@ -13,7 +12,7 @@ export default function PazzaLayout({ children }: { children: ReactNode }) {
   return (
     <PazzaProvider cid={cid as string}>
       <div id="wd-pazza" className="pe-4">
-        <div>
+        <div className="pazza-header">
           <PazzaNavigation cid={cid as string} />
           <FolderFilters />
         </div>

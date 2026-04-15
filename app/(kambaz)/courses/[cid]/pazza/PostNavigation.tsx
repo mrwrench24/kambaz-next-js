@@ -99,7 +99,7 @@ export default function PostNavigation() {
 
                     return (
                       <div
-                        key={post.title}
+                        key={post.id}
                         className={`post-link border border-dark p-1 ps-3 d-flex align-items-start ${selected && "selected"}`}
                         onClick={() => setPage(post)}
                       >

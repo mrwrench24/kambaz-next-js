@@ -82,3 +82,8 @@
 .commended {
   color: rgba(77, 77, 250, 0.574);
 }
+
+.pazza-header {
+  position: sticky;
+  top: 0;
+}

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Folder } from "./types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { usePazzaContext } from "./PazzaContext";
