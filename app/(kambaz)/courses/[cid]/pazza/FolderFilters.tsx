@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Folder } from "./types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import { usePazzaContext } from "./PazzaContext";
 
 export default function FolderFilters() {
   const { folders } = useSelector((state: RootState) => state.folderReducer);
-
-  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
+  const { selectedFolder, setSelectedFolder } = usePazzaContext();
 
   return (
     <div className="bg-secondary d-flex align-items-center border border-dark">

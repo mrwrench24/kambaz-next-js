@@ -16,7 +16,7 @@ import { RootState } from "@/app/(kambaz)/store";
 import { Post } from "./types/types";
 
 export default function PostNavigation() {
-  const { page, setPage } = usePazzaContext();
+  const { page, setPage, selectedFolder } = usePazzaContext();
   // ids of seections that are expanded
   const [showControls, setShowControls] = useState(true);
 
@@ -85,6 +85,13 @@ export default function PostNavigation() {
               {isExpanded && (
                 <div>
                   {section.posts.map((post) => {
+                    if (
+                      selectedFolder &&
+                      !post.folders.includes(selectedFolder.id)
+                    ) {
+                      return;
+                    }
+
                     const selected =
                       typeof page === "object" &&
                       "id" in page &&

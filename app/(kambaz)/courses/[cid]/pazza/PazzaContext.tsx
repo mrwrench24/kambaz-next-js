@@ -1,12 +1,14 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-import { Post } from "./types/types";
+import { Folder, Post } from "./types/types";
 
 export type PageState = "new_post" | "cag" | Post | "manage_class";
 type PazzaState = {
   cid: string;
   page: PageState;
   setPage: (p: PageState) => void;
+  selectedFolder: Folder | null;
+  setSelectedFolder: (f: Folder) => void;
 };
 
 const PazzaContext = createContext<PazzaState | null>(null);
@@ -19,9 +21,18 @@ export function PazzaProvider({
   children: React.ReactNode;
 }) {
   const [page, setPage] = useState<PageState>("cag");
+  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
 
   return (
-    <PazzaContext.Provider value={{ cid, page, setPage }}>
+    <PazzaContext.Provider
+      value={{
+        cid,
+        page,
+        setPage,
+        selectedFolder,
+        setSelectedFolder,
+      }}
+    >
       {children}
     </PazzaContext.Provider>
   );
