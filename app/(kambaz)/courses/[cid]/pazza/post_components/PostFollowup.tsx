@@ -37,6 +37,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
 
   useEffect(() => {
     replyClient.getReplyByIds(followup.replies).then((replies) => {
+      console.log(replies);
       if (replies) {
         dispatch(setReplies(replies));
       }
@@ -138,7 +139,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                 return;
               }
 
-              return <PostFollowupReply key={replyId} reply={reply} />;
+              return <PostFollowupReply key={reply.id} reply={reply} />;
             })}
           </div>
         </div>

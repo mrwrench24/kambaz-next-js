@@ -7,7 +7,7 @@ export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 export const REPLIES_API = `${HTTP_SERVER}/api/pazza/replies`;
 
 export const getReplyByIds = async (ids: string[]) => {
-  const response = await axiosWithCredentials.post(`${REPLIES_API}`, ids);
+  const response = await axiosWithCredentials.post(`${REPLIES_API}/get`, ids);
   return response.data;
 };
 
