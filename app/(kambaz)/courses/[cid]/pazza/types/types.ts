@@ -40,7 +40,7 @@ export type Post = {
   // ids of users who have commended the post
   commenders: string[];
   // null if visible to all
-  onlyVisibleTo?: string[];
+  onlyVisibleTo: string[] | null;
   // folder IDs
   folders: string[];
   studentAnswer: Answer | null;

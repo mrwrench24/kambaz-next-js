@@ -1,12 +1,8 @@
 import { Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { useEffect, useState } from "react";
-import {
-  deleteReply,
-  setReplies,
-  updateReply,
-} from "../reducers/followupReplyReducer";
+import { useState } from "react";
+import { deleteReply, updateReply } from "../reducers/followupReplyReducer";
 import * as client from "../clients/repliesClient";
 import { FollowupReply } from "../types/types";
 

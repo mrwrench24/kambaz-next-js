@@ -29,6 +29,7 @@ const postsSlice = createSlice({
         postType: action.payload.postType,
         author: action.payload.authorId,
         commenders: [],
+        onlyVisibleTo: null,
         // TODO: onlyVisibleTo
         folders: action.payload.folders,
         studentAnswer: null,

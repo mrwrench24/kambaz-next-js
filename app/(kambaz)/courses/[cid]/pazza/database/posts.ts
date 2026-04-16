@@ -23,6 +23,7 @@ const posts: Post[] = [
     postType: "question",
     author: "777",
     commenders: ["u2", "u3", "u4"],
+    onlyVisibleTo: null,
     folders: ["f2", "f3"],
     studentAnswer: null,
     instructorAnswer: {
@@ -40,6 +41,7 @@ const posts: Post[] = [
     postType: "question",
     author: "Eric Cartman",
     commenders: ["u2"],
+    onlyVisibleTo: null,
     folders: ["f1"],
     studentAnswer: {
       content: "This is a student answer.",
