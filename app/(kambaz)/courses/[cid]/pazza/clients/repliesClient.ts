@@ -10,9 +10,9 @@ export const getReplyByIds = async (ids: string[]) => {
   return response.data;
 };
 
-export const createReply = async (cid: string, authorId: string) => {
+export const createReply = async (content: string, authorId: string) => {
   const response = await axiosWithCredentials.post(`${REPLIES_API}`, {
-    cid,
+    content,
     authorId,
   });
 

@@ -35,6 +35,24 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
     dispatch(updateFollowup({ ...followup, resolved: setTo }));
   }
 
+  async function onCreateReply() {
+    if (replyValue.length === 0) {
+      return;
+    }
+
+    const reply = await replyClient.createReply(replyValue, currentUser._id);
+    dispatch(createReply(reply));
+
+    dispatch(
+      updateFollowup({
+        ...followup,
+        replies: [...followup.replies, reply.id],
+      }),
+    );
+
+    setReplyValue("");
+  }
+
   useEffect(() => {
     replyClient.getReplyByIds(followup.replies).then((replies) => {
       console.log(replies);
@@ -149,25 +167,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-
-            const id = `${Math.random()}`;
-
-            dispatch(
-              createReply({
-                id,
-                author: currentUser._id,
-                content: replyValue,
-              }),
-            );
-
-            dispatch(
-              updateFollowup({
-                ...followup,
-                replies: [...followup.replies, id],
-              }),
-            );
-
-            setReplyValue("");
+            onCreateReply();
           }}
         >
           <input
