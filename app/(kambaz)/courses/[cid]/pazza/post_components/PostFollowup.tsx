@@ -53,15 +53,6 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
     setReplyValue("");
   }
 
-  useEffect(() => {
-    replyClient.getReplyByIds(followup.replies).then((replies) => {
-      console.log(replies);
-      if (replies) {
-        dispatch(setReplies(replies));
-      }
-    });
-  }, [followup.replies, followupId]);
-
   return (
     <div className="bg-secondary p-1 border border-dark m-1" key={followup.id}>
       <div className="bg-secondary m-1">

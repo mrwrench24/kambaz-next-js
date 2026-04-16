@@ -4,18 +4,22 @@ import AnswerDisplay from "./post_components/AnswerDisplay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./reducers/postReducer";
-import { useState } from "react";
-import { createFollowup } from "./reducers/followupReducer";
+import { useEffect, useState } from "react";
+import { createFollowup, setFollowups } from "./reducers/followupReducer";
+import * as followupClient from "./clients/followupsClient";
+import * as repliesClient from "./clients/repliesClient";
+import { setReplies } from "./reducers/followupReplyReducer";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
-
   const { sections } = useSelector((state: RootState) => state.postReducer);
   const { followups } = useSelector(
     (state: RootState) => state.followupReducer,
   );
+
+  const dispatch = useDispatch();
 
   const [newFollowup, setNewFollowup] = useState("");
 
@@ -23,7 +27,29 @@ export default function PostScreen({ postId }: { postId: string }) {
     .find((section) => section.posts.map((post) => post.id).includes(postId))
     .posts.find((post) => post.id === postId);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!post) {
+      return;
+    }
+
+    followupClient.getFollowupsByIds(post.followups).then((followups) => {
+      if (!followups) {
+        return;
+      }
+
+      dispatch(setFollowups(followups));
+
+      const replyIds = followups.flatMap((f) => f.replies);
+
+      repliesClient.getReplyByIds(replyIds).then((replies) => {
+        if (!replies) {
+          return;
+        }
+
+        dispatch(setReplies(replies));
+      });
+    });
+  }, [post]);
 
   function handleStudentAnswerChange(newAnswer: string) {
     const prevStudentAnswer = post.studentAnswer;
