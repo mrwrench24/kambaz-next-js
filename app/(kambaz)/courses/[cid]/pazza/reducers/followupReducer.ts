@@ -6,22 +6,7 @@ interface FollowupState {
 }
 
 const initialState: FollowupState = {
-  followups: [
-    {
-      id: "fu1",
-      resolved: true,
-      author: "Ada Lovelace",
-      content: "Any updates on this?",
-      replies: [],
-    },
-    {
-      id: "fu2",
-      resolved: false,
-      author: "Ada Lovelace",
-      content: "Again, updates on this?",
-      replies: ["fr1"],
-    },
-  ],
+  followups: [],
 };
 
 const followupsSlice = createSlice({

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { deleteFollowup, updateFollowup } from "../reducers/followupReducer";
 import { createReply, setReplies } from "../reducers/followupReplyReducer";
+import * as client from "../clients/followupsClient";
 import * as replyClient from "../clients/repliesClient";
 
 export default function PostFollowup({ followupId }: { followupId: string }) {
@@ -33,6 +34,20 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
 
   function handleResolvedChange(setTo: boolean) {
     dispatch(updateFollowup({ ...followup, resolved: setTo }));
+  }
+
+  async function onEditFollowup() {
+    if (editValue.length === 0) {
+      return;
+    }
+
+    dispatch(updateFollowup({ ...followup, content: editValue }));
+    setEditing(false);
+  }
+
+  async function onDeleteFollowup() {
+    await client.deleteFollowup(followup.id);
+    dispatch(deleteFollowup(followup.id));
   }
 
   async function onCreateReply() {
@@ -100,9 +115,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                     <Dropdown.Item onClick={() => setEditing(true)}>
                       Edit
                     </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => dispatch(deleteFollowup(followup.id))}
-                    >
+                    <Dropdown.Item onClick={onDeleteFollowup}>
                       Delete
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -123,15 +136,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                   style={{ minWidth: "400px" }}
                   className="p-1"
                 />
-                <Button
-                  className="m-2"
-                  onClick={() => {
-                    dispatch(
-                      updateFollowup({ ...followup, content: editValue }),
-                    );
-                    setEditing(false);
-                  }}
-                >
+                <Button className="m-2" onClick={onEditFollowup}>
                   Save
                 </Button>
               </div>

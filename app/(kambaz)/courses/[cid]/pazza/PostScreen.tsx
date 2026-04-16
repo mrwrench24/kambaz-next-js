@@ -51,6 +51,28 @@ export default function PostScreen({ postId }: { postId: string }) {
     });
   }, [post]);
 
+  async function onCreateFollowup() {
+    if (newFollowup.length === 0) {
+      return;
+    }
+
+    const followup = await followupClient.createFollowup(
+      newFollowup,
+      currentUser._id,
+    );
+
+    dispatch(createFollowup(followup));
+
+    dispatch(
+      updatePost({
+        ...post,
+        followups: [...post.followups, followup.id],
+      }),
+    );
+
+    setNewFollowup("");
+  }
+
   function handleStudentAnswerChange(newAnswer: string) {
     const prevStudentAnswer = post.studentAnswer;
 
@@ -232,25 +254,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-
-              const id = `${Math.random()}`;
-
-              dispatch(
-                createFollowup({
-                  id,
-                  content: newFollowup,
-                  authorId: currentUser._id,
-                }),
-              );
-
-              dispatch(
-                updatePost({
-                  ...post,
-                  followups: [...post.followups, id],
-                }),
-              );
-
-              setNewFollowup("");
+              onCreateFollowup();
             }}
           >
             <input
