@@ -1,10 +1,11 @@
-import { Button, Dropdown, FormControl } from "react-bootstrap";
-import { useState } from "react";
+import { Button, Dropdown } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import PostFollowupReply from "./PostFollowupReply";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { deleteFollowup, updateFollowup } from "../reducers/followupReducer";
-import { createReply } from "../reducers/followupReplyReducer";
+import { createReply, setReplies } from "../reducers/followupReplyReducer";
+import * as replyClient from "../clients/repliesClient";
 
 export default function PostFollowup({ followupId }: { followupId: string }) {
   const { currentUser } = useSelector(
@@ -13,6 +14,10 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
 
   const { followups } = useSelector(
     (state: RootState) => state.followupReducer,
+  );
+
+  const { followupReplies } = useSelector(
+    (state: RootState) => state.followupRepliesReducer,
   );
 
   const followup = followups.find((f) => f.id === followupId);
@@ -29,6 +34,14 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
   function handleResolvedChange(setTo: boolean) {
     dispatch(updateFollowup({ ...followup, resolved: setTo }));
   }
+
+  useEffect(() => {
+    replyClient.getReplyByIds(followup.replies).then((replies) => {
+      if (replies) {
+        dispatch(setReplies(replies));
+      }
+    });
+  }, [followup.replies, followupId]);
 
   return (
     <div className="bg-secondary p-1 border border-dark m-1" key={followup.id}>
@@ -119,7 +132,13 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
               </div>
             )}
             {followup.replies.map((replyId) => {
-              return <PostFollowupReply key={replyId} replyId={replyId} />;
+              const reply = followupReplies.find((r) => r.id === replyId);
+
+              if (!reply) {
+                return;
+              }
+
+              return <PostFollowupReply key={replyId} reply={reply} />;
             })}
           </div>
         </div>

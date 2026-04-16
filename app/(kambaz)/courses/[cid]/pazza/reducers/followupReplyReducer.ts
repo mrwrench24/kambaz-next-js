@@ -6,7 +6,9 @@ interface FollowupReplyState {
 }
 
 const initialState: FollowupReplyState = {
-  followupReplies: [],
+  followupReplies: [
+    
+  ],
 };
 
 const followupRepliesSlice = createSlice({
@@ -32,6 +34,6 @@ const followupRepliesSlice = createSlice({
   },
 });
 
-export const { createReply, updateReply, deleteReply } =
+export const { createReply, updateReply, deleteReply, setReplies } =
   followupRepliesSlice.actions;
 export default followupRepliesSlice.reducer;

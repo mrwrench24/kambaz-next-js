@@ -1,28 +1,27 @@
 import { Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { useState } from "react";
-import { deleteReply, updateReply } from "../reducers/followupReplyReducer";
+import { useEffect, useState } from "react";
+import {
+  deleteReply,
+  setReplies,
+  updateReply,
+} from "../reducers/followupReplyReducer";
 import * as client from "../clients/repliesClient";
+import { FollowupReply } from "../types/types";
 
-export default function PostFollowupReply({ replyId }: { replyId: string }) {
+export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
 
-  const { followupReplies } = useSelector(
-    (state: RootState) => state.followupRepliesReducer,
-  );
-
-  const reply = followupReplies.find((f) => f.id === replyId);
+  const dispatch = useDispatch();
 
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(reply.content);
 
   const canEdit =
     currentUser.role !== "STUDENT" || reply.author === currentUser._id;
-
-  const dispatch = useDispatch();
 
   async function onDeleteReply(id: string) {
     await client.deleteReply(id);
@@ -37,6 +36,10 @@ export default function PostFollowupReply({ replyId }: { replyId: string }) {
     await client.updateReply({ ...reply, content: editValue });
     dispatch(updateReply({ ...reply, content: editValue }));
     setEditing(false);
+  }
+
+  if (!reply) {
+    return;
   }
 
   return (
