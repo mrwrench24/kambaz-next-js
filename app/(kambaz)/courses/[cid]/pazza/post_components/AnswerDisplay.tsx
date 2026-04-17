@@ -35,6 +35,13 @@ export default function AnswerDisplay({
   const [editing, setEditing] = useState(false);
 
   if (answer && !editing) {
+    const timeUpdatedStr = new Date(answer.updatedAt)
+      .toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+      .toLowerCase();
+
     return (
       <div>
         <div className="d-flex align-items-center">
@@ -80,7 +87,7 @@ export default function AnswerDisplay({
           </div>
 
           <div className="ms-auto">
-            Updated 30 seconds ago by {answer.contributors.join(" and ")}
+            Updated {timeUpdatedStr} by {answer.contributors.join(" and ")}
           </div>
         </div>
       </div>
@@ -113,6 +120,17 @@ export default function AnswerDisplay({
           className="mt-2"
         >
           Save
+        </Button>
+
+        <Button
+          onClick={() => {
+            setEditing(false);
+            setEditValue(answer.content);
+          }}
+          className="mt-2 ms-2"
+          variant="danger"
+        >
+          Cancel
         </Button>
       </div>
     );

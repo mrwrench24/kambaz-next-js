@@ -93,6 +93,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           content: newAnswer,
           contributors: [currentUser._id],
           commenders: [],
+          updatedAt: new Date().toISOString(),
         },
       };
     } else {
@@ -108,6 +109,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           content: newAnswer,
           contributors: updatedContributors,
           commenders: prevStudentAnswer.commenders,
+          updatedAt: new Date().toISOString(),
         },
       };
     }
@@ -126,6 +128,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           content: newAnswer,
           contributors: [currentUser._id],
           commenders: [],
+          updatedAt: new Date().toISOString(),
         },
       };
     } else {
@@ -141,6 +144,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           content: newAnswer,
           contributors: updatedContributors,
           commenders: prevInstructorAnswer.commenders,
+          updatedAt: new Date().toISOString(),
         },
       };
     }

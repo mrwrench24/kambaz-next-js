@@ -148,6 +148,17 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
                 <Button className="m-2" onClick={onEditFollowup}>
                   Save
                 </Button>
+
+                <Button
+                  className="m-2"
+                  onClick={() => {
+                    setEditing(false);
+                    setEditValue(followup.content);
+                  }}
+                  variant="danger"
+                >
+                  Cancel
+                </Button>
               </div>
             ) : (
               <div>

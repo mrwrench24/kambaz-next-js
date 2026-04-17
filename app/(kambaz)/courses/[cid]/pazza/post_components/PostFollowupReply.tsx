@@ -60,6 +60,17 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
             <Button className="m-2" onClick={onEditReply}>
               Save
             </Button>
+
+            <Button
+              className="m-2"
+              onClick={() => {
+                setEditing(false);
+                setEditValue(reply.content);
+              }}
+              variant="danger"
+            >
+              Cancel
+            </Button>
           </div>
         ) : (
           <div>
