@@ -73,6 +73,10 @@
   color: green;
 }
 
+.xmark {
+  color: red;
+}
+
 .nav-link-selected {
   text-decoration: underline;
   font-weight: bold;

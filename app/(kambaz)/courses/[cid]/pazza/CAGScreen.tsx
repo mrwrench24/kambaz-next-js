@@ -3,6 +3,7 @@ import { RootState } from "@/app/(kambaz)/store";
 import { FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { usePazzaContext } from "./PazzaContext";
+import { FaCircleXmark } from "react-icons/fa6";
 
 export default function CAGScreen() {
   const { cid } = usePazzaContext();
@@ -32,6 +33,18 @@ export default function CAGScreen() {
     0,
   );
 
+  const numUnanswered = sections.reduce(
+    (count, section) =>
+      count +
+      section.posts.filter(
+        (post) =>
+          post.postType === "question" &&
+          post.instructorAnswer === null &&
+          post.studentAnswer === null,
+      ).length,
+    0,
+  );
+
   return (
     <div className="p-2 light-blue-bg">
       <h4>Class at a Glance</h4>
@@ -41,10 +54,18 @@ export default function CAGScreen() {
             <FaCheckCircle className="checkmark" />
             <span className="ps-2">No unread posts</span>
           </div>
-          <div>
-            <FaCheckCircle className="checkmark" />
-            <span className="ps-2">No unanswered posts</span>
-          </div>
+
+          {numUnanswered === 0 ? (
+            <div>
+              <FaCheckCircle className="checkmark" />
+              <span className="ps-2">No unanswered posts</span>
+            </div>
+          ) : (
+            <div>
+              <FaCircleXmark className="xmark" />
+              <span className="ps-2">{numUnanswered} unanswered posts</span>
+            </div>
+          )}
         </div>
 
         <div className="ms-auto pe-2">
