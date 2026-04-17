@@ -28,3 +28,7 @@ export const deletePost = async (pid: string) => {
   const response = await axiosWithCredentials.delete(`${POSTS_API}/${pid}`);
   return response.data;
 };
+
+export const addFollowupIdToPost = async (pid: string, fid: string) => {
+  await axiosWithCredentials.put(`${POSTS_API}/${pid}/${fid}`);
+};

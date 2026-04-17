@@ -28,3 +28,7 @@ export const deleteFollowup = async (fid: string) => {
   const response = await axiosWithCredentials.delete(`${FOLLOWUPS_API}/${fid}`);
   return response.data;
 };
+
+export const addReplyToFollowup = async (fid: string, rid: string) => {
+  await axiosWithCredentials.put(`${FOLLOWUPS_API}/${fid}/${rid}`);
+};

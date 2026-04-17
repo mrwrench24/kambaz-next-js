@@ -56,6 +56,8 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
     }
 
     const reply = await replyClient.createReply(replyValue, currentUser._id);
+    await client.addReplyToFollowup(followup.id, reply.id);
+
     dispatch(createReply(reply));
 
     dispatch(
