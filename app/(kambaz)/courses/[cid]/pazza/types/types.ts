@@ -46,6 +46,9 @@ export type Post = {
   studentAnswer: Answer | null;
   instructorAnswer: Answer | null;
   followups: string[];
+
+  createdAt: string;
+  updatedAt: string;
 };
 
 /** Followups */

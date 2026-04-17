@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa6";
 import "./index.css";
 import { usePazzaContext } from "./PazzaContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { Post } from "./types/types";
@@ -21,8 +21,8 @@ export default function PostNavigation() {
   const [showControls, setShowControls] = useState(true);
 
   const { sections } = useSelector((state: RootState) => state.postReducer);
-  const [expanded, setExpanded] = useState(
-    sections.map((section) => section.id),
+  const [expanded, setExpanded] = useState<string[]>(() =>
+    sections.length > 0 ? [sections[0].id] : [],
   );
 
   if (!showControls) {
@@ -97,6 +97,13 @@ export default function PostNavigation() {
                       "id" in page &&
                       page.id === post.id;
 
+                    const timePostedStr = new Date(post.createdAt)
+                      .toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                      .toLowerCase();
+
                     return (
                       // TODO: displaying whether this was posted by a student or an instructor.
                       <div
@@ -111,7 +118,7 @@ export default function PostNavigation() {
                           </div>
                         </div>
                         <div className="post-info text-end">
-                          <div>02:43 pm</div>
+                          <div>{timePostedStr}</div>
                           <div>
                             {post.studentAnswer && (
                               <FaS className="student-s" />

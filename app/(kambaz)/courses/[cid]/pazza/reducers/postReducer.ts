@@ -83,6 +83,11 @@ const postsSlice = createSlice({
       }
     },
     addAllPosts: (state, action: PayloadAction<Post[]>) => {
+      const posts = action.payload.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      );
+
       state.sections = [{ id: "sec1", title: "Today", posts: action.payload }];
     },
   },
