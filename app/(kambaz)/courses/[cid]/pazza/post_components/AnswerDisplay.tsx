@@ -19,11 +19,13 @@ export default function AnswerDisplay({
   answer,
   canEdit,
   onEdit,
+  onDelete,
   changeCommended,
 }: {
   answer: Answer | null;
   canEdit: boolean;
   onEdit: (newAnswer: string) => void;
+  onDelete: () => void;
   changeCommended: (to: boolean) => void;
 }) {
   const { currentUser } = useSelector(
@@ -47,7 +49,15 @@ export default function AnswerDisplay({
                   <Dropdown.Item onClick={() => setEditing(true)}>
                     Edit
                   </Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      onDelete();
+                      // will hold the old content
+                      setEditValue("");
+                    }}
+                  >
+                    Delete
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

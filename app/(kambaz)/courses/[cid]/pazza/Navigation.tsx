@@ -1,6 +1,6 @@
 "use client";
 import { FaPerson } from "react-icons/fa6";
-import { PageState, usePazzaContext } from "./PazzaContext";
+import { usePazzaContext } from "./PazzaContext";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 
@@ -14,8 +14,6 @@ export default function PazzaNavigation({ cid }: { cid: string }) {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
 
   const course = courses.find((c) => c._id === cid);
-
-  console.log(course);
 
   return (
     <div className="bg-primary text-white p-1 d-flex align-items-center">

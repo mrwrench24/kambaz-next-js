@@ -84,18 +84,17 @@ export default function PostScreen({ postId }: { postId: string }) {
 
   function handleStudentAnswerChange(newAnswer: string) {
     const prevStudentAnswer = post.studentAnswer;
+    let updatedPost: Post;
 
     if (!prevStudentAnswer) {
-      dispatch(
-        updatePost({
-          ...post,
-          studentAnswer: {
-            content: newAnswer,
-            contributors: [currentUser._id],
-            commenders: [],
-          },
-        }),
-      );
+      updatedPost = {
+        ...post,
+        studentAnswer: {
+          content: newAnswer,
+          contributors: [currentUser._id],
+          commenders: [],
+        },
+      };
     } else {
       const updatedContributors = prevStudentAnswer.contributors.includes(
         currentUser._id,
@@ -103,33 +102,32 @@ export default function PostScreen({ postId }: { postId: string }) {
         ? prevStudentAnswer.contributors
         : [...prevStudentAnswer.contributors, currentUser._id];
 
-      dispatch(
-        updatePost({
-          ...post,
-          studentAnswer: {
-            content: newAnswer,
-            contributors: updatedContributors,
-            commenders: prevStudentAnswer.commenders,
-          },
-        }),
-      );
+      updatedPost = {
+        ...post,
+        studentAnswer: {
+          content: newAnswer,
+          contributors: updatedContributors,
+          commenders: prevStudentAnswer.commenders,
+        },
+      };
     }
+
+    onUpdatePost(updatedPost);
   }
 
   function handleInstructorAnswerChange(newAnswer: string) {
     const prevInstructorAnswer = post.instructorAnswer;
+    let updatedPost: Post;
 
     if (!prevInstructorAnswer) {
-      dispatch(
-        updatePost({
-          ...post,
-          instructorAnswer: {
-            content: newAnswer,
-            contributors: [currentUser._id],
-            commenders: [],
-          },
-        }),
-      );
+      updatedPost = {
+        ...post,
+        instructorAnswer: {
+          content: newAnswer,
+          contributors: [currentUser._id],
+          commenders: [],
+        },
+      };
     } else {
       const updatedContributors = prevInstructorAnswer.contributors.includes(
         currentUser._id,
@@ -137,17 +135,17 @@ export default function PostScreen({ postId }: { postId: string }) {
         ? prevInstructorAnswer.contributors
         : [...prevInstructorAnswer.contributors, currentUser._id];
 
-      dispatch(
-        updatePost({
-          ...post,
-          instructorAnswer: {
-            content: newAnswer,
-            contributors: updatedContributors,
-            commenders: prevInstructorAnswer.commenders,
-          },
-        }),
-      );
+      updatedPost = {
+        ...post,
+        instructorAnswer: {
+          content: newAnswer,
+          contributors: updatedContributors,
+          commenders: prevInstructorAnswer.commenders,
+        },
+      };
     }
+
+    onUpdatePost(updatedPost);
   }
 
   return (
@@ -174,6 +172,7 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.studentAnswer}
                 canEdit={currentUser.role === "STUDENT"}
                 onEdit={handleStudentAnswerChange}
+                onDelete={() => onUpdatePost({ ...post, studentAnswer: null })}
                 changeCommended={(to) => {
                   let updatedPost: Post;
 
@@ -214,6 +213,9 @@ export default function PostScreen({ postId }: { postId: string }) {
                 answer={post.instructorAnswer}
                 canEdit={currentUser.role !== "STUDENT"}
                 onEdit={handleInstructorAnswerChange}
+                onDelete={() =>
+                  onUpdatePost({ ...post, instructorAnswer: null })
+                }
                 changeCommended={(to) => {
                   let updatedPost: Post;
 
