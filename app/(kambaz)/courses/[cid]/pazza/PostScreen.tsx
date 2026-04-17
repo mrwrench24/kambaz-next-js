@@ -153,7 +153,7 @@ export default function PostScreen({ postId }: { postId: string }) {
       </div>
 
       {/* using key prevents some weird issues (forces rerender) */}
-      <PostContent postId={post.id} />
+      <PostContent key={post.id} postId={post.id} />
 
       <div className="border border-dark p-2">
         {post.postType === "question" && (

@@ -12,8 +12,10 @@ import {
 import { usePazzaContext } from "./PazzaContext";
 import { NewPost } from "./types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "./reducers/postReducer";
+import { addPost } from "./reducers/postReducer";
 import { RootState } from "@/app/(kambaz)/store";
+import * as client from "./clients/postsClient";
+import { useParams } from "next/navigation";
 
 export default function NewPostScreen() {
   const { setPage } = usePazzaContext();
@@ -21,6 +23,8 @@ export default function NewPostScreen() {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+
+  const { cid } = useParams();
 
   const [newPost, setNewPost] = useState<NewPost>({
     postType: "question",
@@ -37,7 +41,7 @@ export default function NewPostScreen() {
 
   const dispatch = useDispatch();
 
-  function handlePostClicked() {
+  async function handlePostClicked() {
     if (
       newPost.summary.length <= 0 ||
       newPost.summary.length > 100 ||
@@ -47,7 +51,8 @@ export default function NewPostScreen() {
       return;
     }
 
-    dispatch(createPost(newPost));
+    const post = await client.createPost(cid as string, newPost);
+    dispatch(addPost(post));
     setPage("cag");
   }
 

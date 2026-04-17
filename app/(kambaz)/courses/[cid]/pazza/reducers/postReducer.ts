@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import posts from "../database/posts";
 import { NewPost, Post, PostSection } from "../types/types";
 
 interface PostState {
@@ -8,51 +7,47 @@ interface PostState {
 }
 
 const initialState: PostState = {
-  sections: [
-    { id: "sec1", title: "Today", posts: [posts[0]] },
-    { id: "sec2", title: "Yesterday", posts: [posts[1]] },
-    { id: "sec3", title: "Last Week", posts: [posts[2], posts[3]] },
-  ],
-  nextPostNumber: 59,
+  sections: [],
+  nextPostNumber: 999,
 };
 
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    createPost: (state, action: PayloadAction<NewPost>) => {
-      const postToAdd: Post = {
-        id: `${Math.random()}`,
-        postNumber: state.nextPostNumber,
-        title: action.payload.summary,
-        content: action.payload.details,
-        postType: action.payload.postType,
-        author: action.payload.authorId,
-        commenders: [],
-        onlyVisibleTo: null,
-        // TODO: onlyVisibleTo
-        folders: action.payload.folders,
-        studentAnswer: null,
-        instructorAnswer: null,
-        followups: [],
-      };
+    // createPost: (state, action: PayloadAction<NewPost>) => {
+    //   const postToAdd: Post = {
+    //     id: `${Math.random()}`,
+    //     postNumber: state.nextPostNumber,
+    //     title: action.payload.summary,
+    //     content: action.payload.details,
+    //     postType: action.payload.postType,
+    //     author: action.payload.authorId,
+    //     commenders: [],
+    //     onlyVisibleTo: null,
+    //     // TODO: onlyVisibleTo
+    //     folders: action.payload.folders,
+    //     studentAnswer: null,
+    //     instructorAnswer: null,
+    //     followups: [],
+    //   };
 
-      const todaySection = state.sections.find(
-        (section) => section.title === "Today",
-      );
+    //   const todaySection = state.sections.find(
+    //     (section) => section.title === "Today",
+    //   );
 
-      if (todaySection) {
-        todaySection.posts = [postToAdd, ...todaySection.posts];
-      } else {
-        // TODO: Test
-        state.sections = [
-          { id: `${Math.random()}`, title: "Today", posts: [postToAdd] },
-          ...state.sections,
-        ];
-      }
+    //   if (todaySection) {
+    //     todaySection.posts = [postToAdd, ...todaySection.posts];
+    //   } else {
+    //     // TODO: Test
+    //     state.sections = [
+    //       { id: `${Math.random()}`, title: "Today", posts: [postToAdd] },
+    //       ...state.sections,
+    //     ];
+    //   }
 
-      state.nextPostNumber += 1;
-    },
+    //   state.nextPostNumber += 1;
+    // },
     // string = the id of the post to delete
     deletePost: (state, action: PayloadAction<string>) => {
       state.sections.forEach((section) => {
@@ -72,8 +67,27 @@ const postsSlice = createSlice({
         );
       });
     },
+    addPost: (state, action: PayloadAction<Post>) => {
+      const todaySection = state.sections.find(
+        (section) => section.title === "Today",
+      );
+
+      if (todaySection) {
+        todaySection.posts = [action.payload, ...todaySection.posts];
+      } else {
+        // TODO: Test
+        state.sections = [
+          { id: `${Math.random()}`, title: "Today", posts: [action.payload] },
+          ...state.sections,
+        ];
+      }
+    },
+    addAllPosts: (state, action: PayloadAction<Post[]>) => {
+      state.sections = [{ id: "sec1", title: "Today", posts: action.payload }];
+    },
   },
 });
 
-export const { createPost, deletePost, updatePost } = postsSlice.actions;
+export const { deletePost, updatePost, addAllPosts, addPost } =
+  postsSlice.actions;
 export default postsSlice.reducer;

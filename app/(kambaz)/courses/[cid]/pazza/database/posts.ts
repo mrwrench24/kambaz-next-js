@@ -14,6 +14,7 @@ const posts: Post[] = [
     studentAnswer: null,
     instructorAnswer: null,
     followups: ["fu1", "fu2"],
+    onlyVisibleTo: null,
   },
   {
     id: "p2",

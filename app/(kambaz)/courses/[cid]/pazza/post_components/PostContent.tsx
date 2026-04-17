@@ -16,6 +16,7 @@ import { RootState } from "@/app/(kambaz)/store";
 import Commendations from "./Commendations";
 import { deletePost, updatePost } from "../reducers/postReducer";
 import { usePazzaContext } from "../PazzaContext";
+import * as client from "../clients/postsClient";
 
 export default function PostContent({ postId }: { postId: string }) {
   const { sections } = useSelector((state: RootState) => state.postReducer);
@@ -44,6 +45,26 @@ export default function PostContent({ postId }: { postId: string }) {
 
   const dispatch = useDispatch();
 
+  async function onEditPost() {
+    if (editedContent.length === 0) {
+      return;
+    }
+
+    await client.updatePost({ ...post, content: editedContent });
+    dispatch(updatePost({ ...post, content: editedContent }));
+    setEditing(false);
+  }
+
+  async function onDeletePost() {
+    if (!post) {
+      return;
+    }
+
+    await client.deletePost(post.id);
+    dispatch(deletePost(post.id));
+    setPage("cag");
+  }
+
   return (
     <div className="border border-dark">
       <div id="pazza-question-content" className="ps-2 pb-2">
@@ -62,14 +83,7 @@ export default function PostContent({ postId }: { postId: string }) {
                   <Dropdown.Item onClick={() => setEditing(true)}>
                     Edit
                   </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      dispatch(deletePost(post.id));
-                      setPage("cag");
-                    }}
-                  >
-                    Delete
-                  </Dropdown.Item>
+                  <Dropdown.Item onClick={onDeletePost}>Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -85,6 +99,7 @@ export default function PostContent({ postId }: { postId: string }) {
                 value={editedContent}
                 className="p-3"
                 onChange={(e) => setEditedContent(e.target.value)}
+                key={post.id}
               >
                 <Toolbar>
                   <BtnBold />
@@ -114,12 +129,12 @@ export default function PostContent({ postId }: { postId: string }) {
       </div>
 
       <div className="bg-secondary ps-2 p-1 d-flex align-items-center">
+        {/* TODO: add a cancel button */}
         {canEdit && (
           <Button
             onClick={() => {
               if (editing) {
-                dispatch(updatePost({ ...post, content: editedContent }));
-                setEditing(false);
+                onEditPost();
               } else {
                 setEditing(true);
               }

@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { getFoldersForCourse } from "./clients/foldersClient";
 import { setFolders } from "./reducers/folderReducer";
 import { useDispatch } from "react-redux";
+import { getPostsForCourse } from "./clients/postsClient";
+import { addAllPosts } from "./reducers/postReducer";
 
 export default function PazzaPage() {
   const { page } = usePazzaContext();
@@ -21,6 +23,10 @@ export default function PazzaPage() {
 
     getFoldersForCourse(cid as string).then((folders) => {
       dispatch(setFolders(folders));
+    });
+
+    getPostsForCourse(cid as string).then((posts) => {
+      dispatch(addAllPosts(posts));
     });
   }, [cid]);
 
