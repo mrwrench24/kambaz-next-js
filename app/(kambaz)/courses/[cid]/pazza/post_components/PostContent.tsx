@@ -143,6 +143,19 @@ export default function PostContent({ postId }: { postId: string }) {
             {editing ? "Save" : "Edit"}
           </Button>
         )}
+
+        {editing && (
+          <Button
+            onClick={() => {
+              setEditing(false);
+              setEditedContent(post.content);
+            }}
+            className="ms-2"
+            variant="danger"
+          >
+            Cancel
+          </Button>
+        )}
         <div className="ps-2">
           <Commendations
             commenders={post.commenders}
