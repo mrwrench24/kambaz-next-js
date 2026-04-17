@@ -65,6 +65,26 @@ export default function PostContent({ postId }: { postId: string }) {
     setPage("cag");
   }
 
+  async function onCommendationPressed() {
+    const commended = post.commenders.includes(currentUser._id);
+    let updatedPost: Post;
+
+    if (commended) {
+      updatedPost = {
+        ...post,
+        commenders: post.commenders.filter((c) => c !== currentUser._id),
+      };
+    } else {
+      updatedPost = {
+        ...post,
+        commenders: [...post.commenders, currentUser._id],
+      };
+    }
+
+    await client.updatePost(updatedPost);
+    dispatch(updatePost(updatedPost));
+  }
+
   return (
     <div className="border border-dark">
       <div id="pazza-question-content" className="ps-2 pb-2">
@@ -160,27 +180,7 @@ export default function PostContent({ postId }: { postId: string }) {
           <Commendations
             commenders={post.commenders}
             commendationsFor={post.postType}
-            onCommendationPressed={() => {
-              const commended = post.commenders.includes(currentUser._id);
-
-              if (commended) {
-                dispatch(
-                  updatePost({
-                    ...post,
-                    commenders: post.commenders.filter(
-                      (c) => c !== currentUser._id,
-                    ),
-                  }),
-                );
-              } else {
-                dispatch(
-                  updatePost({
-                    ...post,
-                    commenders: [...post.commenders, currentUser._id],
-                  }),
-                );
-              }
-            }}
+            onCommendationPressed={onCommendationPressed}
           />
         </div>
       </div>
