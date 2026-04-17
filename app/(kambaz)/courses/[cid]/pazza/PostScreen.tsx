@@ -10,6 +10,7 @@ import * as followupClient from "./clients/followupsClient";
 import * as repliesClient from "./clients/repliesClient";
 import * as postsClient from "./clients/postsClient";
 import { setReplies } from "./reducers/followupReplyReducer";
+import { Post } from "./types/types";
 
 export default function PostScreen({ postId }: { postId: string }) {
   const { currentUser } = useSelector(
@@ -51,6 +52,11 @@ export default function PostScreen({ postId }: { postId: string }) {
       });
     });
   }, [post]);
+
+  async function onUpdatePost(to: Post) {
+    await postsClient.updatePost(to);
+    dispatch(updatePost(to));
+  }
 
   async function onCreateFollowup() {
     if (newFollowup.length === 0) {
@@ -169,32 +175,32 @@ export default function PostScreen({ postId }: { postId: string }) {
                 canEdit={currentUser.role === "STUDENT"}
                 onEdit={handleStudentAnswerChange}
                 changeCommended={(to) => {
+                  let updatedPost: Post;
+
                   if (to) {
-                    dispatch(
-                      updatePost({
-                        ...post,
-                        studentAnswer: {
-                          ...post.studentAnswer,
-                          commenders: [
-                            ...post.studentAnswer.commenders,
-                            currentUser._id,
-                          ],
-                        },
-                      }),
-                    );
+                    updatedPost = {
+                      ...post,
+                      studentAnswer: {
+                        ...post.studentAnswer,
+                        commenders: [
+                          ...post.studentAnswer.commenders,
+                          currentUser._id,
+                        ],
+                      },
+                    };
                   } else {
-                    dispatch(
-                      updatePost({
-                        ...post,
-                        studentAnswer: {
-                          ...post.studentAnswer,
-                          commenders: post.studentAnswer.commenders.filter(
-                            (c) => c !== currentUser._id,
-                          ),
-                        },
-                      }),
-                    );
+                    updatedPost = {
+                      ...post,
+                      studentAnswer: {
+                        ...post.studentAnswer,
+                        commenders: post.studentAnswer.commenders.filter(
+                          (c) => c !== currentUser._id,
+                        ),
+                      },
+                    };
                   }
+
+                  onUpdatePost(updatedPost);
                 }}
               />
             </div>
@@ -209,32 +215,32 @@ export default function PostScreen({ postId }: { postId: string }) {
                 canEdit={currentUser.role !== "STUDENT"}
                 onEdit={handleInstructorAnswerChange}
                 changeCommended={(to) => {
+                  let updatedPost: Post;
+
                   if (to) {
-                    dispatch(
-                      updatePost({
-                        ...post,
-                        instructorAnswer: {
-                          ...post.instructorAnswer,
-                          commenders: [
-                            ...post.instructorAnswer.commenders,
-                            currentUser._id,
-                          ],
-                        },
-                      }),
-                    );
+                    updatedPost = {
+                      ...post,
+                      instructorAnswer: {
+                        ...post.instructorAnswer,
+                        commenders: [
+                          ...post.instructorAnswer.commenders,
+                          currentUser._id,
+                        ],
+                      },
+                    };
                   } else {
-                    dispatch(
-                      updatePost({
-                        ...post,
-                        instructorAnswer: {
-                          ...post.instructorAnswer,
-                          commenders: post.instructorAnswer.commenders.filter(
-                            (c) => c !== currentUser._id,
-                          ),
-                        },
-                      }),
-                    );
+                    updatedPost = {
+                      ...post,
+                      instructorAnswer: {
+                        ...post.instructorAnswer,
+                        commenders: post.instructorAnswer.commenders.filter(
+                          (c) => c !== currentUser._id,
+                        ),
+                      },
+                    };
                   }
+
+                  onUpdatePost(updatedPost);
                 }}
               />
             </div>
