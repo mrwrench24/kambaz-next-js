@@ -51,6 +51,7 @@ export type Post = {
 
   createdAt: string;
   updatedAt: string;
+  viewers: string[];
 };
 
 /** Followups */

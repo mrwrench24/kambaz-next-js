@@ -34,6 +34,18 @@ export default function PostScreen({ postId }: { postId: string }) {
       return;
     }
 
+    const viewed = post.viewers.includes(currentUser._id);
+
+    if (!viewed) {
+      const withView = {
+        ...post,
+        viewers: [...post.viewers, currentUser._id],
+      };
+
+      postsClient.updatePost(withView);
+      dispatch(updatePost(withView));
+    }
+
     followupClient.getFollowupsByIds(post.followups).then((followups) => {
       if (!followups) {
         return;
@@ -159,7 +171,7 @@ export default function PostScreen({ postId }: { postId: string }) {
           {post.postType} @{post.postNumber}
         </div>
         <div className="bg-secondary ps-3 pe-3 ms-auto d-flex align-items-center me-3">
-          1 View
+          {post.viewers.length} View{post.viewers.length !== 1 && "s"}
         </div>
       </div>
 

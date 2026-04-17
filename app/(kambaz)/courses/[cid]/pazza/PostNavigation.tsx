@@ -25,6 +25,10 @@ export default function PostNavigation() {
     sections.length > 0 ? [sections[0].id] : [],
   );
 
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+
   if (!showControls) {
     return (
       <div className="bg-secondary border border-dark">
@@ -104,6 +108,8 @@ export default function PostNavigation() {
                       })
                       .toLowerCase();
 
+                    const viewed = post.viewers.includes(currentUser._id);
+
                     return (
                       // TODO: displaying whether this was posted by a student or an instructor.
                       <div
@@ -113,7 +119,9 @@ export default function PostNavigation() {
                       >
                         <div className="flex-fill">
                           <div className="fw-bold">{post.title}</div>
-                          <div className="text-truncate post-description">
+                          <div
+                            className={`text-truncate post-description ${!viewed && "fw-semibold"}`}
+                          >
                             {post.content}
                           </div>
                         </div>
