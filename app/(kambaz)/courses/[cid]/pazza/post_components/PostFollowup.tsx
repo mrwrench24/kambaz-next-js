@@ -30,6 +30,13 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
   const canEdit =
     currentUser.role !== "STUDENT" || followup.author === currentUser._id;
 
+  const timePostedStr = new Date(followup.createdAt)
+    .toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    .toLowerCase();
+
   const dispatch = useDispatch();
 
   function handleResolvedChange(setTo: boolean) {
@@ -144,7 +151,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
               </div>
             ) : (
               <div>
-                <b>{followup.author}</b> 2 hours ago
+                <b>{followup.author}</b> {timePostedStr}
                 <p>{followup.content}</p>
               </div>
             )}

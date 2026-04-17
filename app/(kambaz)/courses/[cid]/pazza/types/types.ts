@@ -56,6 +56,7 @@ export type FollowupReply = {
   id: string;
   author: string;
   content: string;
+  createdAt: string;
 };
 
 export type Followup = {
@@ -63,6 +64,7 @@ export type Followup = {
   resolved: boolean;
   author: string;
   content: string;
+  createdAt: string;
   // IDs of followup replies
   replies: string[];
 };

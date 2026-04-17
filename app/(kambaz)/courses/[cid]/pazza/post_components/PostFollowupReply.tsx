@@ -19,6 +19,13 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
   const canEdit =
     currentUser.role !== "STUDENT" || reply.author === currentUser._id;
 
+  const timePostedStr = new Date(reply.createdAt)
+    .toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    .toLowerCase();
+
   async function onDeleteReply(id: string) {
     await client.deleteReply(id);
     dispatch(deleteReply(reply.id));
@@ -56,7 +63,7 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
           </div>
         ) : (
           <div>
-            <b>{reply.author}</b> 2 hours ago
+            <b>{reply.author}</b> {timePostedStr}
             <p>{reply.content}</p>
           </div>
         )}
