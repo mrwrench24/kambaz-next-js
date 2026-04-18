@@ -39,8 +39,10 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
 
   const dispatch = useDispatch();
 
-  function handleResolvedChange(setTo: boolean) {
-    dispatch(updateFollowup({ ...followup, resolved: setTo }));
+  async function handleResolvedChange(setTo: boolean) {
+    const updatedFollowup = { ...followup, resolved: setTo };
+    await client.updateFollowup(updatedFollowup);
+    dispatch(updateFollowup(updatedFollowup));
   }
 
   async function onEditFollowup() {
