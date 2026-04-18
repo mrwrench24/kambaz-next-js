@@ -1,13 +1,15 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Folder, Post } from "./types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
+import { findUsersForCourse } from "../../client";
 
 export type PageState = "new_post" | "cag" | Post | "manage_class";
 type PazzaState = {
   cid: string;
   page: PageState;
+  numEnrolled: number;
   setPage: (p: PageState) => void;
   selectedFolder: Folder | null;
   setSelectedFolder: (f: Folder) => void;
@@ -24,6 +26,7 @@ export function PazzaProvider({
 }) {
   const [page, setPageDirect] = useState<PageState>("cag");
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
+  const [numEnrolled, setNumEnrolled] = useState(1);
 
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
@@ -37,11 +40,22 @@ export function PazzaProvider({
     setPageDirect(p);
   };
 
+  useEffect(() => {
+    if (!cid) {
+      return;
+    }
+
+    findUsersForCourse(cid as string).then((users) =>
+      setNumEnrolled(users.length),
+    );
+  }, [cid]);
+
   return (
     <PazzaContext.Provider
       value={{
         cid,
         page,
+        numEnrolled,
         setPage,
         selectedFolder,
         setSelectedFolder,
