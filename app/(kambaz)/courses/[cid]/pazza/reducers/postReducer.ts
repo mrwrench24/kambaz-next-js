@@ -3,12 +3,10 @@ import { NewPost, Post, PostSection } from "../types/types";
 
 interface PostState {
   sections: PostSection[];
-  nextPostNumber: number;
 }
 
 const initialState: PostState = {
   sections: [],
-  nextPostNumber: 999,
 };
 
 const postsSlice = createSlice({

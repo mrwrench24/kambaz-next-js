@@ -167,9 +167,7 @@ export default function PostScreen({ postId }: { postId: string }) {
   return (
     <div>
       <div className="d-flex align-items-center border border-dark ps-1">
-        <div>
-          {post.postType} @{post.postNumber}
-        </div>
+        <div>{post.postType}</div>
         <div className="bg-secondary ps-3 pe-3 ms-auto d-flex align-items-center me-3">
           {post.viewers.length} View{post.viewers.length !== 1 && "s"}
         </div>

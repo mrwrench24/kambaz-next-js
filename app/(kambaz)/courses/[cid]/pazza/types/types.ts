@@ -33,7 +33,6 @@ export type PostSection = {
 
 export type Post = {
   id: string;
-  postNumber: number;
   title: string;
   content: string;
   postType: "question" | "note";
