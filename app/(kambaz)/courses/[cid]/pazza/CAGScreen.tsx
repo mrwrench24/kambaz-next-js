@@ -6,7 +6,7 @@ import { usePazzaContext } from "./PazzaContext";
 import { FaCircleXmark } from "react-icons/fa6";
 
 export default function CAGScreen() {
-  const { numEnrolled } = usePazzaContext();
+  const { usersInCourse } = usePazzaContext();
   const { sections } = useSelector((state: RootState) => state.postReducer);
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
@@ -82,7 +82,7 @@ export default function CAGScreen() {
           <div>{numPosts} total post(s)</div>
           <div>{numInstructorAnswer} instructor response(s)</div>
           <div>{numStudentAnswer} student response(s)</div>
-          <div>{numEnrolled} student(s) enrolled</div>
+          <div>{usersInCourse.length} student(s) enrolled</div>
         </div>
       </div>
     </div>

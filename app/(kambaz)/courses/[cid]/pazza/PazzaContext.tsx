@@ -9,7 +9,7 @@ export type PageState = "new_post" | "cag" | Post | "manage_class";
 type PazzaState = {
   cid: string;
   page: PageState;
-  numEnrolled: number;
+  usersInCourse: any[];
   setPage: (p: PageState) => void;
   selectedFolder: Folder | null;
   setSelectedFolder: (f: Folder) => void;
@@ -26,7 +26,7 @@ export function PazzaProvider({
 }) {
   const [page, setPageDirect] = useState<PageState>("cag");
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
-  const [numEnrolled, setNumEnrolled] = useState(1);
+  const [usersInCourse, setUsersInCourse] = useState([]);
 
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
@@ -45,9 +45,7 @@ export function PazzaProvider({
       return;
     }
 
-    findUsersForCourse(cid as string).then((users) =>
-      setNumEnrolled(users.length),
-    );
+    findUsersForCourse(cid as string).then((users) => setUsersInCourse(users));
   }, [cid]);
 
   return (
@@ -55,7 +53,7 @@ export function PazzaProvider({
       value={{
         cid,
         page,
-        numEnrolled,
+        usersInCourse,
         setPage,
         selectedFolder,
         setSelectedFolder,

@@ -18,7 +18,7 @@ import * as client from "./clients/postsClient";
 import { useParams } from "next/navigation";
 
 export default function NewPostScreen() {
-  const { setPage } = usePazzaContext();
+  const { setPage, usersInCourse } = usePazzaContext();
 
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
@@ -36,6 +36,7 @@ export default function NewPostScreen() {
   });
 
   const [showWarning, setShowWarning] = useState(false);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
 
   const { folders } = useSelector((state: RootState) => state.folderReducer);
 
@@ -62,21 +63,23 @@ export default function NewPostScreen() {
         Post Type
         <span className="ps-4">
           <input
+            id="post-type-q"
             name="postType"
             type="radio"
             checked={newPost.postType === "question"}
             onChange={() => setNewPost({ ...newPost, postType: "question" })}
           />{" "}
-          Question
+          <label htmlFor="post-type-q">Question</label>
         </span>
         <span className="ps-4">
           <input
+            id="post-type-n"
             name="postType"
             type="radio"
             checked={newPost.postType === "note"}
             onChange={() => setNewPost({ ...newPost, postType: "note" })}
           />{" "}
-          Note
+          <label htmlFor="post-type-n">Note</label>
         </span>
       </div>
       <div className="p-2 light-blue-bg" id="post-create">
@@ -91,24 +94,50 @@ export default function NewPostScreen() {
           Post To
           <span className="ps-4">
             <input
+              id="post-to-entire"
               name="postTo"
               type="radio"
               checked={newPost.postTo === "all"}
               onChange={() => setNewPost({ ...newPost, postTo: "all" })}
             />{" "}
-            Entire Class
+            <label htmlFor="post-to-entire">Entire Class</label>
           </span>
           <span className="ps-4">
             <input
+              id="post-to-individual"
               name="postTo"
               type="radio"
               checked={newPost.postTo === "individual"}
               onChange={() => setNewPost({ ...newPost, postTo: "individual" })}
             />{" "}
-            Individual Student(s) / Instructors
+            <label htmlFor="post-to-individual">
+              Individual Student(s) / Instructors
+            </label>
           </span>
           {newPost.postTo === "individual" && (
-            <div>Well... don't forget to do this!</div>
+            <div>
+              {usersInCourse.map((user) => {
+                const selected = selectedUserIds.includes(user._id);
+
+                return (
+                  <span key={user._id} className="m-2 p-1 bg-secondary">
+                    <input
+                      type="checkbox"
+                      className="me-1"
+                      checked={selected}
+                      onChange={() =>
+                        setSelectedUserIds(() =>
+                          selected
+                            ? selectedUserIds.filter((uid) => uid !== user._id)
+                            : [...selectedUserIds, user._id],
+                        )
+                      }
+                    />
+                    {user.firstName + " " + user.lastName}
+                  </span>
+                );
+              })}
+            </div>
           )}
         </div>
 
