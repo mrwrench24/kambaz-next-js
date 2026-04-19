@@ -73,7 +73,6 @@ const postsSlice = createSlice({
       if (todaySection) {
         todaySection.posts = [action.payload, ...todaySection.posts];
       } else {
-        // TODO: Test
         state.sections = [
           { id: `${Math.random()}`, title: "Today", posts: [action.payload] },
           ...state.sections,
@@ -81,13 +80,40 @@ const postsSlice = createSlice({
       }
     },
     addAllPosts: (state, action: PayloadAction<Post[]>) => {
-      // sort appropriatley
-      const posts = action.payload.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
+      const now = new Date();
 
-      state.sections = [{ id: "sec1", title: "Today", posts }];
+      const sections: {
+        id: string;
+        title: string;
+        posts: Post[];
+      }[] = [
+        { id: "today", title: "Today", posts: [] },
+        { id: "yesterday", title: "Yesterday", posts: [] },
+        { id: "lastWeek", title: "Last Week", posts: [] },
+        { id: "older", title: "Weeks ago", posts: [] },
+      ];
+
+      const getDaysDiff = (dateStr: string) => {
+        const created = new Date(dateStr);
+        return (now.getTime() - created.getTime()) / (1000 * 60 * 60 * 24);
+      };
+
+      action.payload.forEach((post) => {
+        const days = getDaysDiff(post.createdAt);
+
+        if (days < 1) {
+          sections[0].posts.push(post);
+        } else if (days < 2) {
+          sections[1].posts.push(post);
+        } else if (days < 7) {
+          sections[2].posts.push(post);
+        } else {
+          sections[3].posts.push(post);
+        }
+      });
+
+      // don't have empty sections
+      state.sections = sections.filter((section) => section.posts.length > 0);
     },
   },
 });

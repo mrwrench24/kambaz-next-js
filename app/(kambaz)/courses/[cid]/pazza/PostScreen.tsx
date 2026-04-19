@@ -188,7 +188,8 @@ export default function PostScreen({ postId }: { postId: string }) {
 
               <AnswerDisplay
                 answer={post.studentAnswer}
-                canEdit={currentUser.role === "STUDENT"}
+                // anyone can edit student answers!
+                canEdit={true}
                 onEdit={handleStudentAnswerChange}
                 onDelete={() => onUpdatePost({ ...post, studentAnswer: null })}
                 changeCommended={(to) => {
