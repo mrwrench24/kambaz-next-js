@@ -110,6 +110,8 @@ export default function PostNavigation() {
 
                     const viewed = post.viewers.includes(currentUser._id);
 
+                    const byStudent = post.author.role === "STUDENT";
+
                     return (
                       // TODO: displaying whether this was posted by a student or an instructor.
                       <div
@@ -118,7 +120,18 @@ export default function PostNavigation() {
                         onClick={() => setPage(post)}
                       >
                         <div className="flex-fill">
-                          <div className="fw-bold">{post.title}</div>
+                          <span className="me-1">
+                            {byStudent ? (
+                              <span className="bg-secondary me-1 p-1">
+                                Stud.
+                              </span>
+                            ) : (
+                              <span className="bg-secondary me-1 p-1">
+                                Inst.
+                              </span>
+                            )}
+                            <span className="fw-bold">{post.title}</span>
+                          </span>
                           <div
                             className={`text-truncate post-description ${!viewed && "fw-semibold"}`}
                           >
