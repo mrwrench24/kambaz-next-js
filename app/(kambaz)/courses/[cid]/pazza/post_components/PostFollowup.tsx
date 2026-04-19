@@ -28,7 +28,7 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
   const [replyValue, setReplyValue] = useState("");
 
   const canEdit =
-    currentUser.role !== "STUDENT" || followup.author === currentUser._id;
+    currentUser.role !== "STUDENT" || followup.author._id === currentUser._id;
 
   const timePostedStr = new Date(followup.createdAt)
     .toLocaleTimeString([], {
@@ -164,7 +164,10 @@ export default function PostFollowup({ followupId }: { followupId: string }) {
               </div>
             ) : (
               <div>
-                <b>{followup.author}</b> {timePostedStr}
+                <b>
+                  {followup.author.firstName} {followup.author.lastName}{" "}
+                </b>{" "}
+                {timePostedStr}
                 <p>{followup.content}</p>
               </div>
             )}

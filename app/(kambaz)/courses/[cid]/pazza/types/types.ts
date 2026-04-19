@@ -10,14 +10,14 @@ export type Answer = {
   // date string
   updatedAt: string;
   // user IDs
-  contributors: string[];
+  contributors: any[];
   commenders: string[];
 };
 
 export type NewPost = {
   postType: "question" | "note";
   postTo: "all" | "individual";
-  authorId: string;
+  authorId: any;
   folders: string[];
   // (title)
   summary: string;
@@ -37,7 +37,7 @@ export type Post = {
   content: string;
   postType: "question" | "note";
   // TODO: name or the uid? probably uid
-  author: string;
+  author: any;
   // ids of users who have commended the post
   commenders: string[];
   // null if visible to all
@@ -55,7 +55,7 @@ export type Post = {
 /** Followups */
 export type FollowupReply = {
   id: string;
-  author: string;
+  author: any;
   content: string;
   createdAt: string;
 };
@@ -63,7 +63,7 @@ export type FollowupReply = {
 export type Followup = {
   id: string;
   resolved: boolean;
-  author: string;
+  author: any;
   content: string;
   createdAt: string;
   // IDs of followup replies

@@ -103,17 +103,17 @@ export default function PostScreen({ postId }: { postId: string }) {
         ...post,
         studentAnswer: {
           content: newAnswer,
-          contributors: [currentUser._id],
+          contributors: [currentUser],
           commenders: [],
           updatedAt: new Date().toISOString(),
         },
       };
     } else {
-      const updatedContributors = prevStudentAnswer.contributors.includes(
-        currentUser._id,
-      )
+      const updatedContributors = prevStudentAnswer.contributors
+        .flatMap((u) => u._id)
+        .includes(currentUser._id)
         ? prevStudentAnswer.contributors
-        : [...prevStudentAnswer.contributors, currentUser._id];
+        : [...prevStudentAnswer.contributors, currentUser];
 
       updatedPost = {
         ...post,
@@ -138,17 +138,17 @@ export default function PostScreen({ postId }: { postId: string }) {
         ...post,
         instructorAnswer: {
           content: newAnswer,
-          contributors: [currentUser._id],
+          contributors: [currentUser],
           commenders: [],
           updatedAt: new Date().toISOString(),
         },
       };
     } else {
-      const updatedContributors = prevInstructorAnswer.contributors.includes(
-        currentUser._id,
-      )
+      const updatedContributors = prevInstructorAnswer.contributors
+        .flatMap((u) => u._id)
+        .includes(currentUser._id)
         ? prevInstructorAnswer.contributors
-        : [...prevInstructorAnswer.contributors, currentUser._id];
+        : [...prevInstructorAnswer.contributors, currentUser];
 
       updatedPost = {
         ...post,

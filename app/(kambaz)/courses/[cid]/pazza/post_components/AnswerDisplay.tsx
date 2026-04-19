@@ -87,7 +87,10 @@ export default function AnswerDisplay({
           </div>
 
           <div className="ms-auto">
-            Updated {timeUpdatedStr} by {answer.contributors.join(" and ")}
+            Updated {timeUpdatedStr} by{" "}
+            {answer.contributors
+              .flatMap((u) => u.firstName + " " + u.lastName)
+              .join(" and ")}
           </div>
         </div>
       </div>

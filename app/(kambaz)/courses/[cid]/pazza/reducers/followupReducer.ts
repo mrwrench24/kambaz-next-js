@@ -20,6 +20,7 @@ const followupsSlice = createSlice({
       const newFollowup: Followup = {
         id: action.payload.id,
         resolved: false,
+        createdAt: new Date().toISOString(),
         author: action.payload.authorId,
         content: action.payload.content,
         replies: [],

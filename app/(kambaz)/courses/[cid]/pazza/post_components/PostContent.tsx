@@ -41,7 +41,7 @@ export default function PostContent({ postId }: { postId: string }) {
   const { setPage } = usePazzaContext();
 
   const canEdit =
-    currentUser._id === post.author || currentUser.role !== "STUDENT";
+    currentUser._id === post.author._id || currentUser.role !== "STUDENT";
 
   const dispatch = useDispatch();
 
@@ -110,7 +110,9 @@ export default function PostContent({ postId }: { postId: string }) {
           )}
         </div>
 
-        <h5 className="ps-2">By {post.author}</h5>
+        <h5 className="ps-2">
+          By {post.author.firstName} {post.author.lastName}
+        </h5>
 
         {editing ? (
           <div className="m-2">

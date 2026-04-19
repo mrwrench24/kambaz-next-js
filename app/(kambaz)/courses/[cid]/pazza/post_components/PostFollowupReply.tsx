@@ -17,7 +17,7 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
   const [editValue, setEditValue] = useState(reply.content);
 
   const canEdit =
-    currentUser.role !== "STUDENT" || reply.author === currentUser._id;
+    currentUser.role !== "STUDENT" || reply.author._id === currentUser._id;
 
   const timePostedStr = new Date(reply.createdAt)
     .toLocaleTimeString([], {
@@ -74,7 +74,10 @@ export default function PostFollowupReply({ reply }: { reply: FollowupReply }) {
           </div>
         ) : (
           <div>
-            <b>{reply.author}</b> {timePostedStr}
+            <b>
+              {reply.author.firstName} {reply.author.lastName}
+            </b>{" "}
+            {timePostedStr}
             <p>{reply.content}</p>
           </div>
         )}
