@@ -5,11 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { updatePost } from "./reducers/postReducer";
 import { useEffect, useState } from "react";
-import {
-  addFollowup,
-  createFollowup,
-  setFollowups,
-} from "./reducers/followupReducer";
+import { addFollowup, setFollowups } from "./reducers/followupReducer";
 import * as followupClient from "./clients/followupsClient";
 import * as repliesClient from "./clients/repliesClient";
 import * as postsClient from "./clients/postsClient";
