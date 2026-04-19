@@ -45,7 +45,10 @@ export default function AnswerDisplay({
     return (
       <div>
         <div className="d-flex align-items-center">
-          <div className="p-2">{answer.content}</div>
+          <div
+            className="p-2"
+            dangerouslySetInnerHTML={{ __html: answer.content }}
+          ></div>
           {canEdit && (
             <div className="ms-auto m-2">
               <Dropdown>

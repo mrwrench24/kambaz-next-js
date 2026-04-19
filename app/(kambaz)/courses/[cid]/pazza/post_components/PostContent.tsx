@@ -134,9 +134,10 @@ export default function PostContent({ postId }: { postId: string }) {
             </EditorProvider>
           </div>
         ) : (
-          <div>
-            <p className="p-2">{post.content}</p>
-          </div>
+          <div
+            className="p-2"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          ></div>
         )}
 
         <span className="p">

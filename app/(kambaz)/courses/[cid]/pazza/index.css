@@ -14,6 +14,7 @@
 
 .post-description {
   max-width: 300px;
+  max-height: 30px;
 }
 
 .post-info {

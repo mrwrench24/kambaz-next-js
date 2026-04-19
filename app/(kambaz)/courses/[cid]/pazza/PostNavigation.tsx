@@ -134,9 +134,10 @@ export default function PostNavigation() {
                           </span>
                           <div
                             className={`text-truncate post-description ${!viewed && "fw-semibold"}`}
-                          >
-                            {post.content}
-                          </div>
+                            dangerouslySetInnerHTML={{
+                              __html: post.content,
+                            }}
+                          ></div>
                         </div>
                         <div className="post-info text-end">
                           <div>{timePostedStr}</div>
