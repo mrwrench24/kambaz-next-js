@@ -13,21 +13,21 @@ const followupsSlice = createSlice({
   name: "followups",
   initialState,
   reducers: {
-    createFollowup: (
-      state,
-      action: PayloadAction<{ id: string; content: string; authorId: string }>,
-    ) => {
-      const newFollowup: Followup = {
-        id: action.payload.id,
-        resolved: false,
-        createdAt: new Date().toISOString(),
-        author: action.payload.authorId,
-        content: action.payload.content,
-        replies: [],
-      };
+    // createFollowup: (
+    //   state,
+    //   action: PayloadAction<{ id: string; content: string; authorId: string }>,
+    // ) => {
+    //   const newFollowup: Followup = {
+    //     id: action.payload.id,
+    //     resolved: false,
+    //     createdAt: new Date().toISOString(),
+    //     author: action.payload.authorId,
+    //     content: action.payload.content,
+    //     replies: [],
+    //   };
 
-      state.followups = [...state.followups, newFollowup];
-    },
+    //   state.followups = [...state.followups, newFollowup];
+    // },
     updateFollowup: (state, action: PayloadAction<Followup>) => {
       state.followups = state.followups.map((f) =>
         f.id === action.payload.id ? action.payload : f,
@@ -39,9 +39,12 @@ const followupsSlice = createSlice({
     setFollowups: (state, action: PayloadAction<Followup[]>) => {
       state.followups = action.payload;
     },
+    addFollowup: (state, action: PayloadAction<Followup>) => {
+      state.followups = [...state.followups, action.payload];
+    },
   },
 });
 
-export const { createFollowup, updateFollowup, deleteFollowup, setFollowups } =
+export const { updateFollowup, deleteFollowup, setFollowups, addFollowup } =
   followupsSlice.actions;
 export default followupsSlice.reducer;

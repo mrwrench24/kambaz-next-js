@@ -8,7 +8,6 @@ export const POSTS_API = `${HTTP_SERVER}/api/pazza/posts`;
 export const getPostsForCourse = async (cid: string) => {
   const response = await axiosWithCredentials.get(`${POSTS_API}/${cid}`);
 
-  console.log(response.data);
   return response.data;
 };
 
