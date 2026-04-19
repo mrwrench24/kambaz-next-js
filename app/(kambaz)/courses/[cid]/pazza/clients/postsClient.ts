@@ -5,8 +5,8 @@ const axiosWithCredentials = axios.create({ withCredentials: true });
 export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 export const POSTS_API = `${HTTP_SERVER}/api/pazza/posts`;
 
-export const getPostsForCourse = async (cid: string) => {
-  const response = await axiosWithCredentials.get(`${POSTS_API}/${cid}`);
+export const getPostsForCourse = async (cid: string, uid: string) => {
+  const response = await axiosWithCredentials.get(`${POSTS_API}/${cid}/${uid}`);
 
   return response.data;
 };

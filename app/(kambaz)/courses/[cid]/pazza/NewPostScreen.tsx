@@ -28,7 +28,7 @@ export default function NewPostScreen() {
 
   const [newPost, setNewPost] = useState<NewPost>({
     postType: "question",
-    postTo: "all",
+    onlyVisibleTo: null,
     folders: [],
     summary: "",
     details: "",
@@ -36,7 +36,6 @@ export default function NewPostScreen() {
   });
 
   const [showWarning, setShowWarning] = useState(false);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
 
   const { folders } = useSelector((state: RootState) => state.folderReducer);
 
@@ -97,8 +96,8 @@ export default function NewPostScreen() {
               id="post-to-entire"
               name="postTo"
               type="radio"
-              checked={newPost.postTo === "all"}
-              onChange={() => setNewPost({ ...newPost, postTo: "all" })}
+              checked={newPost.onlyVisibleTo === null}
+              onChange={() => setNewPost({ ...newPost, onlyVisibleTo: null })}
             />{" "}
             <label htmlFor="post-to-entire">Entire Class</label>
           </span>
@@ -107,17 +106,19 @@ export default function NewPostScreen() {
               id="post-to-individual"
               name="postTo"
               type="radio"
-              checked={newPost.postTo === "individual"}
-              onChange={() => setNewPost({ ...newPost, postTo: "individual" })}
+              checked={newPost.onlyVisibleTo !== null}
+              onChange={() => setNewPost({ ...newPost, onlyVisibleTo: [] })}
             />{" "}
             <label htmlFor="post-to-individual">
               Individual Student(s) / Instructors
             </label>
           </span>
-          {newPost.postTo === "individual" && (
+          {newPost.onlyVisibleTo !== null && (
             <div>
               {usersInCourse.map((user) => {
-                const selected = selectedUserIds.includes(user._id);
+                if (user._id === currentUser._id) return;
+
+                const selected = newPost.onlyVisibleTo.includes(user._id);
 
                 return (
                   <span key={user._id} className="m-2 p-1 bg-secondary">
@@ -126,11 +127,20 @@ export default function NewPostScreen() {
                       className="me-1"
                       checked={selected}
                       onChange={() =>
-                        setSelectedUserIds(() =>
-                          selected
-                            ? selectedUserIds.filter((uid) => uid !== user._id)
-                            : [...selectedUserIds, user._id],
-                        )
+                        selected
+                          ? setNewPost({
+                              ...newPost,
+                              onlyVisibleTo: newPost.onlyVisibleTo.filter(
+                                (uid) => uid !== user._id,
+                              ),
+                            })
+                          : setNewPost({
+                              ...newPost,
+                              onlyVisibleTo: [
+                                ...newPost.onlyVisibleTo,
+                                user._id,
+                              ],
+                            })
                       }
                     />
                     {user.firstName + " " + user.lastName}

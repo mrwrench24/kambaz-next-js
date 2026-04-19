@@ -9,12 +9,16 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { getFoldersForCourse } from "./clients/foldersClient";
 import { setFolders } from "./reducers/folderReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPostsForCourse } from "./clients/postsClient";
 import { addAllPosts } from "./reducers/postReducer";
+import { RootState } from "@/app/(kambaz)/store";
 
 export default function PazzaPage() {
   const { page } = usePazzaContext();
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
   const { cid } = useParams();
   const dispatch = useDispatch();
 
@@ -25,10 +29,10 @@ export default function PazzaPage() {
       dispatch(setFolders(folders));
     });
 
-    getPostsForCourse(cid as string).then((posts) => {
+    getPostsForCourse(cid as string, currentUser._id).then((posts) => {
       dispatch(addAllPosts(posts));
     });
-  }, [cid]);
+  }, [cid, currentUser]);
 
   return (
     <div>

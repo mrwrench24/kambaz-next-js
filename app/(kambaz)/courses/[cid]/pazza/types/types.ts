@@ -16,7 +16,7 @@ export type Answer = {
 
 export type NewPost = {
   postType: "question" | "note";
-  postTo: "all" | "individual";
+  onlyVisibleTo: string[] | null;
   authorId: any;
   folders: string[];
   // (title)
